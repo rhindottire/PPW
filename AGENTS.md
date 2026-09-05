@@ -50,6 +50,8 @@
 - Read `AGENTS.md`, `README.md`, and other project help files
   to understand the task before working.
 - Treat these files as authoritative context for how the project is interpreted.
+- At the start of a new session, recall PPW context from Supermemory
+  (`search_memory`) before working, so no context needs to be rebuilt.
 
 ## Available Agents
 - Delegate work to the configured subagents instead of doing everything inline:
