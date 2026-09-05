@@ -1,0 +1,42 @@
+# Book settings
+# Learn more at https://jupyterbook.org/customize/config.html
+
+title: PPW - Web Search & Mining
+author: rhindottire
+
+# Execution settings
+# ``off`` renders the stored notebook outputs without re-executing anything.
+# This guarantees the site never re-crawls or hits the network at build time.
+execute:
+  execute_notebooks: off
+
+# Build settings
+# Only build files that are listed in the table of contents.
+only_build_toc_files: true
+
+# Files/folders that must be excluded from the build.
+# The docs warn that files inside hidden folders are still scanned, so we
+# exclude them explicitly.
+exclude_patterns:
+  - "**/.venv/**"
+  - "**/.opencode/**"
+  - "**/.github/**"
+  - "**/_build/**"
+  - "**/.ruff_cache/**"
+  - AGENTS.md
+  - README.md
+  - LICENSE
+  - "*.pptx"
+  - "*.ppt"
+
+# HTML-specific settings
+html:
+  use_issues_button: true
+  use_repository_button: true
+  use_edit_page_button: false
+
+# Repository information for the GitHub buttons
+repository:
+  url: https://github.com/rhindottire/PPW
+  path_to_book: ""
+  branch: main
