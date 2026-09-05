@@ -1,43 +1,43 @@
-# PPW — Pencarian & Penambangan Web
+# PPW — Web Search & Mining
 
 ## Project Info
-- Mata kuliah praktikum Information Retrieval / Web Search & Mining
-- Python 3.14.7, virtual environment di `.venv/`
-- Kernel Jupyter: `enWebmining`
+- Practical course: Information Retrieval / Web Search & Mining
+- Python 3.14.7, virtual environment in `.venv/`
+- Jupyter kernel: `enWebmining`
 
-## Perintah Penting
-- Aktifkan venv: `source .venv/bin/activate`
+## Key Commands
+- Activate venv: `source .venv/bin/activate`
 - Install dependencies: `pip install -r requirements.txt`
-- Jalankan Jupyter: `jupyter lab`
-- Crawl ulang: `python run_crawl.py`
+- Run Jupyter: `jupyter lab`
+- Re-crawl: `python run_crawl.py`
 
-## Konvensi Kode
-- Semua kode Python, bukan TypeScript/JavaScript
-- Gunakan `trafilatura` untuk ekstraksi konten web (bukan requests+bs4 untuk ekstraksi utama)
-- Format output DataFrame: kolom `id`, `isi_berita`, `label`, `url`
-- Jangan crawl tanpa jeda (polite delay minimal 1 detik)
-- Data sudah tersedia di `crawling_detik.csv` — jangan crawl ulang kecuali diminta
-- Selalu gunakan `with_metadata=True` atau `include_comments=False` pada trafilatura
+## Code Conventions
+- All code must be Python, not TypeScript/JavaScript
+- Use `trafilatura` for web content extraction (not requests+bs4 for main extraction)
+- DataFrame output format: columns `id`, `isi_berita`, `label`, `url`
+- Never crawl without delays (polite delay of at least 1 second)
+- Data is already available in `crawling_detik.csv` — do not re-crawl unless asked
+- Always use `with_metadata=True` or `include_comments=False` on trafilatura
 
-## Struktur Project
-- `crawling_detik.ipynb` — notebook utama (kernel: enWebmining)
-- `run_crawl.py` — script crawling standalone
-- `crawling_detik.csv/.json` — hasil crawl 200 artikel (100 sport + 100 finance)
-- `requirements.txt` — daftar paket ter-pin
-- `ENVIRONMENT.md` — dokumentasi lengkap environment
+## Project Structure
+- `crawling_detik.ipynb` — main notebook (kernel: enWebmining)
+- `run_crawl.py` — standalone crawling script
+- `crawling_detik.csv/.json` — crawl results of 200 articles (100 sport + 100 finance)
+- `requirements.txt` — pinned package list
+- `ENVIRONMENT.md` — full environment documentation (local only, not tracked in git)
 
-## Library Utama
-- `trafilatura` — ekstraksi teks dari web
-- `pandas` — manipulasi data
+## Main Libraries
+- `trafilatura` — web text extraction
+- `pandas` — data manipulation
 - `scikit-learn` — TF-IDF, clustering
 - `nltk` / `spacy` — NLP
-- `Sastrawi` — stemming bahasa Indonesia
-- `rank-bm25` — ranking dokumen
-- `wordcloud` — visualisasi frekuensi kata
+- `Sastrawi` — Indonesian stemming
+- `rank-bm25` — document ranking
+- `wordcloud` — word frequency visualization
 - `torch` — deep learning (CUDA-enabled)
 
-## Aturan Kelas
-- Kernel Jupyter wajib `enWebmining` (bukan python3 default)
-- Tidak boleh menghapus data crawl yang sudah ada tanpa izin
-- Gunakan User-Agent yang sopan saat crawling
-- Sertakan etika crawling di setiap notebook
+## Course Rules
+- Jupyter kernel must be `enWebmining` (not the default python3)
+- Never delete existing crawl data without permission
+- Use a polite User-Agent when crawling
+- Include crawling ethics in every notebook
