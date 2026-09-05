@@ -63,3 +63,8 @@ torchvision==0.29.0
 # Hanya pilih SATU framework DL (torch ATAU tensorflow), jangan keduanya.
 # ------------------------------------------------------------
 # tensorflow
+
+# ------------------------------------------------------------
+# [9] DEVELOPER TOOLS — code formatter (opencode)
+# ------------------------------------------------------------
+ruff==0.16.6

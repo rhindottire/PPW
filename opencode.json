@@ -25,6 +25,12 @@
       }
     }
   },
+  "formatter": {
+    "ruff": {
+      "command": [".venv/bin/ruff", "format", "$FILE"],
+      "extensions": [".py", ".pyi"]
+    }
+  },
   "watcher": {
     "ignore": [
       ".venv/**",

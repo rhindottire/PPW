@@ -24,7 +24,6 @@
 - `run_crawl.py` — standalone crawling script
 - `crawling_detik.csv/.json` — crawl results of 200 articles (100 sport + 100 finance)
 - `requirements.txt` — pinned package list
-- `ENVIRONMENT.md` — full environment documentation (local only, not tracked in git)
 
 ## Main Libraries
 - `trafilatura` — web text extraction
@@ -41,3 +40,28 @@
 - Never delete existing crawl data without permission
 - Use a polite User-Agent when crawling
 - Include crawling ethics in every notebook
+
+## Version Control Discipline
+- Never commit or push immediately after making changes.
+- After edits, show the user the diff/status and wait for an explicit instruction.
+- Commit only when the user asks; push (public remote) only with separate confirmation.
+
+## Project Help Files
+- Read `AGENTS.md`, `README.md`, and other project help files
+  to understand the task before working.
+- Treat these files as authoritative context for how the project is interpreted.
+
+## Available Agents
+- Delegate work to the configured subagents instead of doing everything inline:
+  - `code-reviewer` — review code for bugs, quality, and convention compliance
+  - `docs-writer` — write and fix documentation, README, and code comments
+  - `research-analyst` — deep analysis of data, papers, or literature
+  - `research-gap-analyst` — identify gaps in research or literature
+  - `research-planner` — structure research: questions, methodology, steps
+  - `security-auditor` — audit code security (injection, secrets, auth)
+  - `python-helper` — debug, review, and write Python code for this project
+- Use subagents for heavy or parallelizable work to keep the main context clean.
+
+## Language
+- Interact with the user in Indonesian unless asked otherwise.
+- Source code, comments, docstrings, commit messages, and documentation are in English.
