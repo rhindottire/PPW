@@ -57,8 +57,14 @@ Each row has the following schema:
 .
 ├── AGENTS.md              # Project instructions for AI agents / collaborators
 ├── book/                  # Jupyter Book source (published to GitHub Pages)
-│   ├── crawling_detik.ipynb   # Main Jupyter notebook (kernel: enWebmining)
-│   ├── intro.md, etika-crawling.md, _config.yml, _toc.yml
+│   ├── CRISP-DM/          # CRISP-DM stage notebooks (kernel: enWebmining)
+│   │   ├── Business.ipynb         # Task 1: goal, scope & crawling ethics
+│   │   ├── EDA.ipynb              # Task 1: detik.com crawl, sport & finance
+│   │   ├── Input.ipynb            # (empty — upcoming)
+│   │   ├── Modeling.ipynb         # (empty — upcoming)
+│   │   ├── Output.ipynb           # (empty — upcoming)
+│   │   └── Production.ipynb       # (empty — upcoming)
+│   ├── intro.md, CRISP-DM.md, _config.yml, _toc.yml
 │   └── _build/            # (generated) build output
 ├── data/                  # Crawl results — 200 articles
 │   ├── crawling_detik.csv
@@ -102,8 +108,8 @@ jupyter lab
 jupyter lab
 ```
 
-Open `book/crawling_detik.ipynb` and select kernel **`enWebmining`**. The notebook
-is organized in sections:
+Open `book/CRISP-DM/EDA.ipynb` and select kernel **`enWebmining`**.
+The notebook is organized in sections:
 
 - **Section A (reference)** — the original crawling code used once to produce
   the dataset. Not executed by default (avoids re-crawling).
@@ -112,7 +118,9 @@ is organized in sections:
 - **Section C (optional)** — re-crawl all 200 articles from scratch when
   `_re_crawl = True`.
 
-The dataset is already complete, so **Section B is all you need**.
+The dataset is already complete, so **Section B is all you need**. The other CRISP-DM
+stage notebooks (`Input`, `Modeling`, `Output`, `Production`) are placeholders for
+upcoming assignments.
 
 ## Re-crawling (optional)
 

@@ -10,9 +10,12 @@
 
 ---
 
-# Welcome to my Web Search & Mining Pages
+# Welcome to my Web Mining Pages
 
-This page serves as a resource hub for exploring key concepts in **Web Search & Mining**. Here you'll find structured discussions of essential topics — from web crawling and information retrieval to text preprocessing and data mining — along with references to key learning materials and curated study resources to help you deepen your understanding of the subject.
+A compilation of my practical coursework in **Web Search & Mining**: the collection,
+analysis, and interpretation of web content in accordance with responsible crawling
+practices. The primary dataset comprises 200 news articles extracted from detik.com
+using the trafilatura framework.
 
 ```{tableofcontents}
 ```
@@ -21,8 +24,6 @@ This page serves as a resource hub for exploring key concepts in **Web Search & 
 
 # References and Study Resources
 
-To build a strong foundation in **Web Search & Mining**, explore the following resources alongside this Jupyter Book:
-
-- **Lecturer**: [MULA'AB, S.Si., M.Kom](https://mulaab.github.io/webmining) - A comprehensive guide to Web Mining concepts, web scraping, and the ethics of extracting data from the web.
-- **My Data Mining Pages**: [rhindottire.github.io/Data-Mining](https://rhindottire.github.io/Data-Mining/intro.html) - A complementary course on the fundamental concepts of data mining.
-- **My Data Science Pages**: [rhindottire.github.io/Data-Science](https://rhindottire.github.io/Data-Science/intro.html) - Notes on the data science pipeline that underpins mining workflows.
+- **Lecturer**: [MULA'AB, S.Si., M.Kom](https://mulaab.github.io/webmining) - The instructor and authoritative source of the course curriculum.
+- **My Data Mining Pages**: [rhindottire.github.io/Data-Mining](https://rhindottire.github.io/Data-Mining/intro.html) - Prior coursework on the fundamental concepts of data mining.
+- **My Data Science Pages**: [rhindottire.github.io/Data-Science](https://rhindottire.github.io/Data-Science/intro.html) - Notes on the data science pipeline underpinning this work.

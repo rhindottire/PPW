@@ -1,7 +1,7 @@
 # PPW — Web Search & Mining
 
 ## Project Info
-- Practical course: Information Retrieval / Web Search & Mining
+- Practical course: Web Search & Mining
 - Python 3.14.7, virtual environment in `.venv/`
 - Jupyter kernel: `enWebmining`
 
@@ -18,11 +18,23 @@
 - Never crawl without delays (polite delay of at least 1 second)
 - Data is already available in `data/crawling_detik.csv` — do not re-crawl unless asked
 - Always use `with_metadata=True` or `include_comments=False` on trafilatura
+- Give every `print` call or visualization its own notebook cell — one output per
+  cell — so each cell's output is clear and never overlaps with other prints
 
 ## Project Structure
-- `book/` — Jupyter Book source (built and published to GitHub Pages)
-  - `crawling_detik.ipynb` — main notebook (kernel: enWebmining)
-  - `intro.md`, `etika-crawling.md`, `_config.yml`, `_toc.yml` — book pages/config
+- `book/` — Jupyter Book source (built and published to GitHub Pages). A Markdown
+  page directly under `book/` having the same name as a sibling folder is the
+  summary/index of that folder's contents (e.g. `CRISP-DM.md` summarizes the
+  notebooks in `CRISP-DM/`). Structure follows the Data-Science repo pattern:
+  methodology chapters (`CRISP-DM.md` + `CRISP-DM/`) plus a per-assignment
+  chapter (`Coursework.md` + `Coursework/` with `tugas1.ipynb`, `tugas2.ipynb`, …)
+  — both coexist, like in rhindottire/Data-Science.
+  - `CRISP-DM/` — CRISP-DM stage notebooks (kernel: enWebmining)
+    - `Business.ipynb` — Task 1: goal, scope & crawling ethics (completed)
+    - `EDA.ipynb` — Task 1: detik.com crawl & exploration (completed)
+    - `Input.ipynb`, `Modeling.ipynb`, `Output.ipynb`, `Production.ipynb` —
+      placeholders for upcoming tasks
+  - `intro.md`, `CRISP-DM.md`, `_config.yml`, `_toc.yml` — book pages/config
 - `data/crawling_detik.csv/.json` — crawl results of 200 articles (100 sport + 100 finance)
 - `scripts/run_crawl.py` — standalone crawling script (re-crawl entry point)
 - `lectures/` — course lecture/assignment materials (`.ppt` + readable `.md`)
@@ -57,6 +69,31 @@
 - Never commit or push immediately after making changes.
 - After edits, show the user the diff/status and wait for an explicit instruction.
 - Commit only when the user asks; push (public remote) only with separate confirmation.
+
+## Ownership & Verification
+- Before modifying or deleting any content, check the git history first.
+- If a change in the repository was NOT done by us (agents), ASK the user first
+  whether they made it — never assume or silently overwrite it.
+- Do not take initiative outside the assigned task (renaming, scaffolding, adding
+  files, restructuring) without explicit confirmation.
+- When in doubt or not understanding something, ASK the user instead of guessing.
+
+## No AI-fingerprints in Deliverables
+Anything the lecturer will see (notebooks, the published web book, scripts) must
+read as natural, human-written work — not as AI-generated output:
+
+1. **Never reference agent configuration files inside code/documents** that the
+   reader can see: `AGENTS.md`, `CLAUDE.md`, `.opencode/`, `skills/`, etc.
+   Example of a banned pattern: `while not (PROJECT_ROOT / "AGENTS.md").exists()`.
+2. No decorative comment banners (`# ============`) and no `CELL n` / `SEL n`
+   cell labels.
+3. Comments must be short and natural; do not restate the code line by line, and
+   avoid agent-style narration such as `# (REFERENCE — not executed)` or
+   `print("… helper ready (function definitions only, not executed)")`.
+4. Avoid excessive/redundant status prints and guard scaffolding that reads like
+   instructions (`print("Change _re_crawl = True to re-crawl")`).
+5. Keep file paths simple (relative to the project root); avoid over-engineered
+   root-discovery loops.
 
 ## Project Help Files
 - Read `AGENTS.md`, `README.md`, and other project help files

@@ -4,5 +4,11 @@
 format: jb-book
 root: intro
 chapters:
-  - file: crawling_detik
-  - file: etika-crawling
+  - file: CRISP-DM
+    sections:
+      - file: CRISP-DM/Business
+      - file: CRISP-DM/EDA
+      - file: CRISP-DM/Input
+      - file: CRISP-DM/Modeling
+      - file: CRISP-DM/Output
+      - file: CRISP-DM/Production
