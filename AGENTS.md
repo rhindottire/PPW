@@ -9,20 +9,23 @@
 - Activate venv: `source .venv/bin/activate`
 - Install dependencies: `pip install -r requirements.txt`
 - Run Jupyter: `jupyter lab`
-- Re-crawl: `python run_crawl.py`
+- Re-crawl: `python scripts/run_crawl.py`
 
 ## Code Conventions
 - All code must be Python, not TypeScript/JavaScript
 - Use `trafilatura` for web content extraction (not requests+bs4 for main extraction)
 - DataFrame output format: columns `id`, `isi_berita`, `label`, `url`
 - Never crawl without delays (polite delay of at least 1 second)
-- Data is already available in `crawling_detik.csv` — do not re-crawl unless asked
+- Data is already available in `data/crawling_detik.csv` — do not re-crawl unless asked
 - Always use `with_metadata=True` or `include_comments=False` on trafilatura
 
 ## Project Structure
-- `crawling_detik.ipynb` — main notebook (kernel: enWebmining)
-- `run_crawl.py` — standalone crawling script
-- `crawling_detik.csv/.json` — crawl results of 200 articles (100 sport + 100 finance)
+- `book/` — Jupyter Book source (built and published to GitHub Pages)
+  - `crawling_detik.ipynb` — main notebook (kernel: enWebmining)
+  - `intro.md`, `etika-crawling.md`, `_config.yml`, `_toc.yml` — book pages/config
+- `data/crawling_detik.csv/.json` — crawl results of 200 articles (100 sport + 100 finance)
+- `scripts/run_crawl.py` — standalone crawling script (re-crawl entry point)
+- `lectures/` — course lecture/assignment materials (`.ppt` + readable `.md`)
 - `requirements.txt` — pinned package list
 
 ## Main Libraries
@@ -41,6 +44,15 @@
 - Use a polite User-Agent when crawling
 - Include crawling ethics in every notebook
 
+## Lecture Instructions
+- Course lecture/assignment instructions live in `lectures/` as editable
+  Markdown (`.md`) files, each paired with the original source file (`.ppt`).
+- **Before modifying code or writing any program**, AI agents MUST first read
+  the relevant instruction file(s) in `lectures/` and treat them as
+  authoritative for interpreting the assignment.
+- When a new lecture file is added, convert its Markdown version so agents can
+  read it without a binary viewer.
+
 ## Version Control Discipline
 - Never commit or push immediately after making changes.
 - After edits, show the user the diff/status and wait for an explicit instruction.
@@ -55,13 +67,9 @@
 
 ## Available Agents
 - Delegate work to the configured subagents instead of doing everything inline:
-  - `code-reviewer` — review code for bugs, quality, and convention compliance
-  - `docs-writer` — write and fix documentation, README, and code comments
-  - `research-analyst` — deep analysis of data, papers, or literature
-  - `research-gap-analyst` — identify gaps in research or literature
-  - `research-planner` — structure research: questions, methodology, steps
-  - `security-auditor` — audit code security (injection, secrets, auth)
   - `python-helper` — debug, review, and write Python code for this project
+  - `data-scientist` — data mining and data science analysis following CRISP-DM
+- Subagents are defined as files in `.opencode/agent/`.
 - Use subagents for heavy or parallelizable work to keep the main context clean.
 
 ## Language

@@ -19,7 +19,7 @@ membebani server detik.com.
 ## Batasan penggunaan
 
 - Data digunakan **hanya untuk kepentingan pembelajaran / tugas kuliah**.
-- Hasil crawl sudah tersedia di `crawling_detik.csv` / `.json`; kode **crawl
+- Hasil crawl sudah tersedia di `data/crawling_detik.csv` / `.json`; kode **crawl
   ulang dinonaktifkan** secara bawaan (`_re_crawl = False`) di notebook agar
   tidak mengirim ulang ~200 permintaan tanpa alasan.
 - Tidak dilarang meng-crawl, tetapi kami tetap memilih pendekatan yang hemat

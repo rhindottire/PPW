@@ -34,8 +34,8 @@ practices.
 
 ## Dataset
 
-`crawling_detik.csv` / `crawling_detik.json` contain **200 Indonesian news
-articles** crawled from detik.com:
+`data/crawling_detik.csv` / `data/crawling_detik.json` contain **200 Indonesian
+news articles** crawled from detik.com:
 
 | Label | Count | IDs |
 |-------|-------|-----|
@@ -56,12 +56,18 @@ Each row has the following schema:
 ```
 .
 ├── AGENTS.md              # Project instructions for AI agents / collaborators
-├── crawling_detik.csv     # Crawl results — 200 articles (tab-separated-safe CSV)
-├── crawling_detik.ipynb   # Main Jupyter notebook (kernel: enWebmining)
-├── crawling_detik.json    # Crawl results — same data as JSON
+├── book/                  # Jupyter Book source (published to GitHub Pages)
+│   ├── crawling_detik.ipynb   # Main Jupyter notebook (kernel: enWebmining)
+│   ├── intro.md, etika-crawling.md, _config.yml, _toc.yml
+│   └── _build/            # (generated) build output
+├── data/                  # Crawl results — 200 articles
+│   ├── crawling_detik.csv
+│   └── crawling_detik.json
+├── lectures/              # Course lecture materials (.ppt + readable .md)
 ├── opencode.json          # Local OpenCode config (permissions, LSP, agents)
 ├── requirements.txt       # Pinned Python dependencies
-└── run_crawl.py           # Standalone crawling script (re-crawl entry point)
+└── scripts/
+    └── run_crawl.py       # Standalone crawling script (re-crawl entry point)
 ```
 
 ## Prerequisites
@@ -96,12 +102,12 @@ jupyter lab
 jupyter lab
 ```
 
-Open `crawling_detik.ipynb` and select kernel **`enWebmining`**. The notebook
+Open `book/crawling_detik.ipynb` and select kernel **`enWebmining`**. The notebook
 is organized in sections:
 
 - **Section A (reference)** — the original crawling code used once to produce
   the dataset. Not executed by default (avoids re-crawling).
-- **Section B (main)** — loads `crawling_detik.csv` / `.json`, validates the
+- **Section B (main)** — loads `data/crawling_detik.csv` / `.json`, validates the
   required columns and label distribution, and prints example articles.
 - **Section C (optional)** — re-crawl all 200 articles from scratch when
   `_re_crawl = True`.
@@ -115,10 +121,10 @@ required, ~200 requests over several minutes):
 
 ```bash
 source .venv/bin/activate
-python run_crawl.py
+python scripts/run_crawl.py
 ```
 
-Data is already available in `crawling_detik.csv` — do **not** re-crawl unless
+Data is already available in `data/crawling_detik.csv` — do **not** re-crawl unless
 asked.
 
 ## Crawling Ethics

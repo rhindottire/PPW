@@ -1,28 +1,36 @@
 # run_crawl.py
 # Crawling data detik.com — sport (100) + finance (100) = 200 artikel
 # Kolom output: id, isi_berita, label, url
+from pathlib import Path
+
 import re
 import time
 import requests
 import pandas as pd
 import trafilatura
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = REPO_ROOT / "data"
+
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                  "AppleWebKit/537.36 (KHTML, like Gecko) "
-                  "Chrome/120.0 Safari/537.36"
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/120.0 Safari/537.36"
 }
-POLITE_DELAY = 1.0          # jeda antar-request (detik)
-RETRY = 3                   # coba ulang bila koneksi drop
-BACKOFF = [1, 2, 4]         # jeda eksponensial per retry (detik)
+POLITE_DELAY = 1.0  # jeda antar-request (detik)
+RETRY = 3  # coba ulang bila koneksi drop
+BACKOFF = [1, 2, 4]  # jeda eksponensial per retry (detik)
+
 
 def log(msg):
     print(msg, flush=True)
+
 
 def get_urls_from_sitemap(sitemap_url):
     r = requests.get(sitemap_url, headers=HEADERS, timeout=30)
     r.raise_for_status()
     return re.findall(r"<loc>\s*<!\[CDATA\[\s*([^\]]+?)\s*\]\]>\s*</loc>", r.text)
+
 
 def collect_article_urls(kanal, limit=100):
     base = f"https://{kanal}.detik.com"
@@ -42,6 +50,7 @@ def collect_article_urls(kanal, limit=100):
         time.sleep(POLITE_DELAY)
     return list(urls)[:limit]
 
+
 def crawl_article(url):
     """Ambil teks artikel dengan trafilatura, pakai retry ringan."""
     for attempt in range(RETRY):
@@ -52,10 +61,11 @@ def crawl_article(url):
                 if text:
                     return text
         except Exception as e:
-            log(f"    [retry {attempt+1}] {url} -> {str(e)[:60]}")
+            log(f"    [retry {attempt + 1}] {url} -> {str(e)[:60]}")
         if attempt < RETRY - 1:
             time.sleep(BACKOFF[attempt])
     return None
+
 
 def crawl_many(urls, label):
     results = []
@@ -69,6 +79,7 @@ def crawl_many(urls, label):
             log(f"  [{label}] {i}/{len(urls)} selesai (sukses={ok})")
         time.sleep(POLITE_DELAY)
     return results
+
 
 def main():
     N = 100
@@ -99,9 +110,15 @@ def main():
     log(f"Gagal          : {len(df) - len(df_clean)}")
     log("\nDistribusi label:\n" + str(df_clean["label"].value_counts().to_string()))
 
-    df_clean.to_csv("crawling_detik.csv", index=False, encoding="utf-8")
-    df_clean.to_json("crawling_detik.json", orient="records", force_ascii=False, indent=2)
-    log("\nFile tersimpan: crawling_detik.csv dan crawling_detik.json")
+    df_clean.to_csv(DATA_DIR / "crawling_detik.csv", index=False, encoding="utf-8")
+    df_clean.to_json(
+        DATA_DIR / "crawling_detik.json",
+        orient="records",
+        force_ascii=False,
+        indent=2,
+    )
+    log(f"\nFile tersimpan: {DATA_DIR}/crawling_detik.csv dan crawling_detik.json")
+
 
 if __name__ == "__main__":
     main()
