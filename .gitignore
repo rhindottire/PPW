@@ -6,6 +6,9 @@ __pycache__/
 *.pyc
 *.pyo
 
+# Lint cache
+/.ruff_cache/
+
 # Jupyter checkpoints
 .ipynb_checkpoints/
 
@@ -19,6 +22,9 @@ _build/
 # OpenCode local config
 .opencode/
 
+# Editor local config
+.vscode/
+
 # OS files
 .DS_Store
 Thumbs.db
@@ -28,3 +34,6 @@ Thumbs.db
 
 # Node modules (untuk MCP/tools)
 node_modules/
+
+# Scratch notebook, one-time use
+scripts/task.ipynb
