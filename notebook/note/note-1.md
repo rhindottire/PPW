@@ -1,9 +1,4 @@
-# Catatan Kuliah 1 — Pengantar Web Mining
-
-Ringkasan materi pertemuan pertama yang diambil dari
-`lectures/01. Pengantar Web Mining.ppt`.
-
-## Apa itu Web Mining
+# Apa itu Web Mining
 
 Web mining adalah proses menemukan dan mengekstrak informasi dari internet
 menggunakan berbagai teknik data mining. Dua definisi yang sering dirujuk:
@@ -13,7 +8,7 @@ menggunakan berbagai teknik data mining. Dua definisi yang sering dirujuk:
 - Mencari pola berguna atau pengetahuan dari struktur hyperlink, isi halaman,
   dan perilaku pengguna web (Bing Liu, 2007).
 
-### Tantangan pemrosesan data web
+## Tantangan pemrosesan data web
 
 - Web merupakan basis data yang sangat besar, kompleks, dinamis, dan tidak
   memiliki domain spesifik.
