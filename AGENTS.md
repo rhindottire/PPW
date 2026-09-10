@@ -22,13 +22,15 @@
   cell — so each cell's output is clear and never overlaps with other prints
 
 ## Project Structure
-- `book/` — Jupyter Book source (built and published to GitHub Pages). A Markdown
-  page directly under `book/` having the same name as a sibling folder is the
-  summary/index of that folder's contents (e.g. `CRISP-DM.md` summarizes the
-  notebooks in `CRISP-DM/`). Structure follows the Data-Science repo pattern:
-  methodology chapters (`CRISP-DM.md` + `CRISP-DM/`) plus a per-assignment
-  chapter (`Coursework.md` + `Coursework/` with `tugas1.ipynb`, `tugas2.ipynb`, …)
-  — both coexist, like in rhindottire/Data-Science.
+- `notebook/` — Jupyter Book build root (built and published to GitHub Pages). A
+  Markdown page directly under `notebook/` having the same name as a sibling
+  folder is the summary/index of that folder's contents (e.g. `CRISP-DM.md`
+  summarizes the notebooks in `CRISP-DM/`). Structure follows the Data-Science
+  repo pattern: methodology chapters (`CRISP-DM.md` + `CRISP-DM/`) plus a
+  per-assignment chapter (`Coursework.md` + `Coursework/` with `tugas1.ipynb`,
+  `tugas2.ipynb`, …) — both coexist, like in rhindottire/Data-Science.
+  - `note/` + `note.md` — per-task assignment notes and instructions
+  - `book/` + `book.md` — per-task coursework deliverable notebooks
   - `CRISP-DM/` — CRISP-DM stage notebooks (kernel: enWebmining)
     - `Business.ipynb` — Task 1: goal, scope & crawling ethics (completed)
     - `EDA.ipynb` — Task 1: detik.com crawl & exploration (completed)

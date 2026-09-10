@@ -5,7 +5,7 @@
   NAME    : ACHMAD RIDHO FA'IZ
   EMAIL   : achmadaliridho46@gmail.com
   MAJOR   : Teknik Informatika
-  SUBJECT : Pencarian  & Penambangan Data
+  SUBJECT : Pencarian & Penambangan Data
 </pre>
 
 ---

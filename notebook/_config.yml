@@ -30,5 +30,5 @@ html:
 # Repository information for the GitHub buttons
 repository:
   url: https://github.com/rhindottire/PPW
-  path_to_book: "book"
+  path_to_book: "notebook"
   branch: main

@@ -4,6 +4,12 @@
 format: jb-book
 root: intro
 chapters:
+  - file: note
+    sections:
+      - file: note/note-1
+  - file: book
+    sections:
+      - file: book/book-1
   - file: CRISP-DM
     sections:
       - file: CRISP-DM/Business

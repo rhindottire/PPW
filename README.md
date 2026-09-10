@@ -56,8 +56,12 @@ Each row has the following schema:
 ```
 .
 ├── AGENTS.md              # Project instructions for AI agents / collaborators
-├── book/                  # Jupyter Book source (published to GitHub Pages)
-│   ├── CRISP-DM/          # CRISP-DM stage notebooks (kernel: enWebmining)
+├── notebook/               # Jupyter Book build root (published to GitHub Pages)
+│   ├── note/               # Assignment notes & instructions
+│   ├── note.md             # Index of note/
+│   ├── book/               # Coursework deliverable notebooks
+│   ├── book.md             # Index of book/
+│   ├── CRISP-DM/           # CRISP-DM stage notebooks (kernel: enWebmining)
 │   │   ├── Business.ipynb         # Task 1: goal, scope & crawling ethics
 │   │   ├── EDA.ipynb              # Task 1: detik.com crawl, sport & finance
 │   │   ├── Input.ipynb            # (empty — upcoming)
@@ -108,7 +112,7 @@ jupyter lab
 jupyter lab
 ```
 
-Open `book/CRISP-DM/EDA.ipynb` and select kernel **`enWebmining`**.
+Open `notebook/CRISP-DM/EDA.ipynb` and select kernel **`enWebmining`**.
 The notebook is organized in sections:
 
 - **Section A (reference)** — the original crawling code used once to produce

@@ -28,13 +28,13 @@ jobs:
       # Build the book
       - name: Build the book
         run: |
-          jupyter-book build book
+          jupyter-book build notebook
 
       # Upload the book's HTML as an artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: book/_build/html
+          path: notebook/_build/html
 
       # Deploy the book's HTML to GitHub Pages
       - name: Deploy to GitHub Pages
