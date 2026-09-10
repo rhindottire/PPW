@@ -22,19 +22,22 @@
   cell — so each cell's output is clear and never overlaps with other prints
 
 ## Project Structure
-- `notebook/` — Jupyter Book build root (built and published to GitHub Pages). A
-  Markdown page directly under `notebook/` having the same name as a sibling
-  folder is the summary/index of that folder's contents (e.g. `CRISP-DM.md`
-  summarizes the notebooks in `CRISP-DM/`). Structure follows the Data-Science
-  repo pattern: methodology chapters (`CRISP-DM.md` + `CRISP-DM/`) plus a
-  per-assignment chapter (`Coursework.md` + `Coursework/` with `tugas1.ipynb`,
-  `tugas2.ipynb`, …) — both coexist, like in rhindottire/Data-Science.
+- `notebook/` — Jupyter Book build root (built and published to GitHub Pages).
+  Structure follows the rhindottire/Data-Science pattern: methodology chapters
+  plus a per-assignment coursework chapter, both coexisting. There are two kinds
+  of Markdown page directly under `notebook/`:
+  - **Summary/index** of a sibling folder's contents — only `CRISP-DM.md`
+    summarizes the notebooks in `CRISP-DM/`.
+  - **Role-specific pages** with their own content linked to a sibling folder —
+    `note.md` and `book.md` are NOT summaries; each holds different content (see
+    below).
   - `note/` + `note.md` — coursework notes. `note.md` holds the assignment
-    instructions/overview for each task; `note/note-N.md` holds the personal
-    notes or material summary learned from lectures and the PPT.
+    instructions/overview for each task (headings `Note N`); `note/note-N.md`
+    holds the personal notes or material summary learned from lectures and the
+    PPT.
   - `book/` + `book.md` — coursework deliverables. `book.md` shows the direct
-    result/outcome of each task; `book/book-N.ipynb` is the working process
-    notebook that produces that result.
+    result/outcome of each task (headings `Book N`); `book/book-N.ipynb` is the
+    working process notebook that produces that result.
   - `CRISP-DM/` — CRISP-DM stage notebooks (kernel: enWebmining)
     - `Business.ipynb` — Task 1: goal, scope & crawling ethics (completed)
     - `EDA.ipynb` — Task 1: detik.com crawl & exploration (completed)
@@ -117,4 +120,8 @@ read as natural, human-written work — not as AI-generated output:
 
 ## Language
 - Interact with the user in Indonesian unless asked otherwise.
-- Source code, comments, docstrings, commit messages, and documentation are in English.
+- **English** for: source code, comments, docstrings, commit messages,
+  `README.md`, `AGENTS.md`, `lectures/`, `intro.md`, `CRISP-DM/*`, and build
+  tooling/config.
+- **Indonesian (may mix with English)** for the coursework content the student
+  reads: `note.md`, `note/note-N.md`, `book.md`, and `book/book-N.ipynb`.

@@ -2,8 +2,12 @@
 
 A practical course project on **Information Retrieval / Web Search & Mining**.
 This repository contains a web crawler for [detik.com](https://www.detik.com),
-the resulting Indonesian news dataset (200 articles), and the Jupyter notebook
-that loads, validates, and analyzes it.
+the resulting Indonesian news dataset (200 articles), and a Jupyter Book that
+documents the full web mining pipeline (crawling, preparation, modeling, and
+deployment) following the CRISP-DM methodology.
+
+All web scraping is done with **`trafilatura`** following polite-crawling
+practices.
 
 ## Table of Contents
 
@@ -27,58 +31,34 @@ mining pipeline:
    and extract clean article text.
 2. **Data cleaning** — build a structured tabular dataset with a defined schema.
 3. **(Upcoming)** preprocessing, indexing (TF-IDF / BM25), clustering, and text
-   mining — the notebook already ships with the libraries for it.
+   mining — the required libraries are already pinned in `requirements.txt`.
 
-All web scraping is done with **`trafilatura`** following polite-crawling
-practices.
+The Jupyter Book is built from `notebook/` and published to GitHub Pages:
+<https://rhindottire.github.io/PPW/>.
 
 ## Dataset
 
 `data/crawling_detik.csv` / `data/crawling_detik.json` contain **200 Indonesian
-news articles** crawled from detik.com:
-
-| Label | Count | IDs |
-|-------|-------|-----|
-| `sport` | 100 | 1–100 |
-| `finance` | 100 | 101–200 |
-
-Each row has the following schema:
-
-| Column | Description |
-|--------|-------------|
-| `id` | Sequential integer (1–200) |
-| `isi_berita` | Main article text extracted with `trafilatura` |
-| `label` | Category (`sport` or `finance`) |
-| `url` | Source article URL |
+news articles** crawled from detik.com: 100 `sport` (ids 1–100) and 100
+`finance` (ids 101–200). Each row has the schema `id`, `isi_berita` (article
+text extracted with `trafilatura`), `label` (`sport` / `finance`), and `url`.
 
 ## Project Structure
 
 ```
 .
 ├── AGENTS.md              # Project instructions for AI agents / collaborators
-├── notebook/               # Jupyter Book build root (published to GitHub Pages)
-│   ├── note/               # Assignment notes & instructions
-│   ├── note.md             # Index of note/
-│   ├── book/               # Coursework deliverable notebooks
-│   ├── book.md             # Index of book/
-│   ├── CRISP-DM/           # CRISP-DM stage notebooks (kernel: enWebmining)
-│   │   ├── Business.ipynb         # Task 1: goal, scope & crawling ethics
-│   │   ├── EDA.ipynb              # Task 1: detik.com crawl, sport & finance
-│   │   ├── Input.ipynb            # (empty — upcoming)
-│   │   ├── Modeling.ipynb         # (empty — upcoming)
-│   │   ├── Output.ipynb           # (empty — upcoming)
-│   │   └── Production.ipynb       # (empty — upcoming)
-│   ├── intro.md, CRISP-DM.md, _config.yml, _toc.yml
-│   └── _build/            # (generated) build output
-├── data/                  # Crawl results — 200 articles
-│   ├── crawling_detik.csv
-│   └── crawling_detik.json
+├── notebook/              # Jupyter Book source (published to GitHub Pages)
+├── data/                  # Crawl results — 200 articles (csv + json)
 ├── lectures/              # Course lecture materials (.ppt + readable .md)
-├── opencode.json          # Local OpenCode config (permissions, LSP, agents)
+├── scripts/               # Standalone crawling script
+├── .github/workflows/     # CI that builds and deploys the book
 ├── requirements.txt       # Pinned Python dependencies
-└── scripts/
-    └── run_crawl.py       # Standalone crawling script (re-crawl entry point)
+└── LICENSE
 ```
+
+The book is organized into coursework notes (`note/`), coursework deliverables
+(`book/`), and CRISP-DM stage notebooks (`CRISP-DM/`).
 
 ## Prerequisites
 
@@ -103,28 +83,22 @@ python -m ipykernel install --user --name=enwebmining --display-name="enWebminin
 jupyter lab
 ```
 
-> **Note:** The notebook must run with the `enWebmining` kernel. If it does not
-> appear in the kernel list, re-run step 3.
+> **Note:** The notebooks must run with the `enWebmining` kernel. If it does
+> not appear in the kernel list, re-run step 3.
 
 ## Usage
 
+1. Open the notebooks under `notebook/` (e.g. `notebook/CRISP-DM/EDA.ipynb` or
+   `notebook/book/book-1.ipynb`) and select the kernel **`enWebmining`**.
+2. The stored crawl results are loaded from `data/`; the notebooks validate the
+   required columns, label balance, and data quality without re-crawling.
+
+To build the book locally:
+
 ```bash
-jupyter lab
+source .venv/bin/activate
+jupyter-book build notebook/
 ```
-
-Open `notebook/CRISP-DM/EDA.ipynb` and select kernel **`enWebmining`**.
-The notebook is organized in sections:
-
-- **Section A (reference)** — the original crawling code used once to produce
-  the dataset. Not executed by default (avoids re-crawling).
-- **Section B (main)** — loads `data/crawling_detik.csv` / `.json`, validates the
-  required columns and label distribution, and prints example articles.
-- **Section C (optional)** — re-crawl all 200 articles from scratch when
-  `_re_crawl = True`.
-
-The dataset is already complete, so **Section B is all you need**. The other CRISP-DM
-stage notebooks (`Input`, `Modeling`, `Output`, `Production`) are placeholders for
-upcoming assignments.
 
 ## Re-crawling (optional)
 
