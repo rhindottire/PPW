@@ -29,8 +29,12 @@
   repo pattern: methodology chapters (`CRISP-DM.md` + `CRISP-DM/`) plus a
   per-assignment chapter (`Coursework.md` + `Coursework/` with `tugas1.ipynb`,
   `tugas2.ipynb`, …) — both coexist, like in rhindottire/Data-Science.
-  - `note/` + `note.md` — per-task assignment notes and instructions
-  - `book/` + `book.md` — per-task coursework deliverable notebooks
+  - `note/` + `note.md` — coursework notes. `note.md` holds the assignment
+    instructions/overview for each task; `note/note-N.md` holds the personal
+    notes or material summary learned from lectures and the PPT.
+  - `book/` + `book.md` — coursework deliverables. `book.md` shows the direct
+    result/outcome of each task; `book/book-N.ipynb` is the working process
+    notebook that produces that result.
   - `CRISP-DM/` — CRISP-DM stage notebooks (kernel: enWebmining)
     - `Business.ipynb` — Task 1: goal, scope & crawling ethics (completed)
     - `EDA.ipynb` — Task 1: detik.com crawl & exploration (completed)
