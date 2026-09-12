@@ -31,13 +31,16 @@
   - **Role-specific pages** with their own content linked to a sibling folder —
     `note.md` and `book.md` are NOT summaries; each holds different content (see
     below).
-  - `note/` + `note.md` — coursework notes. `note.md` holds the assignment
-    instructions/overview for each task (headings `Note N`); `note/note-N.md`
-    holds the personal notes or material summary learned from lectures and the
-    PPT.
-  - `book/` + `book.md` — coursework deliverables. `book.md` shows the direct
-    result/outcome of each task (headings `Book N`); `book/book-N.ipynb` is the
-    working process notebook that produces that result.
+  - `note/` + `note.md` — coursework notes (headings `Note N`). `note.md` holds
+    the short task instructions as explained in class (the authoritative task
+    list, one numbered list per task); `note/note-N.md` holds the lecture
+    material summary written to be displayed on GitHub Pages / the web book.
+  - `book/` + `book.md` — coursework deliverables (headings `Book N`).
+    `book.md` summarizes the task results; `book/book-N.ipynb` is the working
+    notebook with the details and overall process that produces those results.
+  - Work on a task in this order: `note-N.md` (material) → `note.md`
+    (task instructions) → `book-N.ipynb` (working process) → `book.md` (result
+    summary, LAST, so numbers match the executed notebook).
   - `CRISP-DM/` — CRISP-DM stage notebooks (kernel: enWebmining)
     - `Business.ipynb` — Task 1: goal, scope & crawling ethics (completed)
     - `EDA.ipynb` — Task 1: detik.com crawl & exploration (completed)
@@ -46,14 +49,51 @@
   - `intro.md`, `CRISP-DM.md`, `_config.yml`, `_toc.yml` — book pages/config
 - `data/crawling_detik.csv/.json` — crawl results of 200 articles (100 sport + 100 finance)
 - `scripts/run_crawl.py` — standalone crawling script (re-crawl entry point)
-- `lectures/` — course lecture/assignment materials (`.ppt` + readable `.md`)
+- `lectures/` — course lecture/assignment materials (`.ppt`/`.pptx` + readable
+  `.md`, with content images under `lecture-{N}-assets/` as `slide{NN}-{slug}.png`)
 - `requirements.txt` — pinned package list
+
+## Coursework Consistency
+Every task folder follows the same writing template, so the published web book
+reads uniformly and no instruction needs repeating:
+
+- `note.md` — one `## Note N — <topik>` per task, a numbered instruction list
+  (the task as explained in class), and a closing line
+  `Catatan materi kuliah N: [Note N](note/note-N.md)`.
+- `note/note-N.md` — lecture material summary only, headed `# <topik>`; it must
+  NOT repeat the task list (that lives only in `note.md`).
+- `book.md` — one `## Book N — <topik>` per task, result bullets, and a closing
+  line `Proses pengerjaan: [Book N](book/book-N.ipynb)`.
+- `book/book-N.ipynb` — the working process: unnumbered `## ...` section
+  headings, short prose between code cells, exactly ONE output per cell, closed
+  by a `## Kesimpulan` section.
+
+Data handling principles for the working notebooks:
+
+- Explore the data (EDA) BEFORE any dimensionality reduction or column/fitur
+  removal so anomalies surface first.
+- Every data transformation must be transparent: show examples (or counts and
+  small tables) of the data BEFORE and AFTER each change.
+- The extraction model-ready dataset is the TF-IDF vector representation; no
+  other dense representation is saved as the final dataset.
+- Slang/foreign-language normalization must be context-aware: protect
+  capitalized proper nouns using the original casing of the text, resolve
+  ambiguous tokens with a small context-window heuristic, and surface every
+  ambiguous case in a decision table for review.
+- Decisions must be evidence-driven: names, ambiguous tokens, and counts found
+  during work surface from notebook output at execution time — never prefilled
+  in `note.md`, `book.md`, or policy files (they hold only generic
+  instructions). Concrete findings live in the working notebook.
+- Foreign-language handling is preserve-first: translate a token only when
+  every occurrence shares one non-name meaning with a single natural Indonesian
+  equivalent, proven by context; otherwise keep and document why.
 
 ## Main Libraries
 - `trafilatura` — web text extraction
 - `pandas` — data manipulation
 - `scikit-learn` — TF-IDF, clustering
 - `nltk` / `spacy` — NLP
+- `langid` — language detection
 - `Sastrawi` — Indonesian stemming
 - `rank-bm25` — document ranking
 - `wordcloud` — word frequency visualization
@@ -63,16 +103,38 @@
 - Jupyter kernel must be `enWebmining` (not the default python3)
 - Never delete existing crawl data without permission
 - Use a polite User-Agent when crawling
-- Include crawling ethics in every notebook
+- Include crawling ethics in every notebook that performs crawling (collection
+  or re-crawl); non-crawling notebooks only get a one-line data provenance note
 
 ## Lecture Instructions
 - Course lecture/assignment instructions live in `lectures/` as editable
-  Markdown (`.md`) files, each paired with the original source file (`.ppt`).
+  Markdown (`.md`) files, each paired with the original source file (`.ppt` /
+  `.pptx`).
 - **Before modifying code or writing any program**, AI agents MUST first read
   the relevant instruction file(s) in `lectures/` and treat them as
   authoritative for interpreting the assignment.
 - When a new lecture file is added, convert its Markdown version so agents can
   read it without a binary viewer.
+- Name the Markdown copy after the source file (same base name with the `.md`
+  extension), e.g. `01. Pengantar Web Mining.ppt` → `01. Pengantar Web
+  Mining.md`.
+
+### Lecture assets
+When a lecture Markdown references images, extract them as follows:
+
+- Extract the content-material images from the **source file**
+  (`lectures/*.ppt` / `lectures/*.pptx`), not from cached or scraped copies.
+- Keep only substantive diagrams (typically >20 KB, near document size, and
+  unique to one slide). Skip slide backgrounds/templates (e.g. a full-slide
+  image reused across many slides) and decorative icons/bullets (small,
+  15–50 px, ~1–5 KB).
+- Every file must be a **valid PNG that renders in browsers**; convert
+  mislabeled JPEG/EMF extracts to real PNG before committing.
+- Name files consistently as `slide{NN}-{slug}.png` (e.g.
+  `slide30-arsitektur-jaringan.png`) inside `lectures/lecture-{N}-assets/`,
+  and reference them as `![...](./lecture-{N}-assets/slide{NN}-{slug}.png)`.
+- When the same diagram appears on several slides, reference it once at the
+  first occurrence.
 
 ## Version Control Discipline
 - Never commit or push immediately after making changes.
@@ -86,6 +148,27 @@
 - Do not take initiative outside the assigned task (renaming, scaffolding, adding
   files, restructuring) without explicit confirmation.
 - When in doubt or not understanding something, ASK the user instead of guessing.
+
+## Working Flow
+Each task runs through three roles so revisions are caught before the user sees
+them:
+
+- **Plan** — read help files and `lectures/*.md`, then fix the file outline and
+  the verification rubric before writing anything. Instruction files stay
+  generic; concrete findings from earlier runs are never written into them.
+- **Execute with observation** — the executor writes and RUNS code, reads every
+  output, and improvises from what the data shows (artifacts, ambiguous tokens,
+  counts), deriving rules and decision tables from real numbers at execution
+  time. Where useful, `eda-inspector` runs in parallel and reports independent
+  findings the executor merges before proceeding.
+- **Verify** — `plan-verifier` checks deliverables against the plan rubric
+  (note.md without code-derived findings; notebook sections matching the task
+  list; one output per cell; kernel `enWebmining`; `book.md` numbers matching
+  the executed notebook; no AI fingerprints). Fix before delivering.
+
+JARVIS orchestrates: assign the executor, integrate observer findings, run the
+verifier, and show `git status`/`git diff` — commit only on explicit
+instruction.
 
 ## No AI-fingerprints in Deliverables
 Anything the lecturer will see (notebooks, the published web book, scripts) must
@@ -115,8 +198,13 @@ read as natural, human-written work — not as AI-generated output:
 - Delegate work to the configured subagents instead of doing everything inline:
   - `python-helper` — debug, review, and write Python code for this project
   - `data-scientist` — data mining and data science analysis following CRISP-DM
+  - `eda-inspector` — strict data quality / EDA auditor that returns structured
+    findings (artifacts, ambiguous tokens, evidence) for the executor to merge
+  - `plan-verifier` — checks finished deliverables against the plan rubric
 - Subagents are defined as files in `.opencode/agent/`.
 - Use subagents for heavy or parallelizable work to keep the main context clean.
+- Reusable project skills live in `.opencode/skills/` (e.g. `data-quality` for
+  the text-noise taxonomy and strict EDA checklist).
 
 ## Language
 - Interact with the user in Indonesian unless asked otherwise.

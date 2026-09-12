@@ -7,9 +7,11 @@ chapters:
   - file: note
     sections:
       - file: note/note-1
+      - file: note/note-2
   - file: book
     sections:
       - file: book/book-1
+      - file: book/book-2
   - file: CRISP-DM
     sections:
       - file: CRISP-DM/Business

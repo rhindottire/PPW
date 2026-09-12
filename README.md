@@ -50,7 +50,7 @@ text extracted with `trafilatura`), `label` (`sport` / `finance`), and `url`.
 ├── AGENTS.md              # Project instructions for AI agents / collaborators
 ├── notebook/              # Jupyter Book source (published to GitHub Pages)
 ├── data/                  # Crawl results — 200 articles (csv + json)
-├── lectures/              # Course lecture materials (.ppt + readable .md)
+├── lectures/              # Course lecture materials (.ppt/.pptx + readable .md, assets in lecture-{N}-assets/)
 ├── scripts/               # Standalone crawling script
 ├── .github/workflows/     # CI that builds and deploys the book
 ├── requirements.txt       # Pinned Python dependencies
