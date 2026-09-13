@@ -10,7 +10,7 @@
 
 ---
 
-# Welcome to my Web Mining Pages
+# Welcome to Web Mining
 
 A compilation of my practical coursework in **Web Search & Mining**: the collection,
 analysis, and interpretation of web content in accordance with responsible crawling

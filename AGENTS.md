@@ -24,8 +24,16 @@
 ## Project Structure
 - `notebook/` — Jupyter Book build root (built and published to GitHub Pages).
   Structure follows the rhindottire/Data-Science pattern: methodology chapters
-  plus a per-assignment coursework chapter, both coexisting. There are two kinds
-  of Markdown page directly under `notebook/`:
+  plus a per-assignment coursework chapter, both coexisting.
+  Every folder directly under `notebook/` stands on its own; none depends on
+  another. The one exception is the coursework core — `note/` + `note.md` and
+  `book/` + `book.md` — which is the heart of the project: `note.md` pairs with
+  `note/note-N.md`, `book.md` with `book/book-N.ipynb`, and the `book/`
+  notebooks may carry findings between tasks (explore in one book, apply the
+  change in the next). The coursework deliverables are never tied to
+  `CRISP-DM/`: they must not cite or rely on the `CRISP-DM/` notebooks as a
+  source of decisions, and each stream remains comprehensible on its own.
+  There are two kinds of Markdown page directly under `notebook/`:
   - **Summary/index** of a sibling folder's contents — only `CRISP-DM.md`
     summarizes the notebooks in `CRISP-DM/`.
   - **Role-specific pages** with their own content linked to a sibling folder —
@@ -66,7 +74,14 @@ reads uniformly and no instruction needs repeating:
   line `Proses pengerjaan: [Book N](book/book-N.ipynb)`.
 - `book/book-N.ipynb` — the working process: unnumbered `## ...` section
   headings, short prose between code cells, exactly ONE output per cell, closed
-  by a `## Kesimpulan` section.
+  by a `## Conclusion` section.
+- All headings on published pages and notebooks are written in full English,
+  kept to at most heading level 3 (`###`), and concise — no more than 4 words.
+  Count words as alphanumeric tokens separated by spaces; symbols such as `&`,
+  `—`, and `:` are not counted. This applies to `note.md`, `book.md`,
+  `note/note-N.md`, `book/book-N.ipynb`, `intro.md`, `CRISP-DM.md`, and the
+  `CRISP-DM/` notebooks, so every `<topik>` in the `Note N` / `Book N`
+  templates above is written in English too.
 
 Data handling principles for the working notebooks:
 
@@ -213,3 +228,5 @@ read as natural, human-written work — not as AI-generated output:
   tooling/config.
 - **Indonesian (may mix with English)** for the coursework content the student
   reads: `note.md`, `note/note-N.md`, `book.md`, and `book/book-N.ipynb`.
+  Heading text is always English per the heading rule; only the narrative prose
+  uses the language listed here.

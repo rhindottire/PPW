@@ -3,7 +3,7 @@
 Perintah dan ringkasan setiap tugas. Catatan materi kuliahnya tersedia per
 tugas di bawah ini.
 
-## Note 1 — Repositori ppw dan Webstatis
+## Note 1 — Repository & Webpage
 
 1. Membuat repositori web mining di GitHub dengan nama `ppw`,
    `github.com/<username>/ppw`.
@@ -13,7 +13,7 @@ tugas di bawah ini.
 
 Catatan materi kuliah 1: [Note 1](note/note-1.md)
 
-## Note 2 — Preprocessing Teks
+## Note 2 — Text Preprocessing
 
 1. Lakukan eksplorasi data terlebih dahulu — cari anomali (misal kata asing,
    sebaran panjang teks per label) sebelum membuang kolom atau fitur.

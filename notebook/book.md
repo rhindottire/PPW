@@ -3,7 +3,7 @@
 Hasil langsung dari setiap tugas. Proses pengerjaan masing-masing tugas
 tersedia di bawah ini.
 
-## Book 1 — Dataset Berita detik.com
+## Book 1 — News Dataset
 
 - **200 artikel** dari detik.com: 100 sport, 100 finance.
 - Kolom: `id`, `isi_berita`, `label`, `url`.
@@ -12,7 +12,7 @@ tersedia di bawah ini.
 
 Proses pengerjaan: [Book 1](book/book-1.ipynb)
 
-## Book 2 — Preprocessing Teks Berita
+## Book 2 — Text Preprocessing
 
 - **200 dokumen** (100 sport, 100 finance) sehat: tanpa nilai kosong, tanpa
   baris atau URL ganda, `id` lengkap 1–200.

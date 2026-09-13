@@ -1,4 +1,4 @@
-# Apa itu Web Mining
+# What is Web Mining
 
 Web mining adalah proses menemukan dan mengekstrak informasi dari internet
 menggunakan berbagai teknik data mining. Dua definisi yang sering dirujuk:
@@ -8,13 +8,13 @@ menggunakan berbagai teknik data mining. Dua definisi yang sering dirujuk:
 - Mencari pola berguna atau pengetahuan dari struktur hyperlink, isi halaman,
   dan perilaku pengguna web (Bing Liu, 2007).
 
-## Tantangan pemrosesan data web
+## Web Data Processing Challenges
 
 - Web merupakan basis data yang sangat besar, kompleks, dinamis, dan tidak
   memiliki domain spesifik.
 - Datanya tersedia dalam berbagai format: HTML, XML, teks biasa.
 
-## Taxonomy Web Mining
+## Web Mining Taxonomy
 
 Web mining terbagi menjadi tiga cabang:
 
@@ -56,7 +56,7 @@ Mengolah data yang dihasilkan saat pengguna mengunjungi halaman: log akses
 server, log referer, cookie, dan clickstream. Aplikasinya antara lain product
 recommendation dan personalized search.
 
-## Proses Web Mining
+## Web Mining Process
 
 Secara umum sama dengan proses data mining, hanya berbeda pada tahap
 pengumpulan dan pemrosesan data:

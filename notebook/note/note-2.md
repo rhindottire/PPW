@@ -1,10 +1,10 @@
-# Representasi Kata dan Preprocessing Teks
+# Word Representation & Text Preprocessing
 
 Algoritma NLP tidak bisa membaca teks mentah secara langsung; kata-kata harus
 diubah menjadi angka. Materi kuliah kedua membahas cara merepresentasikan kata
 beserta metode preprocessing teks yang menjadi dasar tugas praktikum.
 
-## Representasi Kata (Word Encoding)
+## Word Representation (Word Encoding)
 
 ### One-Hot Encoding
 
@@ -61,7 +61,7 @@ kemiripan makna. "You shall know a word by the company it keeps" (J. R. Firth).
 Dibuat lewat dua pendekatan: berbasis faktorisasi matriks (SVD pada matriks
 ko-okurensi) dan berbasis jaringan saraf (Word2Vec CBOW / Skip-Gram).
 
-## Pengurangan Dimensi dengan PCA
+## Dimensionality Reduction with PCA
 
 PCA (Principal Component Analysis) adalah metode untuk mengurangi jumlah
 dimensi data dengan tetap mempertahankan sebanyak mungkin varians. Data TF-IDF
