@@ -77,3 +77,31 @@ jupyter-book==1.0.4.post1
 # [10] DEVELOPER TOOLS — code formatter (opencode)
 # ------------------------------------------------------------
 ruff==0.16.6
+
+# ------------------------------------------------------------
+# [11] INFO EXTRACTION / NER — sub-proyek notebook/IE
+# gensim: TIDAK tersedia untuk Python 3.14 (no wheel, build gagal).
+# TensorFlow: sengaja tidak dimasukkan (section [8]); bi-LSTM
+# diverifikasi by-inspection, dijalankan di Colab/Kaggle.
+# ------------------------------------------------------------
+python-crfsuite==0.9.12
+sklearn-crfsuite==0.5.0
+flair==0.15.1
+gdown==6.2.0
+gradio==6.27.0
+rapidfuzz==3.14.6
+PyPDF2==3.0.1
+transformers==4.57.6
+huggingface-hub==0.36.2  # pin: flair butuh transformers<5 (4.57 butuh hub<1.0); gradio 6.27 butuh hub>=1.16
+tokenizers==0.22.2
+eli5==0.16.0
+
+# ------------------------------------------------------------
+# [11b] GAGAL / DIKECUALIKAN (2026-09-13, Python 3.14)
+# ------------------------------------------------------------
+# - gensim==4.3.3 : no wheel cp314; build source gagal
+#      ('PyLongObject.ob_digit' dihapus di CPython 3.14);
+#      dipakai hanya bi-lstm-dataset-pidana-cbow.ipynb (inspection).
+# - tensorflow    : no wheel cp314; lihat [8].
+# - keras-contrib : repo mati; CRF layer tak pernah terpakai
+#      (notebook DL memakai softmax sebagai layer akhir).

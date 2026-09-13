@@ -55,6 +55,21 @@
     - `Input.ipynb`, `Modeling.ipynb`, `Output.ipynb`, `Production.ipynb` —
       placeholders for upcoming tasks
   - `intro.md`, `CRISP-DM.md`, `_config.yml`, `_toc.yml` — book pages/config
+  - `IE/` — **lecturer-provided Information Extraction (IE/NER) sub-project.
+    NOT part of the web book** (not in `_toc.yml`, `note.md`, `book.md`). The
+    assignment: try the provided code and make sure everything can be run safely;
+    no formal submission, just comprehension for upcoming tasks. Structure:
+    - `GET-COURT/` (get-court crawlers), `RULE-BASED/` (regex IE → CSV),
+      `DATASET/` (annotation/preprocessing), `ML/` (CRF NER: `ML1/NER-200-*`,
+      `ML2/...` incl. `ML2/Testing/600crf-*`), `DL/` (bi-LSTM, needs TF),
+      `TRANSFORMER/` (BERT/RoBERTa/IndoBERT pretrain + SQLite indexing demo)
+    - `NOTES/` — verification deliverables (one `*-notes.md` per folder +
+      `VERIFICATION-MATRIX.md`). Do NOT edit lecturer source files (`.py`,
+      `.ipynb`) under `IE/`; verify via copies in `/tmp` instead and keep the
+      source bugs intact. Never overwrite `RULE-BASED/courtHistory.csv`.
+      Classifications: `runnable`, `run-true`, `blocked-license`,
+      `blocked-env`. Requirements section `[11]`/`[11b]` of `requirements.txt`.
+      See `NOTES/VERIFICATION-MATRIX.md` for the full per-file status.
 - `data/crawling_detik.csv/.json` — crawl results of 200 articles (100 sport + 100 finance)
 - `scripts/run_crawl.py` — standalone crawling script (re-crawl entry point)
 - `lectures/` — course lecture/assignment materials (`.ppt`/`.pptx` + readable
