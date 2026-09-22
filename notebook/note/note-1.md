@@ -8,7 +8,7 @@ menggunakan berbagai teknik data mining. Dua definisi yang sering dirujuk:
 - Mencari pola berguna atau pengetahuan dari struktur hyperlink, isi halaman,
   dan perilaku pengguna web (Bing Liu, 2007).
 
-## Web Data Processing Challenges
+## Web Processing Challenges
 
 - Web merupakan basis data yang sangat besar, kompleks, dinamis, dan tidak
   memiliki domain spesifik.

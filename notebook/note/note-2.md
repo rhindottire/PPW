@@ -1,10 +1,10 @@
-# Word Representation & Text Preprocessing
+# Word Representation
 
 Algoritma NLP tidak bisa membaca teks mentah secara langsung; kata-kata harus
 diubah menjadi angka. Materi kuliah kedua membahas cara merepresentasikan kata
 beserta metode preprocessing teks yang menjadi dasar tugas praktikum.
 
-## Word Representation (Word Encoding)
+## Word Encoding
 
 ### One-Hot Encoding
 
@@ -61,7 +61,64 @@ kemiripan makna. "You shall know a word by the company it keeps" (J. R. Firth).
 Dibuat lewat dua pendekatan: berbasis faktorisasi matriks (SVD pada matriks
 ko-okurensi) dan berbasis jaringan saraf (Word2Vec CBOW / Skip-Gram).
 
-## Dimensionality Reduction with PCA
+## POS Tagging
+
+POS tagging (Part-of-Speech) memberi label kategori gramatikal pada setiap kata,
+misalnya kata benda (NN), kata kerja (VB), kata sifat (JJ), dan kata depan (IN).
+Label ini menangkap peran kata dalam kalimat sehingga teks dapat dianalisis
+lebih dalam, misalnya membedakan nama diri dari kata biasa atau menyusun fitur
+berdasarkan pola gramatikal.
+
+Terdapat beberapa set tag. Set universal (UD/UPOS) menyediakan label seperti
+`NOUN`, `VERB`, `ADJ`, `ADP`, `PRON`, `DET`, `PROPN`. Bahasa Indonesia juga
+memiliki tagset berbasis akronim kategori, misalnya `NNP` (nama diri orang),
+`NNO` (nomina umum), `VBT`/`VBI` (verba transitif/intransitif), `ADJ`
+(adjektiva), serta `PPO` (preposisi). Penamaan tag yang berbeda tidak mengubah
+konsep dasarnya.
+
+Posisi tagging dalam alur preprocessing menentukan kualitas hasilnya. Tagger
+dilatih pada kalimat utuh sehingga ia perlu *sebelum* stopword removal — kata
+fungsi memberi konteks untuk mendisambiguasi kata di sekitarnya — dan *sebelum*
+stemming, karena bentuk infleksi (penuh afiks) adalah masukan asli model.
+Anotasi POS bersifat pelengkap; representasi fitur akhir seperti TF-IDF tidak
+harus menggunakannya.
+
+## Stopword Removal
+
+Stopword adalah kata yang nyaris tanpa makna sendiri dan muncul di hampir semua
+dokumen, misalnya *dan*, *yang*, *di*, *dengan*, *untuk*. Karena terlalu umum,
+kata-kata ini tidak membantu membedakan isi dokumen dan biasanya dibuang sebelum
+representasi dibuat.
+
+Pustaka **Sastrawi** menyediakan daftar stopword bahasa Indonesia siap pakai.
+Pemotongan dilakukan dengan mencocokkan tiap token terhadap daftar tersebut;
+token yang cocok dihapus dari dokumen. Contoh efeknya:
+
+- Sebelum: "para pemain yang bermain keras dan disiplin"
+- Sesudah: "para pemain bermain keras disiplin"
+
+TF-IDF sebenarnya sudah memberi bobot rendah pada stopword karena frekuensi
+dokumennya tinggi. Pembuangan eksplisit tetap berguna karena mengecilkan kosakata
+dan membebaskan bobot bagi kata yang bermakna.
+
+## Stemming
+
+Stemming memotong afiks (awalan, akhiran, sisipan, dan kombinasinya) sehingga
+bentuk kata sekeluarga dikembalikan ke kata dasarnya. Tujuannya agar bentuk yang
+berlainan tetapi bermakna sama tidak diperlakukan sebagai fitur terpisah.
+**Sastrawi** menyediakan stemmer bahasa Indonesia dengan hasil berupa kata dasar:
+
+- `menambahkan` → `tambah`
+- `permainan` → `main`
+- `memakannya` → `makan`
+- `menjadikan` → `jadi`
+
+Manfaatnya: jumlah kata unik menurun (dimensi kosakata mengecil) dan kecocokan
+antar dokumen lebih mudah diperoleh. Risikonya adalah *over-stemming* yang
+menyatukan kata berbeda makna, sehingga nama diri perlu dilindungi dan hasil
+pemotongan ditinjau kembali.
+
+## Dimensionality Reduction
 
 PCA (Principal Component Analysis) adalah metode untuk mengurangi jumlah
 dimensi data dengan tetap mempertahankan sebanyak mungkin varians. Data TF-IDF

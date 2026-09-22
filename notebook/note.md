@@ -15,22 +15,33 @@ Catatan materi kuliah 1: [Note 1](note/note-1.md)
 
 ## Note 2 — Text Preprocessing
 
-1. Lakukan eksplorasi data terlebih dahulu — cari anomali (misal kata asing,
-   sebaran panjang teks per label) sebelum membuang kolom atau fitur.
-2. Buang simbol, angka, dan karakter lain dari dokumen; angka tidak dihitung
-   sebagai *term*. Anomali yang muncul akibat pembersihan (artefak format)
-   ditangani dengan tabel keputusan berbasis bukti dari output.
-3. Mendeteksi sisipan bahasa asing (per kalimat dan per kata). Kata/kalimat
-   asing dipertahankan bila terjemahan berisiko mengubah konteks; setiap
-   keputusan pertahankan/terjemahkan ditulis dalam tabel keputusan.
-4. Membakukan kata tidak baku menjadi baku (slang preprocessing). Lindungi nama
-   diri agar tidak ikut dinormalisasi, termasuk nama dari beberapa kata.
-5. Mengekstrak seluruh kata unik dari dokumen menggunakan library `sklearn`.
-6. Merepresentasikan setiap dokumen berita dalam bentuk vektor **TF-IDF**
-   sebagai dataset siap model.
-7. Mengurangi dimensi data TF-IDF menggunakan **PCA** dan memeriksa proporsi
-   varians yang dipertahankan.
+1. Lakukan eksplorasi data terlebih dahulu — cari anomali (sebaran panjang teks
+   per label, karakter non-ASCII, sisipan bahasa asing) sebelum membuang kolom
+   atau fitur.
+2. Buang angka dan tanda baca; angka tidak dihitung sebagai *term*. Artefak
+   pembersihan (URL, lambang mata uang, token komposit, angka Romawi) ditangani
+   dengan tabel keputusan berbasis bukti dari output.
+3. Deteksi bahasa asing per kalimat dan per kata. Kata asing dipertahankan bila
+   terjemahan berisiko mengubah konteks, dan keputusan pertahankan/tolak
+   ditulis dalam tabel keputusan.
+4. Bakukan kata tidak baku menjadi kata baku (slang preprocessing). Lindungi
+   nama diri agar tidak ikut dinormalisasi.
+5. Buang stopword bahasa Indonesia menggunakan daftar Sastrawi.
+6. Stemming kata ke bentuk dasar menggunakan Sastrawi.
+7. Ekstrak seluruh kata unik dokumen menggunakan library `sklearn`.
+8. Representasikan setiap dokumen berita dalam vektor **TF-IDF** sebagai
+   dataset siap model, dengan tabel bobot yang memperlihatkan term lawan
+   dokumen.
+9. Kurangi dimensi TF-IDF dengan **PCA**; hitung explained variance kumulatif
+   dan target dimensi di bawah 500.
+10. Lakukan **POS tagging** untuk melabeli kategori kata. Posisinya sebelum
+    stopword removal agar kata fungsi tetap menjadi konteks, dan hasil anotasi
+    tidak mengubah representasi final (TF-IDF).
+
+## Note - 3 gunakan orange
+1. import data
+2. PCA
+2. klasifikasi menggunakan naive bayes / KNN
+4. test and score
 
 Catatan materi kuliah 2: [Note 2](note/note-2.md)
-
-## Note 3
