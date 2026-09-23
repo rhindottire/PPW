@@ -38,10 +38,11 @@ Catatan materi kuliah 1: [Note 1](note/note-1.md)
     stopword removal agar kata fungsi tetap menjadi konteks, dan hasil anotasi
     tidak mengubah representasi final (TF-IDF).
 
-## Note - 3 gunakan orange
-1. import data
-2. PCA
-2. klasifikasi menggunakan naive bayes / KNN
-4. test and score
+## Note 3 — Data Classification
 
-Catatan materi kuliah 2: [Note 2](note/note-2.md)
+1. Import data.
+2. Kurangi dimensi dengan PCA.
+3. Klasifikasi menggunakan Naive Bayes / KNN.
+4. Evaluasi model dengan test and score.
+
+Catatan materi kuliah 3: [Note 3](note/note-3.md)

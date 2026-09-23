@@ -55,4 +55,22 @@ Proses pengerjaan: [Book 1](book/book-1.ipynb)
 
 Proses pengerjaan: [Book 2](book/book-2.ipynb)
 
-## Book 3
+## Book 3 — Data Classification
+
+- **200 berita** (100 sport, 100 finance) bersih dan berkelas seimbang; teks
+  finance lebih beragam panjangnya (median 2.501, maks 14.106 karakter)
+  dibanding sport (median 2.409, maks 5.809).
+- TF-IDF menghasilkan **200 × 4.092 term**; dimensi diturunkan dengan
+  TruncatedSVD, dan ambang varians kumulatif 20/50/80/90/95% tercapai pada
+  **10/45/109/141/162 komponen**.
+- Dipilih **141 komponen (90%)**, setara pengurangan dimensi **96,6%**, lalu
+  data dibagi berstrata menjadi 160 latih dan 40 uji.
+- **Naive Bayes Gaussian mencapai skor sempurna**: akurasi test **1,000** dan
+  10-fold cross-validation **1,000 ± 0,000** untuk akurasi, precision, recall,
+  dan f1.
+- **kNN terbaik pada k=2** (akurasi CV-5 0,744); akurasi test **0,725** dan
+  CV 10-fold **0,762 ± 0,100** dengan precision 0,696, recall 0,988, f1 0,812.
+- Kesimpulan: Naive Bayes unggul karena ruang fitur kedua topik terpisah jelas;
+  kNN recall-nya tinggi tetapi berlebihan memrediksi kelas sport.
+
+Proses pengerjaan: [Book 3](book/book-3.ipynb)
