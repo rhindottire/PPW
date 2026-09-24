@@ -1,6 +1,6 @@
 # Catatan Folder ML
 
-Catatan pembacaan `notebook/IE/ML/`. Dibaca read-only (via `unzip -p`).
+Catatan pembacaan `resource/IE/ML/`. Dibaca read-only (via `unzip -p`).
 Source `ML1-20260913T082839Z-1-001.zip` & `ML2-20260913T082847Z-1-001.zip`
 sudah diekstrak ke `ML/ML1/` dan `ML/ML2/`; arsip `.zip` aslinya dihapus dari
 repo setelah ekstraksi (semua isi terverifikasi terekstrak).

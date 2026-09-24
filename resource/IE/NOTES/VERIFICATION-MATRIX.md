@@ -1,4 +1,4 @@
-# Verification Matrix — `notebook/IE`
+# Verification Matrix — `resource/IE`
 
 Status tiap file terhadap misi dosen: **pastikan code bisa dijalankan**.
 Diverifikasi 2026-09-13 pada `.venv` (Python 3.14.7, kernel `enWebmining`,

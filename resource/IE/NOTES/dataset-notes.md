@@ -1,6 +1,6 @@
 # Catatan Folder DATASET
 
-Catatan pembacaan `notebook/IE/DATASET/`. Dibaca read-only via ekstraksi
+Catatan pembacaan `resource/IE/DATASET/`. Dibaca read-only via ekstraksi
 markdown/code cells; file tidak diubah. Semua notebook aslinya dieksekusi di
 Google Colab (kernel `python3`), path `/content/drive/MyDrive/NER nlp/...`.
 

@@ -1,16 +1,16 @@
 # run_crawl.py
 # Crawling data detik.com — sport (100) + finance (100) = 200 artikel
 # Kolom output: id, isi_berita, label, url
-from pathlib import Path
-
 import re
 import time
-import requests
+from pathlib import Path
+
 import pandas as pd
+import requests
 import trafilatura
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DATA_DIR = REPO_ROOT / "data"
+DATA_DIR = REPO_ROOT / "data" / "Web-Mining"
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -104,7 +104,7 @@ def main():
     # Hapus baris yang gagal (isi_berita None)
     df_clean = df.dropna(subset=["isi_berita"]).reset_index(drop=True)
 
-    log(f"\n=== HASIL ===")
+    log("\n=== HASIL ===")
     log(f"Total di-crawl : {len(df)}")
     log(f"Valid (ada isi): {len(df_clean)}")
     log(f"Gagal          : {len(df) - len(df_clean)}")

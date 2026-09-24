@@ -3,7 +3,9 @@
 
 title: PPW - Web Search & Mining
 author: rhindottire
-logo: Doo.jpg
+# Note: the logo path resolves against the book source directory (`notebook/`),
+# so `../img/Doo.jpg` points to the shared `img/` folder at the repo root.
+logo: ../img/Doo.jpg
 
 # Execution settings
 # ``off`` renders the stored notebook outputs without re-executing anything.

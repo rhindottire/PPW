@@ -38,10 +38,11 @@ The Jupyter Book is built from `notebook/` and published to GitHub Pages:
 
 ## Dataset
 
-`data/crawling_detik.csv` / `data/crawling_detik.json` contain **200 Indonesian
-news articles** crawled from detik.com: 100 `sport` (ids 1–100) and 100
-`finance` (ids 101–200). Each row has the schema `id`, `isi_berita` (article
-text extracted with `trafilatura`), `label` (`sport` / `finance`), and `url`.
+`data/Web-Mining/crawling_detik.csv` / `data/Web-Mining/crawling_detik.json`
+contain **200 Indonesian news articles** crawled from detik.com: 100 `sport`
+(ids 1–100) and 100 `finance` (ids 101–200). Each row has the schema `id`,
+`isi_berita` (article text extracted with `trafilatura`), `label`
+(`sport` / `finance`), and `url`.
 
 ## Project Structure
 
@@ -49,16 +50,21 @@ text extracted with `trafilatura`), `label` (`sport` / `finance`), and `url`.
 .
 ├── AGENTS.md              # Project instructions for AI agents / collaborators
 ├── notebook/              # Jupyter Book source (published to GitHub Pages)
-├── data/                  # Crawl results — 200 articles (csv + json)
-├── lectures/              # Course lecture materials (.ppt/.pptx + readable .md, assets in lecture-{N}-assets/)
-├── scripts/               # Standalone crawling script
+├── data/Web-Mining/       # Crawl results (csv + json) & TF-IDF artifacts
+├── resource/              # Shared non-PPW course material
+│   ├── Web-Mining/        # Course lecture/assignment slides (.ppt/.pptx + .md)
+│   └── IE/                # Lecturer-provided IE/NER sub-project + notes
+├── img/                   # Book logo shared by published pages
+├── scripts/               # Standalone crawling script + helpers
 ├── .github/workflows/     # CI that builds and deploys the book
 ├── requirements.txt       # Pinned Python dependencies
 └── LICENSE
 ```
 
 The book is organized into coursework notes (`note/`), coursework deliverables
-(`book/`), and CRISP-DM stage notebooks (`CRISP-DM/`).
+(`book/`), and CRISP-DM stage notebooks (`CRISP-DM/`). Files under
+`resource/` and `data/` other than `data/Web-Mining/` belong to other course
+work shared in this workspace.
 
 ## Prerequisites
 
@@ -76,6 +82,9 @@ source .venv/bin/activate
 # 2. Install pinned dependencies
 pip install -r requirements.txt
 
+# 2b. (Task 4 only) install gensim — no cp314 wheel on PyPI
+python scripts/install_gensim.py
+
 # 3. Register the Jupyter kernel (course requirement)
 python -m ipykernel install --user --name=enwebmining --display-name="enWebmining"
 
@@ -90,8 +99,9 @@ jupyter lab
 
 1. Open the notebooks under `notebook/` (e.g. `notebook/CRISP-DM/EDA.ipynb` or
    `notebook/book/book-1.ipynb`) and select the kernel **`enWebmining`**.
-2. The stored crawl results are loaded from `data/`; the notebooks validate the
-   required columns, label balance, and data quality without re-crawling.
+2. The stored crawl results are loaded from `data/Web-Mining/`; the notebooks
+   validate the required columns, label balance, and data quality without
+   re-crawling.
 
 To build the book locally:
 
@@ -110,8 +120,8 @@ source .venv/bin/activate
 python scripts/run_crawl.py
 ```
 
-Data is already available in `data/crawling_detik.csv` — do **not** re-crawl unless
-asked.
+Data is already available in `data/Web-Mining/crawling_detik.csv` — do **not**
+re-crawl unless asked.
 
 ## Crawling Ethics
 

@@ -15,7 +15,7 @@ Catatan materi kuliah 1: [Note 1](note/note-1.md)
 
 ## Note 2 — Text Preprocessing
 
-1. Lakukan eksplorasi data terlebih dahulu — cari anomali (sebaran panjang teks
+1. Lakukan eksplorasi data terlebih dahulu, cari anomali (sebaran panjang teks
    per label, karakter non-ASCII, sisipan bahasa asing) sebelum membuang kolom
    atau fitur.
 2. Buang angka dan tanda baca; angka tidak dihitung sebagai *term*. Artefak
@@ -44,5 +44,10 @@ Catatan materi kuliah 1: [Note 1](note/note-1.md)
 2. Kurangi dimensi dengan PCA.
 3. Klasifikasi menggunakan Naive Bayes / KNN.
 4. Evaluasi model dengan test and score.
+
+## Note 4 - Word Embedding
+
+1. Gensim Skip Gram
+bikin kumpulan kata dari kumpulan kalimat minimal 3, lalu representasikan 3 kalimat itu menjadi vector dengan skipgram pakai jaringan syaraf tiruan
 
 Catatan materi kuliah 3: [Note 3](note/note-3.md)

@@ -1,6 +1,6 @@
 # Catatan Folder DL
 
-Catatan pembacaan `notebook/IE/DL/`. Dibaca read-only; file tidak diubah.
+Catatan pembacaan `resource/IE/DL/`. Dibaca read-only; file tidak diubah.
 
 ## Inventori
 - `bi-lstm-dataset-pidana-200.ipynb` — Bi-LSTM NER 200 dok pidana

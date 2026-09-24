@@ -55,8 +55,11 @@
     - `Input.ipynb`, `Modeling.ipynb`, `Output.ipynb`, `Production.ipynb` —
       placeholders for upcoming tasks
   - `intro.md`, `CRISP-DM.md`, `_config.yml`, `_toc.yml` — book pages/config
-  - `IE/` — **lecturer-provided Information Extraction (IE/NER) sub-project.
-    NOT part of the web book** (not in `_toc.yml`, `note.md`, `book.md`). The
+  - `IE.md` / `ML.md` — placeholder chapters for other-course topics (the
+    `note/` and `book/` streams are the PPW coursework core). The `ML/` folder
+    and `IE.md` pages are NOT part of the PPW deliverables.
+  - (outside the book) `resource/IE/` — **lecturer-provided Information
+    Extraction (IE/NER) sub-project, hosted in this shared workspace.** The
     assignment: try the provided code and make sure everything can be run safely;
     no formal submission, just comprehension for upcoming tasks. Structure:
     - `GET-COURT/` (get-court crawlers), `RULE-BASED/` (regex IE → CSV),
@@ -65,16 +68,24 @@
       `TRANSFORMER/` (BERT/RoBERTa/IndoBERT pretrain + SQLite indexing demo)
     - `NOTES/` — verification deliverables (one `*-notes.md` per folder +
       `VERIFICATION-MATRIX.md`). Do NOT edit lecturer source files (`.py`,
-      `.ipynb`) under `IE/`; verify via copies in `/tmp` instead and keep the
-      source bugs intact. Never overwrite `RULE-BASED/courtHistory.csv`.
+      `.ipynb`) under `resource/IE/`; verify via copies in `/tmp` instead and
+      keep the source bugs intact. Never overwrite `RULE-BASED/courtHistory.csv`.
       Classifications: `runnable`, `run-true`, `blocked-license`,
       `blocked-env`. Requirements section `[11]`/`[11b]` of `requirements.txt`.
       See `NOTES/VERIFICATION-MATRIX.md` for the full per-file status.
-- `data/crawling_detik.csv/.json` — crawl results of 200 articles (100 sport + 100 finance)
+- `data/Web-Mining/` — PPW dataset & model-ready artifacts:
+  `crawling_detik.csv/.json` (200 articles, 100 sport + 100 finance),
+  `tfidf_sparse.npz`, `tfidf_features.txt`, `tfidf_docs.csv`. Other `data/`
+  folders hold unrelated coursework imports.
 - `scripts/run_crawl.py` — standalone crawling script (re-crawl entry point)
-- `lectures/` — course lecture/assignment materials (`.ppt`/`.pptx` + readable
-  `.md`, with content images under `lecture-{N}-assets/` as `slide{NN}-{slug}.png`)
-- `requirements.txt` — pinned package list
+- `resource/` — non-PPW course materials shared in this workspace:
+    - `resource/Web-Mining/` — course lecture/assignment materials
+      (`.ppt`/`.pptx` + readable `.md`, assets under `lecture-{N}-assets/` as
+      `slide{NN}-{slug}.png`)
+    - `resource/IE/` — lecturer-provided IE sub-project (see below)
+- `img/` — web book logo (`Doo.jpg`)
+- `requirements.txt` — pinned package list (gensim is installed via a separate
+  script — see section `[12]`)
 
 ## Coursework Consistency
 Every task folder follows the same writing template, so the published web book
@@ -127,6 +138,8 @@ Data handling principles for the working notebooks:
 - `Sastrawi` — Indonesian stemming
 - `rank-bm25` — document ranking
 - `wordcloud` — word frequency visualization
+- `gensim` — word2vec / skip-gram (installed via `scripts/install_gensim.py`;
+  no cp314 wheel, see `requirements.txt` `[12]`)
 - `torch` — deep learning (CUDA-enabled)
 
 ## Course Rules

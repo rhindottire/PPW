@@ -8,10 +8,14 @@ chapters:
     sections:
       - file: note/note-1
       - file: note/note-2
+      - file: note/note-3
   - file: book
     sections:
       - file: book/book-1
       - file: book/book-2
+      - file: book/book-3
+  - file: UTS
+  - file: UAS
   - file: CRISP-DM
     sections:
       - file: CRISP-DM/Business
@@ -20,3 +24,5 @@ chapters:
       - file: CRISP-DM/Modeling
       - file: CRISP-DM/Output
       - file: CRISP-DM/Production
+  - file: IE
+  - file: ML

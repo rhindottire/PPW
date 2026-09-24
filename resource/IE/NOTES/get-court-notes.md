@@ -1,6 +1,6 @@
 # Catatan Folder GET-COURT
 
-Catatan pembacaan source code `notebook/IE/GET-COURT/`. Dibuat read-only;
+Catatan pembacaan source code `resource/IE/GET-COURT/`. Dibuat read-only;
 tidak ada file sumber yang diubah. Semua file notebook & data berasal dari
 `GET-COURT-*.zip` yang sudah diekstrak ke `GET-COURT/`; arsip `.zip`
 aslinya dihapus dari repo setelah ekstraksi (semua isi terverifikasi terekstrak).

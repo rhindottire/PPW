@@ -44,7 +44,7 @@ Proses pengerjaan: [Book 1](book/book-1.ipynb)
 - Kata unik per label: **sport 3.318**, **finance 3.141**, dipakai kedua label
   1.259.
 - Dataset siap model berupa **TF-IDF 200 × 5.200** (29.089 entri bukan nol)
-  disimpan di `data/` dalam tiga berkas: `tfidf_sparse.npz`,
+  disimpan di `data/Web-Mining/` dalam tiga berkas: `tfidf_sparse.npz`,
   `tfidf_features.txt`, `tfidf_docs.csv`.
 - **PCA** dua komponen mempertahankan **7,35%** varians; ambang kumulatif
   50/80/90/95% tercapai pada 45/109/140/160 komponen (semuanya di bawah 500),

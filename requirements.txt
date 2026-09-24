@@ -79,8 +79,9 @@ jupyter-book==1.0.4.post1
 ruff==0.16.6
 
 # ------------------------------------------------------------
-# [11] INFO EXTRACTION / NER — sub-proyek notebook/IE
-# gensim: TIDAK tersedia untuk Python 3.14 (no wheel, build gagal).
+# [11] INFO EXTRACTION / NER — sub-proyek resource/IE
+# gensim: tidak dapat dipasang lewat pip di CPython 3.14;
+# dipasang via skrip reproduksi (lihat seksi [12]).
 # TensorFlow: sengaja tidak dimasukkan (section [8]); bi-LSTM
 # diverifikasi by-inspection, dijalankan di Colab/Kaggle.
 # ------------------------------------------------------------
@@ -88,20 +89,30 @@ python-crfsuite==0.9.12
 sklearn-crfsuite==0.5.0
 flair==0.15.1
 gdown==6.2.0
-gradio==6.27.0
+gradio==6.15.0
 rapidfuzz==3.14.6
 PyPDF2==3.0.1
 transformers==4.57.6
-huggingface-hub==0.36.2  # pin: flair butuh transformers<5 (4.57 butuh hub<1.0); gradio 6.27 butuh hub>=1.16
+huggingface-hub==0.36.2  # pin: transformers 4.57 butuh hub<1.0; gradio 6.15 terima hub>=0.33.5,<2.0; flair butuh >=0.10
 tokenizers==0.22.2
 eli5==0.16.0
 
 # ------------------------------------------------------------
-# [11b] GAGAL / DIKECUALIKAN (2026-09-13, Python 3.14)
+# [11b] GAGAL / DIKECUALIKAN (Python 3.14)
 # ------------------------------------------------------------
-# - gensim==4.3.3 : no wheel cp314; build source gagal
-#      ('PyLongObject.ob_digit' dihapus di CPython 3.14);
-#      dipakai hanya bi-lstm-dataset-pidana-cbow.ipynb (inspection).
 # - tensorflow    : no wheel cp314; lihat [8].
 # - keras-contrib : repo mati; CRF layer tak pernah terpakai
 #      (notebook DL memakai softmax sebagai layer akhir).
+
+# ------------------------------------------------------------
+# [12] TUGAS 4 — WORD EMBEDDING (gensim / skip-gram)
+# gensim 4.4.0 belum menyediakan wheel CPython 3.14 dan build
+# langsung dari PyPI gagal ('PyLongObject.ob_digit' dihapus di
+# CPython 3.14). Instalasi harus melalui skrip reproduksi:
+#     source .venv/bin/activate && python scripts/install_gensim.py
+# Skrip membangun dari sdist memakai Cython terbaru, lalu
+# memasang stub 'fastss' (source absen pada sdist 4.4.0).
+# Karena tidak bisa dipasang lewat pip, gensim sengaja TIDAK
+# dicantumkan pada daftar dependensi di bawah.
+# ------------------------------------------------------------
+Cython==3.3.0

@@ -1,6 +1,6 @@
 # Catatan Folder RULE-BASED
 
-Catatan pembacaan `notebook/IE/RULE-BASED/`. Dibaca read-only; file sumber
+Catatan pembacaan `resource/IE/RULE-BASED/`. Dibaca read-only; file sumber
 tidak diubah. Sumber data `INPUT-*.zip` & `OUTPUT-*.zip` sudah diekstrak ke
 `RULE-BASED/INPUT/` dan `RULE-BASED/OUTPUT/`; arsip `.zip` aslinya dihapus dari
 repo setelah ekstraksi (semua isi terverifikasi terekstrak).
