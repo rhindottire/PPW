@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<scheme version="2.0" title="Task 3 - Berita Classification" description="Klasifikasi berita detik.com (sport vs finance). Pipeline Oracle ala Orange: File -&gt; Bag of Words (TF-IDF) -&gt; PCA (90 persen varians) -&gt; Naive Bayes &amp; kNN -&gt; Test and Score -&gt; Confusion Matrix.">
+<scheme version="2.0" title="Task 3 - Berita Classification" description="Klasifikasi berita detik.com (sport vs finance). Pipeline Orange: File -&gt; Bag of Words (TF-IDF) -&gt; PCA (90 persen varians) -&gt; Naive Bayes &amp; kNN -&gt; Test and Score -&gt; Confusion Matrix.">
 	<nodes>
 		<node id="0" name="File" qualified_name="Orange.widgets.data.owfile.OWFile" project_name="Orange3" version="" title="File" position="(60.0, 260.0)" />
 		<node id="1" name="Bag of Words" qualified_name="orangecontrib.text.widgets.owbagofwords.OWTBagOfWords" project_name="Orange3-text" version="" title="Bag of Words (TF-IDF)" position="(250.0, 260.0)" />

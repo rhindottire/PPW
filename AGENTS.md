@@ -16,7 +16,7 @@
 - Use `trafilatura` for web content extraction (not requests+bs4 for main extraction)
 - DataFrame output format: columns `id`, `isi_berita`, `label`, `url`
 - Never crawl without delays (polite delay of at least 1 second)
-- Data is already available in `data/crawling_detik.csv` — do not re-crawl unless asked
+- Data is already available in `data/Web-Mining/crawling_detik.csv` — do not re-crawl unless asked
 - Always use `with_metadata=True` or `include_comments=False` on trafilatura
 - Give every `print` call or visualization its own notebook cell — one output per
   cell — so each cell's output is clear and never overlaps with other prints
@@ -150,11 +150,11 @@ Data handling principles for the working notebooks:
   or re-crawl); non-crawling notebooks only get a one-line data provenance note
 
 ## Lecture Instructions
-- Course lecture/assignment instructions live in `lectures/` as editable
-  Markdown (`.md`) files, each paired with the original source file (`.ppt` /
-  `.pptx`).
+- Course lecture/assignment instructions live in `resource/Web-Mining/` as
+  editable Markdown (`.md`) files, each paired with the original source file
+  (`.ppt` / `.pptx`).
 - **Before modifying code or writing any program**, AI agents MUST first read
-  the relevant instruction file(s) in `lectures/` and treat them as
+  the relevant instruction file(s) in `resource/Web-Mining/` and treat them as
   authoritative for interpreting the assignment.
 - When a new lecture file is added, convert its Markdown version so agents can
   read it without a binary viewer.
@@ -166,7 +166,8 @@ Data handling principles for the working notebooks:
 When a lecture Markdown references images, extract them as follows:
 
 - Extract the content-material images from the **source file**
-  (`lectures/*.ppt` / `lectures/*.pptx`), not from cached or scraped copies.
+  (`resource/Web-Mining/*.ppt` / `resource/Web-Mining/*.pptx`), not from cached
+  or scraped copies.
 - Keep only substantive diagrams (typically >20 KB, near document size, and
   unique to one slide). Skip slide backgrounds/templates (e.g. a full-slide
   image reused across many slides) and decorative icons/bullets (small,
@@ -174,7 +175,8 @@ When a lecture Markdown references images, extract them as follows:
 - Every file must be a **valid PNG that renders in browsers**; convert
   mislabeled JPEG/EMF extracts to real PNG before committing.
 - Name files consistently as `slide{NN}-{slug}.png` (e.g.
-  `slide30-arsitektur-jaringan.png`) inside `lectures/lecture-{N}-assets/`,
+  `slide30-arsitektur-jaringan.png`) inside
+  `resource/Web-Mining/lecture-{N}-assets/`,
   and reference them as `![...](./lecture-{N}-assets/slide{NN}-{slug}.png)`.
 - When the same diagram appears on several slides, reference it once at the
   first occurrence.
@@ -193,25 +195,38 @@ When a lecture Markdown references images, extract them as follows:
 - When in doubt or not understanding something, ASK the user instead of guessing.
 
 ## Working Flow
-Each task runs through three roles so revisions are caught before the user sees
-them:
+Each task follows a single inline pass with built-in review gates:
 
-- **Plan** — read help files and `lectures/*.md`, then fix the file outline and
-  the verification rubric before writing anything. Instruction files stay
-  generic; concrete findings from earlier runs are never written into them.
-- **Execute with observation** — the executor writes and RUNS code, reads every
-  output, and improvises from what the data shows (artifacts, ambiguous tokens,
-  counts), deriving rules and decision tables from real numbers at execution
-  time. Where useful, `eda-inspector` runs in parallel and reports independent
-  findings the executor merges before proceeding.
-- **Verify** — `plan-verifier` checks deliverables against the plan rubric
-  (note.md without code-derived findings; notebook sections matching the task
-  list; one output per cell; kernel `enWebmining`; `book.md` numbers matching
-  the executed notebook; no AI fingerprints). Fix before delivering.
+- **Plan** — read help files and `resource/Web-Mining/*.md`, then fix the file
+  outline and the verification rubric before writing anything. Instruction
+  files stay generic; concrete findings from earlier runs are never written
+  into them.
+- **Execute with observation** — write and RUN code, read every output, and
+  improvise from what the data shows (artifacts, ambiguous tokens, counts),
+  deriving rules and decision tables from real numbers at execution time. Where
+  useful, load the `data-quality` skill for the text-noise taxonomy and run the
+  strict EDA checklist while working.
+- **Verify** — after finishing, run the checks in "Verification Rubric" below
+  and fix failures before delivering.
 
-JARVIS orchestrates: assign the executor, integrate observer findings, run the
-verifier, and show `git status`/`git diff` — commit only on explicit
-instruction.
+JARVIS owns all three passes. Show `git status`/`git diff` — commit only on
+explicit instruction.
+
+## Verification Rubric
+Run these checks on every finished task before showing results to the user:
+
+1. `note.md` holds only the generic numbered task instructions; no
+   code-derived names, tokens, or counts.
+2. `note/note-N.md` is lecture-material only and never repeats the task list.
+3. Working notebook: kernel `enWebmining`; sections match the task list (no
+   off-topic sections); exactly ONE output per code cell; every transformation
+   shows before/after examples or counts; decision tables come from executed
+   code with real numbers.
+4. `book.md` numbers match the executed notebook outputs; closing line
+   `Proses pengerjaan: [Book N](book/book-N.ipynb)` present.
+5. No AI fingerprints in visible deliverables: no `AGENTS.md`/`.opencode/`/
+   `skills/` references, no decorative banners or `CELL n`/`SEL n` labels, no
+   agent-style narration prints.
 
 ## No AI-fingerprints in Deliverables
 Anything the lecturer will see (notebooks, the published web book, scripts) must
@@ -238,22 +253,28 @@ read as natural, human-written work — not as AI-generated output:
   (`search_memory`) before working, so no context needs to be rebuilt.
 
 ## Available Agents
-- Delegate work to the configured subagents instead of doing everything inline:
-  - `python-helper` — debug, review, and write Python code for this project
-  - `data-scientist` — data mining and data science analysis following CRISP-DM
-  - `eda-inspector` — strict data quality / EDA auditor that returns structured
-    findings (artifacts, ambiguous tokens, evidence) for the executor to merge
-  - `plan-verifier` — checks finished deliverables against the plan rubric
-- Subagents are defined as files in `.opencode/agent/`.
-- Use subagents for heavy or parallelizable work to keep the main context clean.
-- Reusable project skills live in `.opencode/skills/` (e.g. `data-quality` for
-  the text-noise taxonomy and strict EDA checklist).
+- The main agent (JARVIS) handles all coding and inline QA; the routine workflow
+  runs inline without dedicated subagents (iterating in one context is faster
+  and the rubric above enforces the checks).
+- Global subagents remain for their specific domains: `edith` (Linux sysadmin;
+  Arch/CachyOS, config, storage, battery, thermal) and `friday` (documents,
+  research, general knowledge) — see the identity tags and escalation rules in
+  the global `~/.config/opencode/AGENTS.md`.
+- Reusable project skills live in `.opencode/skills/`:
+  - `data-quality` — text-noise taxonomy and strict EDA checklist for the news
+    corpus (load whenever cleaning or exploring Indonesian text).
+  - `data-preprocessing` — IR preprocessing snippets (tokenization, stopwords,
+    stemming, TF-IDF).
+  - `crawling` — polite trafilatura crawling workflow and ethics.
+  - `information-extraction` — IE sub-project pipeline, bug patterns, and
+    verification workflow for `resource/IE/`.
+  Load the matching skill when a task enters one of those domains.
 
 ## Language
 - Interact with the user in Indonesian unless asked otherwise.
 - **English** for: source code, comments, docstrings, commit messages,
-  `README.md`, `AGENTS.md`, `lectures/`, `intro.md`, `CRISP-DM/*`, and build
-  tooling/config.
+  `README.md`, `AGENTS.md`, `resource/Web-Mining/`, `intro.md`, `CRISP-DM/*`,
+  and build tooling/config.
 - **Indonesian (may mix with English)** for the coursework content the student
   reads: `note.md`, `note/note-N.md`, `book.md`, and `book/book-N.ipynb`.
   Heading text is always English per the heading rule; only the narrative prose

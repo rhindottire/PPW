@@ -7,7 +7,7 @@ repo setelah ekstraksi (semua isi terverifikasi terekstrak).
 
 ## Inventori File
 
-- **Python (6)**: `entityGenerator.py`, `newEntityGenerator.py`, `entityGenerator3.py`,
+- **Python (7)**: `entityGenerator.py`, `newEntityGenerator.py`, `entityGenerator3.py`,
   `ruleBased-IE.py`, `newRule-BasedIE.py`, `ruleBased-IE3.py`, `courtHistoryCsv.py`
 - **Data**: `courtHistory.csv` (85 baris, 15 kolom), `INPUT/` (14 .txt putusan),
   `OUTPUT/` (15 .txt hasil ekstraksi `O-*.txt`)

@@ -41,24 +41,25 @@ Hasil tersimpan (train vs test):
 
 | Varian | NB | SGD | PAC | Perceptron | SVM | CRF |
 |---|---|---|---|---|---|---|
-| WithPos | 0.77/0.07 | 0.95/0.10 | 0.94/0.10 | 0.94/0.08 | 0.71/0.09 | — (tak dieksekusi) |
+| WithPos | 0.77/0.07 | 0.95/0.10 | 0.94/0.10 | 0.94/0.08 | 0.71/0.09 | — (error CRF) |
 | WithPosPrev | 0.79/0.11 | 0.95/0.12 | 0.95/0.17 | 0.95/0.17 | 0.48/0.13 | — |
 | WithPosNext | 0.77/0.10 | 0.95/0.12 | 0.95/0.15 | 0.94/0.12 | 0.22/0.09 | — |
 | WithPosPrevNext | 0.81/0.11 | 0.96/0.14 | 0.96/0.21 | 0.95/0.21 | 0.70/0.19 | — |
 | WithoutPos | 0.79/0.11 | 0.95/0.10 | 0.95/0.10 | 0.95/0.11 | 0.75/0.10 | 0.96/**0.56** |
 
 - Accuracy didominasi O (93%); macro-F1 ≤ 0.21 di semua vector classifier → minoritas tak tergambar
-- CRF hanya `WithoutPos` yang tereksekusi: acc 0.96, macro-F1 0.56, train 157 dtk
+- CRF bermakna hanya `WithoutPos`: acc 0.96, macro-F1 0.56, train 157 dtk; `WithPos`
+  terhenti `KeyError: 'Unnamed: 0'` (cell 80), varian lain menyisakan output CRF utuh
 
 #### Per-file varian NER-200 (5 notebook, 6 metode per file)
 
 | Notebok | Fitur token | Status (2026-09-13) |
 |---|---|---|
 | NER-200-WithoutPos.ipynb | word + jendela ±1 | CRF tereksekusi (acc 0.96/macro-F1 0.56); 5 vector classifier tereksekusi |
-| NER-200-WithPos.ipynb | word + pos | hasil 5 vector classifier tersimpan; sel CRF tak dieksekusi |
-| NER-200-WithPosPrev.ipynb | word + pos + prev | hasil tersimpan; sel CRF tak dieksekusi |
-| NER-200-WithPosNext.ipynb | word + pos + next | hasil tersimpan; sel CRF tak dieksekusi |
-| NER-200-WithPosPrevNext.ipynb | word + pos + prev + next | hasil tersimpan; sel CRF tak dieksekusi |
+| NER-200-WithPos.ipynb | word + pos | hasil 5 vector classifier tersimpan; sel CRF tereksekusi lalu `KeyError: 'Unnamed: 0'` |
+| NER-200-WithPosPrev.ipynb | word + pos + prev | hasil tersimpan; sel CRF juga tereksekusi (output utuh) |
+| NER-200-WithPosNext.ipynb | word + pos + next | hasil tersimpan; sel CRF juga tereksekusi (output utuh) |
+| NER-200-WithPosPrevNext.ipynb | word + pos + prev + next | hasil tersimpan; sel CRF juga tereksekusi (output utuh) |
 
 Semuanya: patch path CSV → folder sama + `to_dict('records')` + `ffill()` + hapus `jcopml` agar
 bisa dijalankan lokal (diverifikasi dengan replika `-WithoutPos` pada subset 26: CRF fit 59,5 s).

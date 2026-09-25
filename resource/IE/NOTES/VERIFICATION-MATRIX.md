@@ -18,7 +18,7 @@ tokenizers, eli5).
 | File | Status | Bukti / alasan | Fix lokal |
 |---|---|---|---|
 | `getURLlist.ipynb` | ⚠️ `runnable` tak lengkap | Hanya 2 halaman; anchor `'<a href="'` posisi 9 → 7 URL campuran; `verify=False`, tanpa delay/UA | Loop halaman; parser; +delay ≥1 dtk; User-Agent |
-| `getMETAINFO.ipynb` | ❌ `blocked-license` | Path `/content/drive/...` (Colab); `IndexError` `rowsMETA2[1]`; ribuan `url` kosong | Lokalkan path; delay; parse `url` robust |
+| `getMETAINFO.ipynb` | ❌ `blocked-license` | Hasil tersimpan berhenti di `OSError [Errno 7] Transport endpoint is not connected` (cell 4, close file); inspeksi: path `/content/drive/...` (Colab), `IndexError` `rowsMETA2[1]`, ribuan `url` kosong | Lokalkan path; delay; parse `url` robust |
 | `getFileDownload.ipynb` | ❌ `blocked-license` | Path `D:/6.PYTHON-CODE/...` (Windows); butuh CSV 21 kolom bebas-bug | Lokalkan path; validasi kolom |
 
 Catatan etika: semua notebook tanpa delay/User-Agent/`verify=False` — tidak
@@ -55,7 +55,7 @@ menyentuh `courtHistory.csv` atau `OUTPUT/` proyek.
 | `Pre Processing Data Lama.ipynb` | ⚠️ `run-true` data korup | `'tag': row['tag']` menyalin label seluruh dokumen ke tiap kalimat → `zip` truncate | Label per-token sejajar |
 | `Pre Processing Data Merge.ipynb` | ❌ error | Kolom `text/text-tags` tanpa pembuat sel 20/30 → `KeyError`; `label_converter` dikomentari | Baca ulang alur kolom; terapkan mapping skema |
 | `Pre Processing Data Perdata.ipynb` | ⚠️ `run-true` bug label | `'text-tags': row['text-tags']` (bug sejajar, sel 14) | Mapping label sejajar |
-| `Salinan Anotasi Pidana.ipynb` | ❌ error | `generate_label` tanpa `return`; `anotasi()`, `countLabel`, `accuracy` tak ada → `NameError` | Definisikan fungsi; perbaiki `generate_label` |
+| `Salinan Anotasi Pidana.ipynb` | ⚠️ `run-true` (sebagian) | Hasil tersimpan: `generate_label` jalan (cell 14–15); output terakhir `Accuracy : 7.52` (cell 18) — labil karena tiap dokumen hanya 1 label; beberapa sel tak tereksekusi | Telaah logika label; validasi himpunan label |
 
 Semua notebook Colab (`/content/drive/`), data komoditi 4 CSV + 2 xlsx bukan
 produk zip — perlu lokalisasi saat dipindah ke deliverable.
@@ -68,10 +68,10 @@ produk zip — perlu lokalisasi saat dipindah ke deliverable.
 | `ML1/Flair_2_0.ipynb` | ⚠️ `run-true` (berat) | sama; flair terpasang sekarang | Path lokal |
 | `ML1/make-prev-next.ipynb` | ❌ `blocked-license` | Input `pos200.csv` tidak ada di zip; nama output tidak konsisten | — |
 | `ML1/NER-200-WithoutPos.ipynb` | ⚠️ `run-true` (terverifikasi) | CRF tereksekusi asli (0.96/0.56); replika subset 26 CRF fit 59.5s; CSV di folder sama bukan `../datasets/`; `to_dict('Record')`; `ffill` deprecated; `jcopml` tak butuh | path; `to_dict('records')`; `ffill()`; hapus `jcopml` |
-| `ML1/NER-200-WithPos.ipynb` | ⚠️ `run-true` | Hasil 5 vector classifier tersimpan; sel CRF belum tereksekusi | sama seperti `-WithoutPos` |
-| `ML1/NER-200-WithPosPrev.ipynb` | ⚠️ `run-true` | Hasil tersimpan; sel CRF belum | sama |
-| `ML1/NER-200-WithPosNext.ipynb` | ⚠️ `run-true` | Hasil tersimpan; sel CRF belum | sama |
-| `ML1/NER-200-WithPosPrevNext.ipynb` | ⚠️ `run-true` | Hasil tersimpan; sel CRF belum | sama |
+| `ML1/NER-200-WithPos.ipynb` | ⚠️ `run-true` | Hasil 5 vector classifier tersimpan; sel CRF tereksekusi lalu error `KeyError: 'Unnamed: 0'` (cell 80) | sama seperti `-WithoutPos` |
+| `ML1/NER-200-WithPosPrev.ipynb` | ⚠️ `run-true` | Hasil tersimpan; sel CRF juga tereksekusi (output utuh) | sama |
+| `ML1/NER-200-WithPosNext.ipynb` | ⚠️ `run-true` | Hasil tersimpan; sel CRF juga tereksekusi (output utuh) | sama |
+| `ML1/NER-200-WithPosPrevNext.ipynb` | ⚠️ `run-true` | Hasil tersimpan; sel CRF juga tereksekusi (output utuh) | sama |
 | `ML2/POS tagging.ipynb` | ⚠️ `run-true` | Identik ML1 POS; copy `best-model.pt` ke Drive | Path |
 | `ML2/FinalCode.ipynb` | ⚠️ `run-true` (parsial) | Drive (`data_all.csv`, `entities_all.xlsx`, `best-model.pt`, pkl); `applymap` dihapus pandas ≥2.1; `fillna` deprecated; fitur sel 93–94 tidak sinkron dgn model | Lokalkan data; `df.applymap`→`map`; samakan fitur train/inference |
 | `ML2/Testing/600crf.ipynb` | ✅ `run-true` | `gdown` + `crfsuite` terpasang; file Drive (37,8–44,4 MB) harus live | kernel |

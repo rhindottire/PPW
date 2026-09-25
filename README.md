@@ -30,8 +30,9 @@ mining pipeline:
 1. **Crawling** — collect news article URLs from the official detik.com sitemap
    and extract clean article text.
 2. **Data cleaning** — build a structured tabular dataset with a defined schema.
-3. **(Upcoming)** preprocessing, indexing (TF-IDF / BM25), clustering, and text
-   mining — the required libraries are already pinned in `requirements.txt`.
+3. **Preprocessing and indexing** — TF-IDF features and sport/finance
+   classification are covered in the course notebooks; clustering and text
+   mining remain upcoming (libraries already pinned in `requirements.txt`).
 
 The Jupyter Book is built from `notebook/` and published to GitHub Pages:
 <https://rhindottire.github.io/PPW/>.

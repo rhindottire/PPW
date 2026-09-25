@@ -37,7 +37,7 @@ Catatan pembacaan `resource/IE/DL/`. Dibaca read-only; file tidak diubah.
 ## 2. bi-lstm-dataset-pidana-cbow.ipynb
 
 - **Model**: Bi-LSTM 100 + input vektor **CBOW Word2Vec 10-d** (tanpa layer Embedding)
-- **Env**: TensorFlow 2.13.0; gensim; keras; sklearn; pydot/graphviz; torch (simpan)
+- **Env**: TensorFlow 2.15.0; gensim; keras; sklearn; pydot/graphviz; torch (simpan)
 - **Data**: `Dataset-Pidana500.csv` — **6 kolom (TANPA pos)**, 3.296.250 baris, 500 dok, 65.700 kalimat
 - **Preprocess**: `Word2Vec(vector_size=10, window=5, min_count=1, sg=0)` dari token kalimat;
   vocab 39.500; **MAX_LEN=100**; split 80/20 (52.560/13.140 kalimat)

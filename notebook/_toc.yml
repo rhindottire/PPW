@@ -9,6 +9,7 @@ chapters:
       - file: note/note-1
       - file: note/note-2
       - file: note/note-3
+      - file: note/note-4
   - file: book
     sections:
       - file: book/book-1

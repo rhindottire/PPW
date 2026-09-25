@@ -45,9 +45,12 @@ Catatan materi kuliah 1: [Note 1](note/note-1.md)
 3. Klasifikasi menggunakan Naive Bayes / KNN.
 4. Evaluasi model dengan test and score.
 
-## Note 4 - Word Embedding
-
-1. Gensim Skip Gram
-bikin kumpulan kata dari kumpulan kalimat minimal 3, lalu representasikan 3 kalimat itu menjadi vector dengan skipgram pakai jaringan syaraf tiruan
-
 Catatan materi kuliah 3: [Note 3](note/note-3.md)
+
+## Note 4 — Word Embedding
+
+1. Gensim Skip Gram — bikin kumpulan kata dari kumpulan kalimat minimal 3, lalu
+   representasikan 3 kalimat itu menjadi vector dengan skipgram pakai jaringan
+   syaraf tiruan.
+
+Catatan materi kuliah 4: [Note 4](note/note-4.md)
