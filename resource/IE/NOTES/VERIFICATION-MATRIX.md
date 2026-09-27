@@ -97,7 +97,7 @@ Hasil terverifikasi: prev/next fitur memberi lompatan macro-F1 0.59→0.81 (600c
 Keputusan user: 3 notebook DL diverifikasi **by-inspection** (tanpa mengubah
 source), dijalankan di Colab/Kaggle; untuk lapor ke dosen: env TF diperlukan.
 
-## TRANSFORMER
+## BERT
 
 | File | Status | Bukti / alasan | Fix |
 |---|---|---|---|
@@ -109,7 +109,7 @@ source), dijalankan di Colab/Kaggle; untuk lapor ke dosen: env TF diperlukan.
 | `Pretrain Venkatesh...-NER-ind.ipynb` | ⚠️ `run-true` | Sama + overfit epoch5 (tes 0.963); `ignore_mismatched_sizes=True` | +early stopping |
 | `Uji Coba Pengindexan Database NER.ipynb` | ✅ `run-true` (terverifikasi) | **Replika lokal berhasil (2026-09-13)**: model 522M jalan di GPU GTX 1650; 31 teks → SQLite in-memory 470 baris entity; V1/V2 query bekerja. Peringatan `classifier` random-init = head NER tak fine-tune → prediksi label acak; notebook memang uji SQLite indexing, bukan kualitas NER | — |
 
-Isu dominan seluruh TRANSFORMER: label `'nan'` bocor dari konversi → 26th
+Isu dominan seluruh BERT: label `'nan'` bocor dari konversi → 26th
 class ikut dilatih. Bersihkan sebelum training.
 
 ## Verifikator yang Jalan Lokal (batch ringan)
@@ -119,5 +119,5 @@ class ikut dilatih. Bersihkan sebelum training.
    match data asli ✓
 2. ML1 `NER-200-WithoutPos.ipynb`: path CSV lokal + fix `to_dict`/`fillna`; CRF ✓
 3. ML2 `Testing/600crf-prevnext.ipynb`: **replika jalan** (`gdown` ID file; 7.985/3.287 fragment fit 156 s; acc 0.9712 / macro-F1 0.8065) ✓
-4. TRANSFORMER `ConvertDatasetToBERT.ipynb` + `Preprocessing Without O`: path lokal ✓
+4. BERT `ConvertDatasetToBERT.ipynb` + `Preprocessing Without O`: path lokal ✓
 5. `Uji Coba Pengindexan Database NER.ipynb`: **replika jalan** (GPU, 470 entity SQLite) ✓

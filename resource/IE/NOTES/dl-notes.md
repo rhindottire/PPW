@@ -11,7 +11,7 @@ Catatan pembacaan `resource/IE/DL/`. Dibaca read-only; file tidak diubah.
 ## Dataset `LEGALNER-POS-PREV-NEXT-200.csv`
 - 1.048.575 baris + header, 7 kolom: `doc, sentence, word, pos, prev, next, tag`
 - **107 doc unik**, nilai `doc` = **hash MD5** (bukan `doc: 1..200`)
-- 24.515 kalimat unik (= jumlah baris CSV TRANSFORMER, jembatan awal alur)
+- 24.515 kalimat unik (= jumlah baris CSV BERT, jembatan awal alur)
 - `doc`/`sentence` hanya terisi di baris pertama blok → butuh `fillna(method='ffill')` (yang deprecated di pandas baru)
 - `tag` ada 1 nilai kosong `''` (label NaN)
 - Distribusi tag: O 93%; I_DEFN 25.283; I_ARTV 16.441; B_DEFN 13.034; I_VERN 6.607; sisanya kecil

@@ -1,6 +1,6 @@
-# Catatan Folder TRANSFORMER
+# Catatan Folder BERT
 
-Catatan pembacaan `resource/IE/TRANSFORMER/`. Dibaca read-only; file tidak diubah.
+Catatan pembacaan `resource/IE/BERT/`. Dibaca read-only; file tidak diubah.
 
 ## Inventori (7 notebook + 1 CSV)
 

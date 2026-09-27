@@ -54,18 +54,22 @@
     - `EDA.ipynb` — Task 1: detik.com crawl & exploration (completed)
     - `Input.ipynb`, `Modeling.ipynb`, `Output.ipynb`, `Production.ipynb` —
       placeholders for upcoming tasks
-  - `intro.md`, `CRISP-DM.md`, `_config.yml`, `_toc.yml` — book pages/config
-  - `IE.md` / `ML.md` — placeholder chapters for other-course topics (the
-    `note/` and `book/` streams are the PPW coursework core). The `ML/` folder
-    and `IE.md` pages are NOT part of the PPW deliverables.
+  - `intro.md`, `CRISP-DM.md`, `IE.md`, `_config.yml`, `_toc.yml` — book pages/config
+  - `IE.md` + `IE/` — published chapter for the separate Information Extraction
+    course, not a PPW deliverable. `IE.md` states the objective, scope, results,
+    access and ethics, and links the notebooks; `IE/NN-*.ipynb` are the working
+    notebooks registered as sections in `_toc.yml`.
+  - `ML.md` / `ML/` — placeholder chapter for the Machine Learning course.
   - (outside the book) `resource/IE/` — **lecturer-provided Information
-    Extraction (IE/NER) sub-project, hosted in this shared workspace.** The
-    assignment: try the provided code and make sure everything can be run safely;
-    no formal submission, just comprehension for upcoming tasks. Structure:
+    Extraction (IE/NER) sub-project, hosted in this shared workspace.** Treat
+    every `.py` and `.ipynb` here as read-only lecturer source: run it, verify
+    it, and report what breaks without editing the files. The student's own
+    coursework for this course does not live here — it lives in `notebook/IE/`
+    and `data/IE/`. Structure:
     - `GET-COURT/` (get-court crawlers), `RULE-BASED/` (regex IE → CSV),
       `DATASET/` (annotation/preprocessing), `ML/` (CRF NER: `ML1/NER-200-*`,
       `ML2/...` incl. `ML2/Testing/600crf-*`), `DL/` (bi-LSTM, needs TF),
-      `TRANSFORMER/` (BERT/RoBERTa/IndoBERT pretrain + SQLite indexing demo)
+      `BERT/` (BERT/RoBERTa/IndoBERT pretrain + SQLite indexing demo)
     - `NOTES/` — verification deliverables (one `*-notes.md` per folder +
       `VERIFICATION-MATRIX.md`). Do NOT edit lecturer source files (`.py`,
       `.ipynb`) under `resource/IE/`; verify via copies in `/tmp` instead and
@@ -77,6 +81,10 @@
   `crawling_detik.csv/.json` (200 articles, 100 sport + 100 finance),
   `tfidf_sparse.npz`, `tfidf_features.txt`, `tfidf_docs.csv`. Other `data/`
   folders hold unrelated coursework imports.
+- `data/IE/` — Information Extraction assignment outputs, one folder per court:
+  `PN-Ngawi/` holds the submitted CSV `IE-PN-Ngawi-<NIM>.csv`, the candidate URL
+  list, the error report, and the `html/` snapshots. Snapshots and row-level CSV
+  contain personal data, so they stay local and are never committed or published.
 - `scripts/run_crawl.py` — standalone crawling script (re-crawl entry point)
 - `resource/` — non-PPW course materials shared in this workspace:
     - `resource/Web-Mining/` — course lecture/assignment materials
@@ -86,6 +94,27 @@
 - `img/` — web book logo (`Doo.jpg`)
 - `requirements.txt` — pinned package list (gensim is installed via a separate
   script — see section `[12]`)
+
+## Separate Courses
+This workspace hosts more than one course. Keep the streams apart: no page or
+notebook of one course may cite or rely on the deliverables of another.
+
+- **PPW — Web Search & Mining**: `intro.md`, `note/` + `note.md`, `book/` +
+  `book.md`, `CRISP-DM/` + `CRISP-DM.md`, and `data/Web-Mining/`.
+- **IE — Information Extraction**: `IE.md`, `IE/`, and `data/IE/`.
+- **ML — Machine Learning**: `ML.md` and `ML/`.
+
+Rules for the IE and ML chapters:
+
+- Each course keeps its own page pattern: a role-specific `.md` file that states
+  the objective, scope, results, and constraints, plus notebooks registered as
+  sections in `_toc.yml`.
+- Working notebooks use unnumbered `## ...` section headings, short prose between
+  code cells, exactly ONE output per code cell, and a closing `## Conclusion`.
+- Headings follow the same limits as the PPW pages: full English, level 3 at
+  deepest, at most 4 words each.
+- Never renumber another course's tasks into this one, and never reuse another
+  course's data directory.
 
 ## Coursework Consistency
 Every task folder follows the same writing template, so the published web book
@@ -105,9 +134,9 @@ reads uniformly and no instruction needs repeating:
   kept to at most heading level 3 (`###`), and concise — no more than 4 words.
   Count words as alphanumeric tokens separated by spaces; symbols such as `&`,
   `—`, and `:` are not counted. This applies to `note.md`, `book.md`,
-  `note/note-N.md`, `book/book-N.ipynb`, `intro.md`, `CRISP-DM.md`, and the
-  `CRISP-DM/` notebooks, so every `<topik>` in the `Note N` / `Book N`
-  templates above is written in English too.
+  `note/note-N.md`, `book/book-N.ipynb`, `intro.md`, `CRISP-DM.md`, `IE.md`, and
+  the `CRISP-DM/` and `IE/` notebooks, so every `<topik>` in the `Note N` /
+  `Book N` templates above is written in English too.
 
 Data handling principles for the working notebooks:
 
@@ -148,6 +177,28 @@ Data handling principles for the working notebooks:
 - Use a polite User-Agent when crawling
 - Include crawling ethics in every notebook that performs crawling (collection
   or re-crawl); non-crawling notebooks only get a one-line data provenance note
+- Follow the Crawling Ethics rules below for every collection, in any course
+
+## Crawling Ethics
+Any notebook that collects from the web must pass these rules before its first
+request:
+
+1. Read `robots.txt` and the site's terms of service first. If automated access is
+   disallowed, do not crawl automatically: request written permission, or use an
+   official API or export instead.
+2. Never bypass bot protection. No stealth plugins, header or User-Agent
+   spoofing, proxy or VPN rotation, CAPTCHA solving, cookie replay, or rate-limit
+   evasion, regardless of how the block is reported.
+3. Stop on `403` or `429` and record the refusal in the notebook instead of
+   looking for another way in.
+4. Identify the client honestly, keep at least a one-second delay between
+   requests, avoid parallel bursts, and keep the volume small.
+5. Document the authorization status in the working notebook — who granted it,
+   when, and what scope it covers. Concrete findings about one specific site
+   belong in that notebook, never in this policy file.
+6. Public court and news data contains personal names. Keep row-level data and
+   raw snapshots local; published pages show aggregate counts, schemas, and
+   source URLs only.
 
 ## Lecture Instructions
 - Course lecture/assignment instructions live in `resource/Web-Mining/` as
@@ -227,6 +278,9 @@ Run these checks on every finished task before showing results to the user:
 5. No AI fingerprints in visible deliverables: no `AGENTS.md`/`.opencode/`/
    `skills/` references, no decorative banners or `CELL n`/`SEL n` labels, no
    agent-style narration prints.
+6. Separate-course chapters: `IE.md` links a notebook that exists and is listed in
+   `_toc.yml`; stored notebook outputs contain no personal names or case numbers;
+   any collection states its access limits and never documents a bypass.
 
 ## No AI-fingerprints in Deliverables
 Anything the lecturer will see (notebooks, the published web book, scripts) must
@@ -276,6 +330,7 @@ read as natural, human-written work — not as AI-generated output:
   `README.md`, `AGENTS.md`, `resource/Web-Mining/`, `intro.md`, `CRISP-DM/*`,
   and build tooling/config.
 - **Indonesian (may mix with English)** for the coursework content the student
-  reads: `note.md`, `note/note-N.md`, `book.md`, and `book/book-N.ipynb`.
+  reads: `note.md`, `note/note-N.md`, `book.md`, `book/book-N.ipynb`, `IE.md`,
+  and `IE/*.ipynb`.
   Heading text is always English per the heading rule; only the narrative prose
   uses the language listed here.
