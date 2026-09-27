@@ -26,4 +26,6 @@ chapters:
       - file: CRISP-DM/Output
       - file: CRISP-DM/Production
   - file: IE
+    sections:
+      - file: IE/01-Scraping-PN-Ngawi
   - file: ML
