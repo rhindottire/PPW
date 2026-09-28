@@ -96,6 +96,14 @@ jupyter lab
 > **Note:** The notebooks must run with the `enWebmining` kernel. If it does
 > not appear in the kernel list, re-run step 3.
 
+Orange Data Mining is **not** part of the main environment: Orange 3.40 has no
+wheel for Python 3.14. The Task 3 canvas re-run lives in its own environment
+(`.venv-orange`, Python 3.12) and runs headless:
+
+```bash
+.venv-orange/bin/python scripts/orange-task3/run_pipeline.py
+```
+
 ## Usage
 
 1. Open the notebooks under `notebook/` (e.g. `notebook/CRISP-DM/EDA.ipynb` or

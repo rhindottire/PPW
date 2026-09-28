@@ -20,8 +20,12 @@ _build/
 .env
 .env.*
 
-# OpenCode local config
-.opencode/
+# OpenCode local config — skills & commands ikut dilacak, hanya dependensi lokal
+.opencode/node_modules/
+.opencode/package.json
+.opencode/package-lock.json
+.opencode/bun.lock
+.opencode/.gitignore
 
 # Editor local config
 .vscode/

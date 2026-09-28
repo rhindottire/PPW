@@ -1,0 +1,69 @@
+{
+  "source": "data/Web-Mining/crawling_detik.csv",
+  "n_documents": 200,
+  "n_terms": 8109,
+  "class_values": [
+    "finance",
+    "sport"
+  ],
+  "text_features": [
+    "isi_berita"
+  ],
+  "pca_marks": {
+    "0.2": {
+      "components": 1,
+      "variance": 0.9997
+    },
+    "0.5": {
+      "components": 1,
+      "variance": 0.9997
+    },
+    "0.8": {
+      "components": 1,
+      "variance": 0.9997
+    },
+    "0.9": {
+      "components": 1,
+      "variance": 0.9997
+    },
+    "0.95": {
+      "components": 1,
+      "variance": 0.9997
+    }
+  },
+  "pca_total_components": 199,
+  "models": {
+    "Naive Bayes": {
+      "accuracy": 1.0,
+      "precision_sport": 1.0,
+      "recall_sport": 1.0,
+      "f1_sport": 1.0,
+      "confusion": [
+        [
+          100,
+          0
+        ],
+        [
+          0,
+          100
+        ]
+      ]
+    },
+    "kNN (k=2)": {
+      "accuracy": 1.0,
+      "precision_sport": 1.0,
+      "recall_sport": 1.0,
+      "f1_sport": 1.0,
+      "confusion": [
+        [
+          100,
+          0
+        ],
+        [
+          0,
+          100
+        ]
+      ]
+    }
+  }
+}

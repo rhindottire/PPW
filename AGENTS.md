@@ -10,6 +10,7 @@
 - Install dependencies: `pip install -r requirements.txt`
 - Run Jupyter: `jupyter lab`
 - Re-crawl: `python scripts/run_crawl.py`
+- Orange pipeline: `.venv-orange/bin/python scripts/orange-task3/run_pipeline.py`
 
 ## Code Conventions
 - All code must be Python, not TypeScript/JavaScript
@@ -86,6 +87,12 @@
   list, the error report, and the `html/` snapshots. Snapshots and row-level CSV
   contain personal data, so they stay local and are never committed or published.
 - `scripts/run_crawl.py` — standalone crawling script (re-crawl entry point)
+- `scripts/orange-task3/` — Orange Data Mining re-run of Book 3: `task3.ows`
+  (canvas), `run_pipeline.py` (same chain headless, prints the widget numbers),
+  `orange-task-3.md` (findings), `results.json` (output). Orange lives in its own
+  environment `.venv-orange` (Python 3.12, Orange 3.40) because Orange does not
+  support the Python 3.14 of the main `.venv`; run it with
+  `.venv-orange/bin/python scripts/orange-task3/run_pipeline.py`
 - `resource/` — non-PPW course materials shared in this workspace:
     - `resource/Web-Mining/` — course lecture/assignment materials
       (`.ppt`/`.pptx` + readable `.md`, assets under `lecture-{N}-assets/` as
