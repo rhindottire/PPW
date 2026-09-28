@@ -24,9 +24,9 @@ Proses pengerjaan: [Book 1](book/book-1.ipynb)
 - Artefak format disisihkan utuh sebelum simbol/angka dibuang: **5 URL**,
   **285 mata uang** (`Rp`, `US$`), **4.073 komposit berangka** (`3x3`, `U-18`,
   `76ers`, `GA-604`), dan **126 angka Romawi**.
-- Deteksi bahasa per kalimat (5.227 kalimat: **id 74,0%**, ms 10,9%,
-  en 8,5%); `langid` per kata terbukti tidak andal sehingga tidak dipakai dan
-  prosa Inggris asli dipertahankan.
+- Deteksi bahasa per kalimat (id 3.868 dari 5.227 kalimat = **74,0%**,
+  ms 10,9%, en 8,5%); `langid` per kata terbukti tidak andal sehingga tidak
+  dipakai dan prosa Inggris asli dipertahankan.
 - **3.091 nama diri unik** (14.332 kemunculan) dilindungi dari normalisasi
   lewat bukti kapitalisasi di tengah kalimat.
 - Kata tidak baku sejati yang dibakukan: **17 kata / 72 kemunculan**; 21 token
@@ -60,17 +60,27 @@ Proses pengerjaan: [Book 2](book/book-2.ipynb)
 - **200 berita** (100 sport, 100 finance) bersih dan berkelas seimbang; teks
   finance lebih beragam panjangnya (median 2.501, maks 14.106 karakter)
   dibanding sport (median 2.409, maks 5.809).
-- TF-IDF menghasilkan **200 × 4.092 term**; dimensi diturunkan dengan
-  TruncatedSVD, dan ambang varians kumulatif 20/50/80/90/95% tercapai pada
-  **10/45/109/141/162 komponen**.
-- Dipilih **141 komponen (90%)**, setara pengurangan dimensi **96,6%**, lalu
-  data dibagi berstrata menjadi 160 latih dan 40 uji.
-- **Naive Bayes Gaussian mencapai skor sempurna**: akurasi test **1,000** dan
-  10-fold cross-validation **1,000 ± 0,000** untuk akurasi, precision, recall,
-  dan f1.
-- **kNN terbaik pada k=2** (akurasi CV-5 0,744); akurasi test **0,725** dan
-  CV 10-fold **0,762 ± 0,100** dengan precision 0,696, recall 0,988, f1 0,812.
-- Kesimpulan: Naive Bayes unggul karena ruang fitur kedua topik terpisah jelas;
-  kNN recall-nya tinggi tetapi berlebihan memrediksi kelas sport.
+- Data dibagi berstrata lebih dulu menjadi **160 latih dan 40 uji**, sebelum
+  TF-IDF maupun SVD dijalankan, supaya dokumen uji tidak ikut memengaruhi model.
+- TF-IDF pada data latih menghasilkan **3.588 term** (`min_df=2`); dimensi
+  diturunkan dengan TruncatedSVD, dan ambang varians kumulatif
+  20/50/80/90/95% tercapai pada **10/40/93/118/135 komponen**.
+- Dipilih **118 komponen (90%)**, setara pengurangan dimensi **96,7%**, lalu
+  vektorisasi dan SVD dibungkus `Pipeline` agar di-fit ulang di tiap lipatan.
+- **Naive Bayes Gaussian unggul tipis**: akurasi **0,994 ± 0,019**, precision
+  0,989 ± 0,033, recall 1,000 ± 0,000, dan f1 0,994 ± 0,018 pada 10-fold
+  cross-validation.
+- **kNN terbaik pada k=2** (akurasi CV-5 1,000) dengan akurasi **0,988 ± 0,025**,
+  precision 0,978 ± 0,044, recall 1,000 ± 0,000, dan f1 0,988 ± 0,024.
+- Pada 40 dokumen uji, akurasi **0,950** dengan dua kesalahan satu arah: dua
+  berita finance diprediksi sport (precision finance 1,000, sport 0,909).
+- `StandardScaler` terbukti merusak kNN tanpa menyentuh Naive Bayes: kNN turun
+  dari 0,988 ke **0,838 ± 0,080**, sedangkan Naive Bayes tetap 0,994. Standar
+  deviasi komponen SVD berbeda 17,9 kali, sehingga menyamaratakan semuanya
+  memberi bobot yang sama kepada komponen noise.
+- Kesimpulan: kedua model mencapai recall sempurna, dan selisihnya hanya pada
+  dokumen yang tumpang tindih. Versi sebelumnya melaporkan 1,000 karena vektorisasi
+  dijalankan sebelum pembagian data; perbaikannya tidak mengubah pemenang, tetapi
+  membuat angkanya dapat dipertanggungjawabkan.
 
 Proses pengerjaan: [Book 3](book/book-3.ipynb)
