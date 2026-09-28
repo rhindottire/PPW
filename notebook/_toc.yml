@@ -27,5 +27,7 @@ chapters:
       - file: CRISP-DM/Production
   - file: IE
     sections:
-      - file: IE/01-Scraping-PN-Ngawi
+      - file: IE/01-Scraping-230411100197
   - file: ML
+    sections:
+      - file: ML/01-Linear-Regression

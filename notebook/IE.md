@@ -58,4 +58,4 @@ terkait dengan tugas berikutnya.
 
 **Penugasan.** Kelas B — PN Ngawi.
 
-Proses pengerjaan: [Task 1](IE/01-Scraping-PN-Ngawi.ipynb)
+Proses pengerjaan: [Task 1](IE/01-Scraping-230411100197.ipynb)

@@ -38,6 +38,8 @@ Catatan materi kuliah 1: [Note 1](note/note-1.md)
     stopword removal agar kata fungsi tetap menjadi konteks, dan hasil anotasi
     tidak mengubah representasi final (TF-IDF).
 
+Catatan materi kuliah 2: [Note 2](note/note-2.md)
+
 ## Note 3 — Data Classification
 
 1. Import data.
@@ -49,8 +51,11 @@ Catatan materi kuliah 3: [Note 3](note/note-3.md)
 
 ## Note 4 — Word Embedding
 
-1. Gensim Skip Gram — bikin kumpulan kata dari kumpulan kalimat minimal 3, lalu
-   representasikan 3 kalimat itu menjadi vector dengan skipgram pakai jaringan
-   syaraf tiruan.
+Gensim Skip Gram — bikin kumpulan kata dari kumpulan kalimat minimal 3, lalu representasikan 3 kalimat itu menjadi vector dengan skipgram pakai jaringan syaraf tiruan (klasifikasi berita, vektornya menggunakan skip-gram skip-gram clasification naive bayes). tanpa reduksi dan bangun vektor dengan skip gram dan pakai naive bayes. 3 kalimat atau 3 berita.
+with and without stopword
+with and without tanda baca
+with and without slang
+with and without stemming
+
 
 Catatan materi kuliah 4: [Note 4](note/note-4.md)
