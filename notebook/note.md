@@ -51,11 +51,15 @@ Catatan materi kuliah 3: [Note 3](note/note-3.md)
 
 ## Note 4 — Word Embedding
 
-Gensim Skip Gram — bikin kumpulan kata dari kumpulan kalimat minimal 3, lalu representasikan 3 kalimat itu menjadi vector dengan skipgram pakai jaringan syaraf tiruan (klasifikasi berita, vektornya menggunakan skip-gram skip-gram clasification naive bayes). tanpa reduksi dan bangun vektor dengan skip gram dan pakai naive bayes. 3 kalimat atau 3 berita.
-with and without stopword
-with and without tanda baca
-with and without slang
-with and without stemming
-
+1. Bentuk kumpulan kata dari kumpulan kalimat minimal 3.
+2. Representasikan 3 kalimat itu menjadi vektor dengan skip-gram.
+3. Bangun vektor skip-gram memakai jaringan syaraf tiruan (Gensim).
+4. Klasifikasi berita dari vektor skip-gram dengan Naive Bayes.
+5. Tanpa reduksi dimensi.
+6. 3 kalimat atau 3 berita.
+7. Dengan dan without stopword.
+8. Dengan dan without tanda baca.
+9. Dengan dan without slang.
+10. Dengan dan without stemming.
 
 Catatan materi kuliah 4: [Note 4](note/note-4.md)

@@ -78,10 +78,19 @@
       Classifications: `runnable`, `run-true`, `blocked-license`,
       `blocked-env`. Requirements section `[11]`/`[11b]` of `requirements.txt`.
       See `NOTES/VERIFICATION-MATRIX.md` for the full per-file status.
+    - **Tracked in git, and it holds court records.** Nine of these notebooks
+      keep stored outputs that name judges (878 occurrences), carry case numbers
+      (959), and name parties (177); `GET-COURT/metaPerceraianPASBY.csv` adds
+      997 divorce-case records with judge, registrar, ruling, and reasoning
+      fields. The material is lecturer-provided and has been public since commit
+      `57882e4`, so this is inherited rather than newly introduced, and it is not
+      published to the web book — only `notebook/` is built. Know this before
+      changing anything here, and keep the student's own row-level data in
+      `data/IE/`, which stays out of version control.
 - `data/Web-Mining/` — PPW dataset & model-ready artifacts:
   `crawling_detik.csv/.json` (200 articles, 100 sport + 100 finance),
-  `tfidf_sparse.npz`, `tfidf_features.txt`, `tfidf_docs.csv`. Other `data/`
-  folders hold unrelated coursework imports.
+  `tfidf_sparse.npz`, `tfidf_features.txt`, `tfidf_docs.csv`. `data/IE/` is the
+  other `data/` folder and belongs to this project — see the next entry.
 - `data/IE/` — Information Extraction assignment outputs, one folder per court:
   `PN-Ngawi/` holds the submitted CSV `IE-PN-Ngawi-<NIM>.csv`, the candidate URL
   list, the error report, and the `html/` snapshots. Snapshots and row-level CSV

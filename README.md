@@ -51,21 +51,30 @@ contain **200 Indonesian news articles** crawled from detik.com: 100 `sport`
 .
 ├── AGENTS.md              # Project instructions for AI agents / collaborators
 ├── notebook/              # Jupyter Book source (published to GitHub Pages)
+│   ├── note/ book/        # PPW coursework notes and deliverables
+│   ├── CRISP-DM/          # CRISP-DM stage notebooks
+│   ├── IE/ ML/            # Information Extraction / Machine Learning coursework
 ├── data/Web-Mining/       # Crawl results (csv + json) & TF-IDF artifacts
+├── data/IE/               # Own IE deliverable data — local only, never committed
 ├── resource/              # Shared non-PPW course material
 │   ├── Web-Mining/        # Course lecture/assignment slides (.ppt/.pptx + .md)
 │   └── IE/                # Lecturer-provided IE/NER sub-project + notes
 ├── img/                   # Book logo shared by published pages
-├── scripts/               # Standalone crawling script + helpers
+├── scripts/               # Standalone crawling script + Orange pipeline
 ├── .github/workflows/     # CI that builds and deploys the book
 ├── requirements.txt       # Pinned Python dependencies
 └── LICENSE
 ```
 
-The book is organized into coursework notes (`note/`), coursework deliverables
-(`book/`), and CRISP-DM stage notebooks (`CRISP-DM/`). Files under
-`resource/` and `data/` other than `data/Web-Mining/` belong to other course
-work shared in this workspace.
+The book publishes five chapters: coursework notes (`note/`), coursework
+deliverables (`book/`), the CRISP-DM stage notebooks, the Information Extraction
+chapter (`IE/`), and the Machine Learning chapter (`ML/`).
+
+`data/IE/` holds the data behind the IE deliverable. It stays out of version
+control on purpose: court decisions name the parties involved, so the row-level
+CSV and the raw page snapshots never leave the machine. The IE notebook replays
+those local snapshots, which means a fresh clone can read the published outputs
+but cannot re-run the scraping stage.
 
 ## Prerequisites
 

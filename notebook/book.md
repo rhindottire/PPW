@@ -49,6 +49,13 @@ Proses pengerjaan: [Book 1](book/book-1.ipynb)
 - **PCA** dua komponen mempertahankan **7,35%** varians; ambang kumulatif
   50/80/90/95% tercapai pada 45/109/140/160 komponen (semuanya di bawah 500),
   sehingga dipilih **140 komponen (90%)** setara reduksi **97,3%**.
+- Angka komponen di tugas ini **tidak sebanding** dengan Book 3. Di sini PCA
+  dihitung pada seluruh 200 dokumen dengan kosakata 5.200 term, sedangkan Book 3
+  memakai TruncatedSVD pada 160 dokumen latih dengan 3.588 term. Algoritma,
+  jumlah dokumen, dan kosakata ketiganya berbeda, sehingga 140 dan 118
+  komponen sama-sama sah untuk konteksnya. Tugas ini tidak membagi data karena
+  tujuannya menyiapkan vektor, bukan menilai model; pemisahan data baru relevan
+  di Book 3.
 - Refleksi penutup mencatat enam kelemahan pustaka (`langid`, Sastrawi,
   `sklearn`, `transformers`, PCA) beserta penyempurnaan yang diterapkan pada
   tiap tahap pengolahan.
