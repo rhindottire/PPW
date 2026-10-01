@@ -1,0 +1,35 @@
+#!/bin/sh
+# Run the project's static checks on staged Python/notebook files.
+set -eu
+
+root=$(git rev-parse --show-toplevel)
+cd "$root"
+
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+[ -n "$staged" ] || exit 0
+
+# Skip unless a .py/.ipynb file under scripts/ or notebook/ is staged.
+if ! printf '%s\n' "$staged" | grep -Eq '^(scripts|notebook)/.*\.(py|ipynb)$'; then
+  exit 0
+fi
+
+if [ ! -x .venv/bin/ruff ]; then
+  echo "pre-commit: .venv/bin/ruff not found; run: pip install -r requirements.txt" >&2
+  exit 1
+fi
+
+fail=0
+run() {
+  echo "+ $*"
+  "$@" || fail=1
+}
+
+run .venv/bin/ruff check --no-cache scripts notebook
+run .venv/bin/ruff format --check scripts
+run .venv/bin/pyright scripts
+
+if [ "$fail" -ne 0 ]; then
+  echo "pre-commit: static checks failed; commit blocked." >&2
+  echo "Fix the findings above, then stage the changes and commit again." >&2
+  exit 1
+fi

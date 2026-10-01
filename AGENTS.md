@@ -14,6 +14,8 @@
 - Lint: `.venv/bin/ruff check scripts notebook`
 - Format check: `.venv/bin/ruff format --check scripts`
 - Type check: `.venv/bin/pyright scripts` and `.venv/bin/pyrefly check`
+- Pre-commit gate: `.githooks/pre-commit` (ruff + pyright; enable once with
+  `git config core.hooksPath .githooks`)
 
 ## Code Conventions
 - All code must be Python, not TypeScript/JavaScript

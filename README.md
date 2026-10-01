@@ -95,6 +95,9 @@ pip install -r requirements.txt
 # 2b. (Task 4 only) install gensim — no cp314 wheel on PyPI
 python scripts/install_gensim.py
 
+# 2c. Enable the git pre-commit static checks (ruff + pyright)
+git config core.hooksPath .githooks
+
 # 3. Register the Jupyter kernel (course requirement)
 python -m ipykernel install --user --name=enwebmining --display-name="enWebmining"
 
