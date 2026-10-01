@@ -1,0 +1,12 @@
+{
+  "venvPath": ".",
+  "venv": ".venv",
+  "pythonVersion": "3.14",
+  "exclude": [
+    "**/.venv",
+    "**/.venv-orange",
+    "**/node_modules",
+    "**/.ipynb_checkpoints"
+  ],
+  "reportMissingModuleSource": "none"
+}

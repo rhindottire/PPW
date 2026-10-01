@@ -43,7 +43,7 @@ def collect_article_urls(kanal, limit=100):
         try:
             for u in get_urls_from_sitemap(sm):
                 urls.add(u)
-        except Exception as e:
+        except requests.RequestException as e:
             log(f"  [skip sitemap] {sm} -> {e}")
         if len(urls) >= limit:
             break
@@ -60,7 +60,8 @@ def crawl_article(url):
                 text = trafilatura.extract(downloaded, include_comments=False)
                 if text:
                     return text
-        except Exception as e:
+        # A download or parse failure is expected per URL, so any error retries.
+        except Exception as e:  # noqa: BLE001
             log(f"    [retry {attempt + 1}] {url} -> {str(e)[:60]}")
         if attempt < RETRY - 1:
             time.sleep(BACKOFF[attempt])
@@ -99,7 +100,7 @@ def main():
     all_rows = sport_rows + finance_rows
     df = pd.DataFrame(all_rows)
     df.insert(0, "id", range(1, len(df) + 1))
-    df = df[["id", "isi_berita", "label", "url"]]
+    df = df.loc[:, ["id", "isi_berita", "label", "url"]]
 
     # Hapus baris yang gagal (isi_berita None)
     df_clean = df.dropna(subset=["isi_berita"]).reset_index(drop=True)

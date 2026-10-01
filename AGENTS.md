@@ -11,6 +11,9 @@
 - Run Jupyter: `jupyter lab`
 - Re-crawl: `python scripts/run_crawl.py`
 - Orange pipeline: `.venv-orange/bin/python scripts/orange-task3/run_pipeline.py`
+- Lint: `.venv/bin/ruff check scripts notebook`
+- Format check: `.venv/bin/ruff format --check scripts`
+- Type check: `.venv/bin/pyright scripts` and `.venv/bin/pyrefly check`
 
 ## Code Conventions
 - All code must be Python, not TypeScript/JavaScript
@@ -297,6 +300,15 @@ Run these checks on every finished task before showing results to the user:
 6. Separate-course chapters: `IE.md` links a notebook that exists and is listed in
    `_toc.yml`; stored notebook outputs contain no personal names or case numbers;
    any collection states its access limits and never documents a bypass.
+7. Source code stays as simple as the task allows: no extra features,
+   abstractions, or refactors beyond the objective; the closing message
+   explicitly confirms the code is simple and easy to read.
+8. Static checks are clean on the changed `.py`/`.ipynb` files:
+   `.venv/bin/ruff check scripts notebook`, `.venv/bin/ruff format --check
+   scripts`, `.venv/bin/pyright scripts`, and `.venv/bin/pyrefly check` report
+   zero errors AND zero warnings; the closing message states the commands run and
+   the clean result. Tool noise is suppressed narrowly at the source, never by
+   disabling a whole rule.
 
 ## No AI-fingerprints in Deliverables
 Anything the lecturer will see (notebooks, the published web book, scripts) must

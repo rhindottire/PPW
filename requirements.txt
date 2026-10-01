@@ -74,9 +74,11 @@ torchvision==0.29.0
 jupyter-book==1.0.4.post1
 
 # ------------------------------------------------------------
-# [10] DEVELOPER TOOLS — code formatter (opencode)
+# [10] DEVELOPER TOOLS — formatter & type checker (opencode)
 # ------------------------------------------------------------
 ruff==0.16.6
+pyright==1.1.414
+pyrefly==1.3.2
 
 # ------------------------------------------------------------
 # [11] INFO EXTRACTION / NER — sub-proyek resource/IE

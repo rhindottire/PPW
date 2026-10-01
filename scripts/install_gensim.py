@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Reproducible gensim install for CPython 3.14.
 
 gensim 4.4.0 ships no cp314 wheel and its bundled C sources are too old
@@ -18,6 +17,7 @@ import shutil
 import subprocess
 import sys
 import tarfile
+from importlib.metadata import PackageNotFoundError, version
 
 GENSIM_VERSION = "4.4.0"
 CYTHON_PIN = "Cython==3.3.0"
@@ -92,16 +92,14 @@ def verify():
     ]
     model = Word2Vec(corpus, vector_size=8, min_count=1, sg=1, workers=1, seed=7)
     model.wv.most_similar("saham", topn=1)
-    sys.stdout.write("OK gensim %s (skip-gram sg=1)\n" % GENSIM_VERSION)
+    sys.stdout.write(f"OK gensim {GENSIM_VERSION} (skip-gram sg=1)\n")
 
 
 def ensure_cython():
     try:
-        import Cython  # type: ignore[import-not-found]
-
-        if Cython.__version__.split(".")[0] == "3":
+        if version("Cython").split(".")[0] == "3":
             return
-    except ImportError:
+    except PackageNotFoundError:
         pass
     run([sys.executable, "-m", "pip", "install", "-q", CYTHON_PIN])
 
@@ -187,7 +185,7 @@ def install(force=False):
     )
     install_fastss_stub()
     verify()
-    sys.stdout.write("gensim %s installed and verified\n" % GENSIM_VERSION)
+    sys.stdout.write(f"gensim {GENSIM_VERSION} installed and verified\n")
 
 
 def main():

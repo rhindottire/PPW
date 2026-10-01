@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # pyright: reportMissingImports=false
 """Reproduce the Orange Task 3 pipeline without the canvas.
 
@@ -23,6 +22,13 @@ import pathlib
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 import numpy as np
+from Orange.classification import KNNLearner, NaiveBayesLearner
+from Orange.data import Domain
+from Orange.evaluation import TestOnTrainingData
+from Orange.preprocess import Continuize, RemoveNaNColumns
+from Orange.projection import PCA
+from orangecontrib.text import Corpus
+from orangecontrib.text.vectorization import BowVectorizer
 from sklearn.metrics import (
     accuracy_score,
     confusion_matrix,
@@ -30,15 +36,6 @@ from sklearn.metrics import (
     precision_score,
     recall_score,
 )
-
-from Orange.classification import KNNLearner, NaiveBayesLearner
-from Orange.data import Domain
-from Orange.evaluation import TestOnTrainingData
-from Orange.preprocess import Continuize, RemoveNaNColumns
-from Orange.projection import PCA
-
-from orangecontrib.text import Corpus
-from orangecontrib.text.vectorization import BowVectorizer
 
 REPO = pathlib.Path(__file__).resolve().parents[2]
 CSV = REPO / "data" / "Web-Mining" / "crawling_detik.csv"
@@ -72,7 +69,7 @@ def pca_marks(table):
     for t in (0.2, 0.5, 0.8, 0.9, 0.95):
         i = int(np.argmax(cum >= t))
         out[str(t)] = {"components": i + 1, "variance": round(float(cum[i]), 4)}
-    return out, int(len(cum))
+    return out, len(cum)
 
 
 def evaluate(table):

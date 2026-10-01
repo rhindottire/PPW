@@ -1,4 +1,9 @@
 python-interpreter-path = ".venv/bin/python"
+project-includes = ["scripts/**/*.py"]
+
+# The Orange pipeline runs in the separate .venv-orange environment (Python
+# 3.12), so its Orange imports cannot resolve against .venv.
+project-excludes = ["scripts/orange-task3/**"]
 
 [errors]
 untyped-import = false
