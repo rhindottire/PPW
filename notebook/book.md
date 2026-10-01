@@ -118,6 +118,9 @@ Proses pengerjaan: [Book 3](book/book-3.ipynb)
   naik ke **0,950** saat `window=5`. Skip-gram sekitar dua kali lebih lambat
   (0,85–1,39 detik berbanding 0,46–0,50 detik), tetapi selisih itu tidak berarti
   pada 160 dokumen latih.
+- **Peta vektor** dua dimensi memakai PCA hanya untuk keperluan gambar, bukan
+  untuk model: kata kunci olahraga dan pasar modal dipetakan bersama, dan tiap
+  dokumen digambar sebagai satu titik berwarna sesuai labelnya.
 - Stemming memangkas rata-rata kata unik dari sekitar **2.120** menjadi
   **1.810**.
 - Pembagian data dilakukan **sebelum pelatihan Word2Vec** tiap konfigurasi agar
