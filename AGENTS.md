@@ -303,8 +303,10 @@ Run these checks on every finished task before showing results to the user:
    `_toc.yml`; stored notebook outputs contain no personal names or case numbers;
    any collection states its access limits and never documents a bypass.
 7. Source code stays as simple as the task allows: no extra features,
-   abstractions, or refactors beyond the objective; the closing message
-   explicitly confirms the code is simple and easy to read.
+   abstractions, or refactors beyond the objective. The closing message answers
+   the five simplicity questions from the global `AGENTS.md` checklist with
+   checkable facts (paths, counts, command output) instead of an unevidenced
+   "the code is simple".
 8. Static checks are clean on the changed `.py`/`.ipynb` files:
    `.venv/bin/ruff check scripts notebook`, `.venv/bin/ruff format --check
    scripts`, `.venv/bin/pyright scripts`, and `.venv/bin/pyrefly check` report
