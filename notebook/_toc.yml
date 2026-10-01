@@ -15,6 +15,7 @@ chapters:
       - file: book/book-1
       - file: book/book-2
       - file: book/book-3
+      - file: book/book-4
   - file: UTS
   - file: UAS
   - file: CRISP-DM

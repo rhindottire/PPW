@@ -91,3 +91,36 @@ Proses pengerjaan: [Book 2](book/book-2.ipynb)
   membuat angkanya dapat dipertanggungjawabkan.
 
 Proses pengerjaan: [Book 3](book/book-3.ipynb)
+
+## Book 4 — Word Embedding
+
+- **200 berita** (100 sport, 100 finance) diklasifikasikan dari vektor
+  skip-gram **Word2Vec** dengan **Gaussian Naive Bayes**, tanpa reduksi dimensi.
+- Representasi dokumen memakai **mean pooling** vektor kata; model skip-gram
+  100 dimensi dibangun pada data latih saja (160 dokumen, kosakata **1.783**).
+- Daftar slang tidak ditebak: dari 18 kandidat hasil hitung frekuensi, **12
+  diterjemahkan** dan **6 ditahan**. `gas` bermakna ganda dan `lo` ternyata
+  bagian nama orang, keduanya dibiarkan apa adanya.
+- **16 kombinasi sakelar** stopword, tanda baca, slang, dan stemming diuji ulang
+  masing-masing dengan modelnya sendiri: akurasi uji bergerak **0,850–1,000**,
+  dan konfigurasi bawaan memberi **0,975** pada 40 dokumen uji.
+- Arah tiap preprocessing berbeda: membuang stopword menaikkan akurasi
+  (**0,991** berbanding 0,953), demikian pula stemming (**0,988** berbanding
+  0,956) dan membakukan slang (**0,981** berbanding 0,962). Tanda baca justru
+  sebaliknya, membuangnya menurunkan akurasi (**0,959** berbanding 0,984),
+  sehingga tanda baca dibiarkan.
+- Urutan per kombinasi tidak lurus: **7 kombinasi** mencapai **1,000**, tanpa
+  semua langkah berada di **0,950**, sedangkan yang terendah justru kombinasi
+  yang hanya membuang tanda baca (**0,850**). Selisih ini tipis karena data uji
+  hanya 40 berita.
+- **Skip-gram** lebih cocok daripada CBOW di korpus ini: skip-gram bertahan di
+  **0,975–1,000**, sedangkan CBOW turun ke **0,700** pada `window=2` dan baru
+  naik ke **0,950** saat `window=5`. Skip-gram sekitar dua kali lebih lambat
+  (0,85–1,39 detik berbanding 0,46–0,50 detik), tetapi selisih itu tidak berarti
+  pada 160 dokumen latih.
+- Stemming memangkas rata-rata kata unik dari sekitar **2.120** menjadi
+  **1.810**.
+- Pembagian data dilakukan **sebelum pelatihan Word2Vec** tiap konfigurasi agar
+  tidak ada kebocoran informasi dari data uji.
+
+Proses pengerjaan: [Book 4](book/book-4.ipynb)
