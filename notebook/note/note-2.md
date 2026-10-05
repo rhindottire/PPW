@@ -1,12 +1,10 @@
-# Word Representation
+# Word Encoding
 
 Algoritma NLP tidak bisa membaca teks mentah secara langsung; kata-kata harus
 diubah menjadi angka. Materi kuliah kedua membahas cara merepresentasikan kata
 beserta metode preprocessing teks yang menjadi dasar tugas praktikum.
 
-## Word Encoding
-
-### One-Hot Encoding
+## One-Hot Encoding
 
 Satu kata diubah menjadi vektor berdimensi N, dengan N = ukuran kosakata di
 dalam korpus. Vektor berisi nol di semua posisi kecuali satu nilai (hot) yang
@@ -27,7 +25,7 @@ Kelebihan: sederhana dan mudah diimplementasikan. Kekurangan:
 - **Tanpa informasi semantik** — setiap kata dianggap ortogonal, jadi
   `football` dan `soccer` dianggap sama jauhnya.
 
-### Bag-of-Words (BOW)
+## Bag-of-Words (BOW)
 
 Representasi yang menghitung frekuensi setiap kata di dalam dokumen, mengabaikan
 tata bahasa dan urutan kata. Contoh untuk dua dokumen dengan 6 kata unik:
@@ -38,7 +36,7 @@ tata bahasa dan urutan kata. Contoh untuk dua dokumen dengan 6 kata unik:
 Kelemahan BOW: urutan kata hilang (`not good` sama dengan `good`), kata umum
 mendominasi bobot, matriks hasilnya sparse, dan tidak mengenal kata baru (OOV).
 
-### TF-IDF
+## TF-IDF
 
 Perbaikan terhadap BOW dengan memberikan penalti pada kata yang muncul di banyak
 dokumen:
@@ -54,7 +52,7 @@ idf(t) = log(N / df(t))
 Kata yang muncul di semua dokumen (misal `love`) mendapat bobot nol; kata khas
 dokumen (misal `football`, `cricket`) mendapat bobot tinggi.
 
-### Word Embedding
+## Word Embedding
 
 Representasi kata dalam vektor padat berdimensi tetap (50–300) yang menangkap
 kemiripan makna. "You shall know a word by the company it keeps" (J. R. Firth).
