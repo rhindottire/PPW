@@ -59,3 +59,51 @@ terkait dengan tugas berikutnya.
 **Penugasan.** Kelas B — PN Ngawi.
 
 Proses pengerjaan: [Task 1](IE/01-Scraping-230411100197.ipynb)
+
+## Task 2 — Entity Extraction
+
+**Maksud dan tujuan.** Mahasiswa melakukan proses ujicoba code rule-based
+IE, memahami aplikasi rule-based IE dan kode Python, memahami tahapan
+proses pada masing-masing kode rule-based IE, serta memahami resource
+library rule-based IE Python yang bisa digunakan.
+
+**Tahapan tugas.**
+
+1. Pelajari code rule-based IE yang disediakan pada
+   [drive kelas](https://drive.google.com/drive/folders/1g8vkKr7k1YlPsT25-vTaSGM9W4eYieEz?usp=drive_link).
+2. Lakukan ujicoba untuk menjalankan code dan pastikan code bisa dijalankan
+   dengan baik sampai mendapatkan output atau hasil ekstraksi.
+3. Buat code untuk melakukan konversi bentuk data dari file PDF putusan,
+   hasil dari masing-masing tugas scraping sebelumnya, menjadi bentuk TXT.
+4. Lakukan proses ekstraksi informasi menggunakan rule-based sehingga input
+   data putusan dapat menghasilkan output berupa informasi entitas yang
+   dicari.
+5. Buat file PDF untuk memperlihatkan proses menjalankan code rule-based IE
+   beserta hasil dan berikan catatan seperlunya pada kode. Pada browser Opera
+   bisa memakai menu page → save as pdf, sedangkan browser lain memakai menu
+   print lalu pilih bentuk pdf. Beri nama file `IE-RuleBased-nim.pdf`.
+6. Kumpulkan tugas dalam bentuk penjelasan code `IE-RuleBased-nim.pdf` dan
+   juga 5 (lima) hasil/output rule-based IE dalam bentuk
+   `IE-RuleBased-Hasil-nim.pdf`.
+7. Kumpulkan tugas sesuai batas waktu yang sudah ditentukan di GCR.
+
+**Indikator penilaian.**
+
+- Kelengkapan catatan penjelasan dari setiap proses pada kode.
+- Hasil input dan output yang diperoleh, minimal 5 dokumen putusan.
+- Jika dua mahasiswa atau lebih menghasilkan scraping yang sama, nilai
+  tidak akan diberikan.
+
+**Pembagian nilai.** Nilai maksimal 100 bila aplikasi berjalan dan tugas
+dikumpulkan pada hari pertama sampai ketiga sejak assignment diposting. Nilai
+maksimal 75 bila dikumpulkan pada hari keempat dan seterusnya sampai batas
+akhir pengumpulan. Nilai 0 bila tidak mengumpulkan tugas atau pengumpulan
+melewati batas waktu.
+
+**Catatan.** Setiap mahasiswa harus berhasil melakukan proses rule-based IE
+pada notebook atau laptopnya masing-masing. Tugas ini berkelajutan dan saling
+terkait dengan tugas berikutnya.
+
+**Penugasan.** Kelas B — PN Ngawi.
+
+Proses pengerjaan: [Task 2](IE/02-RuleBased-IE-230411100197.ipynb)
