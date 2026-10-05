@@ -62,4 +62,8 @@ Catatan materi kuliah 3: [Note 3](note/note-3.md)
 9. Dengan dan without slang.
 10. Dengan dan without stemming.
 
+## Note 5 - 
+
+Curse of Dimensity (semakin banyak fitur semakin susah membuat model), jadi kita harus membandingkan apakah skip-gram bisa mengungguli tf-idf? gunakan "grid search hyperparameter tuning" untuk mendapatkan hasil yang terbaik. simpan model pkl skip-gram dan naive bayes untuk implementasikan aplikasi klasifikasi berita nanti. tugas ini adalah membuat aplikasi untuk klasifikasi berita menggunakan naive bayes dan di deploy menggunakan hugging face atau publish di streamlit dll, interface aplikasi nanti adalah menggunakan link dari website lalu paste ke aplikasi dan model melihat apakah itu adalah berita yang sport atau finance. disini fokus menggunakan skip-gram nya saja, menggunakan trafilatura untuk melakukan crawling website tanpa tau struktur lalu kita yang proses nanti atau model kita yang melakukan pekerjaannya setelah itu seperti yang kita lakukan di tugas tugas sebelumnya!
+
 Catatan materi kuliah 4: [Note 4](note/note-4.md)
