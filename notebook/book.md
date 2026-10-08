@@ -127,3 +127,29 @@ Proses pengerjaan: [Book 3](book/book-3.ipynb)
   tidak ada kebocoran informasi dari data uji.
 
 Proses pengerjaan: [Book 4](book/book-4.ipynb)
+
+## Book 5 — Model Deployment
+
+- Empat artefak pemenang dikemas ke folder distribusi `deploy/models/`:
+  `word2vec.model` (1.656.252 byte), `protected.json` (12.981 byte),
+  `gnb.joblib` (2.415 byte), dan `labels.json` (20 byte).
+- Aplikasi memutar transformasi yang identik dengan data latih lewat
+  `deploy/serve.py`: normalisasi ascii, artefak format, aturan angka, pemecahan
+  kalimat, lalu lowercasing dan normalisasi slang dengan proteksi nama diri;
+  token di luar kosakata skip-gram dilewati dan vektor sisanya dirata-rata
+  sebelum masuk estimator naive bayes.
+- Dua contoh cepat: kalimat finance diklasifikasikan finance dengan skor
+  **1,000** (11 token, 9 dikenal kosakata), dan kalimat sport diklasifikasikan
+  sport dengan skor **1,000** (13 token, 10 dikenal).
+- **Parity check** pada 40 dokumen uji yang sama dengan Modeling: akurasi lewat
+  pipeline aplikasi **39/40 = 0,975**, setara hasil validasi, sehingga kemasan
+  tidak menggeser prediksi.
+- Aplikasi dipasang sebagai **Hugging Face Space** `Rhindottire/News-Classifier`
+  memakai Gradio pada perangkat **ZeroGPU** (Python 3.12) dan tercatat
+  **RUNNING**: dapat diakses di `rhindottire-news-classifier.hf.space`.
+- Cara pakai: tempel **link berita** (isi halaman diambil dengan trafilatura,
+  jeda satu detik, user agent jujur, berhenti di 403/429) atau **teks berita**
+  langsung; jawabannya kategori **sport/finance**, skor kedua kelas, dan
+  ringkasan kalimat, token, serta cakupan kosakata.
+
+Proses pengerjaan: [Book 5](book/book-5.ipynb)
