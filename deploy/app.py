@@ -6,6 +6,7 @@ import urllib.request
 from urllib.parse import urlparse
 
 import gradio as gr
+import spaces
 import trafilatura
 from serve import classify, describe, sentence_tokens
 
@@ -46,7 +47,7 @@ def fetch_text(url):
 
 
 def build_result(value, source):
-    label, scores = classify(value)
+    label, scores = classify_gpu(value)
     stats = describe(value)
     lines = [
         f"**Kategori: {label}**",
@@ -63,6 +64,11 @@ def build_result(value, source):
         ),
     ]
     return "\n".join(lines)
+
+
+@spaces.GPU(duration=10)
+def classify_gpu(value):
+    return classify(value)
 
 
 def predict(url, text):
