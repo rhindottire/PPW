@@ -53,3 +53,5 @@ data/IE/
 # Model artifacts for the deployed app live in deploy/models/;
 # the pipeline output directory stays untracked.
 data/Web-Mining/models/
+
+graphify-out

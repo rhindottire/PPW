@@ -32,6 +32,7 @@ chapters:
     sections:
       - file: IE/01-Scraping-230411100197
       - file: IE/02-RuleBased-IE-230411100197
+      - file: IE/03-MachineLearning-IE-230411100197
   - file: ML
     sections:
       - file: ML/01-Linear-Regression

@@ -107,3 +107,59 @@ terkait dengan tugas berikutnya.
 **Penugasan.** Kelas B — PN Ngawi.
 
 Proses pengerjaan: [Task 2](IE/02-RuleBased-IE-230411100197.ipynb)
+
+## Task 3 — Machine Learning IE
+
+**Maksud dan tujuan.** Mahasiswa melakukan proses ujicoba code Machine
+Learning IE, memahami aplikasi Machine Learning IE dan kode Python, memahami
+tahapan dan proses pada masing-masing Machine Learning IE, serta memahami
+resource library Machine Learning IE Python yang bisa digunakan.
+
+**Tahapan tugas.**
+
+1. Pelajari code Machine Learning IE yang disediakan pada folder ML1 maupun
+   ML2 pada [drive kelas](https://drive.google.com/drive/folders/16GKudbRKcmUgMpRpaKVKUk1sSGyT9P1n?usp=drive_link). ML1
+   memakai kombinasi fitur (word, POS, Prev, Next), sedangkan ML2 menambah
+   fitur word shape.
+2. Lakukan ujicoba untuk menjalankan code dan pastikan code bisa dijalankan
+   dengan baik sampai mendapatkan output atau hasil ekstraksi.
+3. Simpan bukti telah berhasil menjalankan code sampai terlihat output dalam
+   file pdf `IE-coba-ML1-nim.pdf` dan `IE-coba-ML2-nim.pdf`.
+4. Buat dataset sesuai format contoh menggunakan dokumen putusan hasil
+   scraping pada tugas sebelumnya sesuai PN yang dipilih.
+5. Modifikasi code (salah satu dari ML1 atau ML2) untuk dapat menjalankan
+   proses IE menggunakan dataset sendiri. Modifikasi lain bisa ditambahkan
+   jika diperlukan, termasuk menambah fitur lain.
+6. Lakukan proses ekstraksi informasi menggunakan Machine Learning sehingga
+   input data putusan dapat menghasilkan output berupa informasi entitas
+   yang dicari.
+7. Buat file PDF untuk memperlihatkan proses menjalankan code Machine
+   Learning IE beserta hasil dan berikan catatan seperlunya pada kode. Beri
+   nama file yang disimpan dengan `IE-modif-ML-nim.pdf`.
+8. Kumpulkan tugas dalam bentuk file `IE-coba-ML1-nim.pdf`,
+   `IE-coba-ML2-nim.pdf`, dan `IE-modif-ML-nim.pdf`, sesuai batas waktu yang
+   sudah ditentukan di GCR.
+
+**Indikator penilaian.**
+
+- Berhasil menunjukkan bukti sudah dapat menjalankan code ML1 dan ML2 dengan
+  baik.
+- Membuat dataset dokumen putusan sesuai PN yang dipilih sebelumnya.
+- Membuat modifikasi minimal dataset sendiri atau menambahkan fitur maupun
+  modifikasi lainnya.
+- Jika dua mahasiswa atau lebih menghasilkan scraping yang sama, nilai tidak
+  akan diberikan.
+
+**Pembagian nilai.** Nilai maksimal 100 bila aplikasi berjalan dan tugas
+dikumpulkan pada hari pertama sampai ketiga sejak assignment diposting. Nilai
+maksimal 75 bila dikumpulkan pada hari keempat dan seterusnya sampai batas
+akhir pengumpulan. Nilai 0 bila tidak mengumpulkan tugas atau pengumpulan
+melewati batas waktu.
+
+**Catatan.** Setiap mahasiswa harus berhasil melakukan proses ML IE pada
+notebook atau laptopnya masing-masing. Tugas ini berkelajutan dan saling
+terkait dengan tugas berikutnya.
+
+**Penugasan.** Kelas B — PN Ngawi.
+
+Proses pengerjaan: [Task 3](IE/03-MachineLearning-IE-230411100197.ipynb)

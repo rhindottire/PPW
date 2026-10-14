@@ -81,6 +81,9 @@ Data handling principles for the working notebooks:
 - Explore (EDA) BEFORE any dimensionality reduction or column/fitur removal.
 - Every transformation is transparent: show examples (or counts/small tables)
   BEFORE and AFTER each change.
+- Every code cell's output is followed immediately by a short markdown cell
+  explaining what that output shows (the table, figure, or counts just
+  produced); no code cell's output is left without an interpretation.
 - The model-ready dataset is the TF-IDF vector representation; no other dense
   representation is saved as the final dataset.
 - Slang/foreign normalization is context-aware: protect capitalized proper nouns
@@ -174,8 +177,9 @@ Run these checks on every finished task before showing results:
    code-derived names, tokens, or counts.
 2. `note/note-N.md` is lecture-material only and never repeats the task list.
 3. Working notebook: kernel `enWebmining`; sections match the task list; exactly
-   ONE output per code cell; every transformation shows before/after examples or
-   counts; decision tables come from executed code with real numbers.
+   ONE output per code cell, each followed by a short markdown cell
+   interpreting that output; every transformation shows before/after examples
+   or counts; decision tables come from executed code with real numbers.
 4. `book.md` numbers match the executed notebook outputs; closing line
    `Proses pengerjaan: [Book N](book/book-N.ipynb)` present.
 5. No AI fingerprints in visible deliverables: no `AGENTS.md`/`.opencode/`/
@@ -233,9 +237,10 @@ natural, human-written work:
 ## Language
 - Interact with the user in Indonesian unless asked otherwise.
 - **English** for: source code, comments, docstrings, commit messages,
-  `README.md`, `AGENTS.md`, `resource/Web-Mining/`, `intro.md`, `CRISP-DM/*`,
+  `README.md`, `AGENTS.md`, `resource/Web-Mining/`, `intro.md`,
   and build tooling/config.
 - **Indonesian (may mix with English)** for the coursework content: `note.md`,
-  `note/note-N.md`, `book.md`, `book/book-N.ipynb`, `IE.md`, and `IE/*.ipynb`.
+  `note/note-N.md`, `book.md`, `book/book-N.ipynb`, `IE.md`, `IE/*.ipynb`,
+  and the narrative prose of `CRISP-DM/*` notebooks plus `notebook/CRISP-DM.md`.
   Heading text is always English per the heading rule; only the narrative prose
   uses the language listed here.

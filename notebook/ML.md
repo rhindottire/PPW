@@ -18,3 +18,28 @@ Dari tugas minggu sebelumnya (multivariate), gunakan data tersebut untuk membuat
 11. Lakukan evaluasi sesuai pilihan yang ada pada tugas sebelumnya.
 
 Proses pengerjaan: [Task 1](ML/01-Linear-Regression.ipynb)
+
+Studi kasus
+Universitas memiliki beberapa gedung perkuliahan, selama ini pelaporan kerusakan fasilitas di
+
+ketika ac ruang kelas rusak, mahasiswa menghubungi
+ketua kelas meneruskan kepada petugas sarana dan prasarana
+petugas kemudian mencatat laporan pada buku kerja
+dan menghubungi teknisi yang di anggap sesuai
+teknisi memeriksa kerusakan
+jika kerusakannya ringan, teknisi langsung melakukan perbaikan
+tapi jika membutuhkan suku cadang, teknisi menyampaikan kebutuhan kepada petugas
+petugas mengajukan permintaan pembelian kepada bagian atau pihak yang terkait
+setelah suku cadang tersedia, teknisi melanjutkan perbaikan
+dalam prakteknya, pelapor sering menghubungi petugas berulang kali
+untuk menanyakan perkembangannya.
+beberapa laporan tidak tercatat
+laporan yang lebih mendesak tidak selalu ditangani duluan
+dan pimpinan tidak punya rekap waktu penyelesaian setiap kerusakan sarana
+
+buatkan pemodelan bisnis as is nya.
+siapa saja actor, pool, lane nya?
+input dan outputnya apa?
+sebutkan 5 pain point dari hasil pemodelan bisnis as is ini.
+cari apakah ada eliminasi, simplify, dll
+tentukan mana yang punya potensi untuk diperbaiki pada to-be
