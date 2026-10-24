@@ -108,7 +108,7 @@ terkait dengan tugas berikutnya.
 
 Proses pengerjaan: [Task 2](IE/02-RuleBased-IE-230411100197.ipynb)
 
-## Task 3 — Machine Learning IE
+## Task 3 — Machine Learning
 
 **Maksud dan tujuan.** Mahasiswa melakukan proses ujicoba code Machine
 Learning IE, memahami aplikasi Machine Learning IE dan kode Python, memahami

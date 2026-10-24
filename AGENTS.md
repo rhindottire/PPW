@@ -247,3 +247,7 @@ natural, human-written work:
   and the narrative prose of `CRISP-DM/*` notebooks plus `notebook/CRISP-DM.md`.
   Heading text is always English per the heading rule; only the narrative prose
   uses the language listed here.
+## Course Scope Clarification
+- **PPW only:** The rule "exactly ONE output per code cell, each followed by a short markdown cell interpreting that output" applies only to PPW coursework (`notebook/book/`, `book.md`, `note.md`). 
+- **IE/ML separate:** Information Extraction (`notebook/IE/`, `IE.md`) and Machine Learning (`notebook/ML/`, `ML.md`) follow their own instruction sets in `resource/IE/` and course materials. Do not enforce the PPW cell-output pattern on IE/ML notebooks.
+- **Readable lecture files:** Every `resource/IE/PENJELASAN TUGAS *.pdf` must have a matching `.md` file with the same base name (converted so agents can read it without a binary viewer).
