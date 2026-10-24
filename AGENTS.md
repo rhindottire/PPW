@@ -217,6 +217,9 @@ natural, human-written work:
 - Treat these files as authoritative context for how the project is interpreted.
 - At the start of a new session, recall PPW context from Supermemory
   (`search_memory`) before working.
+- Before any IE coursework, read `docs/ie-task-log.md` (task status, artefacts,
+  decisions, known traps) instead of re-reading notebooks and data, and update
+  it at the end of every IE task.
 
 ## Available Agents
 - JARVIS (main agent) handles all coding and inline QA; the routine workflow runs

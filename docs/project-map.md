@@ -63,7 +63,9 @@ principles live in `AGENTS.md`; concrete paths, counts, and structures live here
 - `img/` — web book logo (`Doo.jpg`).
 - `requirements.txt` — pinned package list (gensim is installed via a separate
   script — see section `[12]`).
-- `docs/` — this project map (sibling to `AGENTS.md`, not part of the web book).
+- `docs/` — this project map plus `ie-task-log.md`, the IE task history (status,
+  artefacts, decisions, traps; read it before IE work). Sibling to `AGENTS.md`,
+  not part of the web book.
 
 ## Separate Courses
 

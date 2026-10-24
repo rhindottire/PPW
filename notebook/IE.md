@@ -163,3 +163,46 @@ terkait dengan tugas berikutnya.
 **Penugasan.** Kelas B — PN Ngawi.
 
 Proses pengerjaan: [Task 3](IE/03-MachineLearning-IE-230411100197.ipynb)
+
+## Task 4 — Dataset Annotation
+
+**Maksud dan tujuan.** Mahasiswa melakukan proses membuat dataset, memahami
+konsep dalam membuat dataset, memahami tahapan dan langkah dalam membuat
+dataset, serta memahami resource Python yang bisa digunakan.
+
+**Tahapan tugas.**
+
+1. Lakukan tahapan untuk membuat dataset dari 200 putusan pidana umum PN yang
+   sudah dipilih sebelumnya.
+2. Lakukan anotasi pada 12 entitas pada masing-masing putusan sesuai dengan
+   skema IOB pada kolom tag tabel.
+3. Lakukan proses pemeriksaan dataset dengan membagikan dataset kepada minimal
+   2 anggota dari kelompok yang sudah ditentukan.
+4. Kumpulkan dataset dalam bentuk file csv. Beri nama file dataset
+   `PN-BKL-nim.csv` (BKL adalah contoh kode jika dataset dari PN Bangkalan, PN
+   yang lain menyesuaikan). Tambahkan satu file txt yang berisi catatan nama PN,
+   waktu scrapping, jumlah putusan, dan nama 2 orang anggota kelompok yang
+   melakukan pemeriksaan dataset.
+5. Kumpulkan tugas sesuai batas waktu yang sudah ditentukan di GCR.
+
+**Indikator penilaian.**
+
+- Jumlah putusan sesuai arahan sebanyak 200 putusan.
+- Dataset sudah dianotasi sesuai skema IOB.
+- Dataset sudah benar-benar dilakukan pemeriksaan oleh dua anggota kelompok
+  sesuai catatan di file txt.
+- Jika masih terjadi 2 atau lebih mahasiswa dengan hasil scraping yang sama,
+  nilai tidak akan diberikan.
+
+**Pembagian nilai.** Nilai maksimal 100 untuk dataset sesuai indikator
+penilaian. Nilai maksimal 75 untuk dataset yang tidak sesuai dengan indikator
+penilaian. Nilai 0 bagi yang tidak mengumpulkan tugas atau tidak sesuai batas
+waktu yang ditentukan.
+
+**Catatan.** Pastikan setiap mahasiswa membuat dataset ini masing-masing. Tugas
+ini akan berkelanjutan dan saling terkait dengan tugas berikutnya serta akan
+digunakan dalam UAS.
+
+**Penugasan.** Kelas B — PN Ngawi.
+
+Proses pengerjaan: [Task 4](IE/04-Dataset-230411100197.ipynb)
