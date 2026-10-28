@@ -1,208 +1,56 @@
 # Information Extraction
 
-Ringkasan instruksi setiap tugas, disusun dari PDF penjelasan tugas resmi
-dari dosen. Proses pengerjaan lengkap tersedia pada notebook masing-masing.
-
 ## Task 1 — Court Scraping
 
-**Maksud dan tujuan.** Mahasiswa melakukan proses ujicoba code scraping,
-memahami aplikasi scraping dan kode Python, memahami tahapan proses pada
-masing-masing kode scraping, serta memahami resource library scraping Python
-yang bisa digunakan.
+**Objective.** Get metadata for general criminal court decisions from one selected District Court (Pengadilan Negeri) in East Java.
 
-**Tahapan tugas.**
+**What to do.**
+1. Coordinate with class/group leader to pick a District Court in East Java. Avoid picking the same court as others.
+2. Study the scraping code provided in the [class drive](https://drive.google.com/drive/folders/1StUCQDNn7Gp7BG9yHiCVwMOojlZ4EDap?usp=sharing).
+3. Get the URL for the "Pidana Umum" list for the chosen court via the MA site:
+   - Open <https://putusan3.mahkamahagung.go.id/pengadilan/profil/pengadilan/pt-surabaya.html>
+   - Pick the target PN from the left sidebar.
+   - Click/select "Pidana Umum" in the left sidebar once the PN appears (name shown top-left).
+   - Take the URL that appears at that point to run `getURLlist.ipynb`.
+4. Run `getURLlist.ipynb` then `getMETAINFO.ipynb`. Modifications are allowed as long as the core logic to collect metadata from decision detail pages remains.
+5. Collect metadata for at least **200** decisions. The dataset must be **different** from others.
 
-1. Pilih satu Pengadilan Negeri (PN) di Jawa Timur. Pembagian PN dan nomor putusan
-   dikoordinasikan dengan ketua kelas dan ketua kelompok agar tidak ada dua
-   mahasiswa atau lebih yang melakukan scraping nomor putusan dari PN yang sama.
-2. Pelajari code scraping yang disediakan pada
-   [drive kelas](https://drive.google.com/drive/folders/1StUCQDNn7Gp7BG9yHiCVwMOojlZ4EDap?usp=sharing).
-3. Lakukan proses scraping untuk mendapatkan data pidana umum dari PN yang
-   dipilih. Untuk mencapai posisi data pidana umum pada PN:
-   1. Akses link yang menampilkan semua PN di Jawa Timur:
-      <https://putusan3.mahkamahagung.go.id/pengadilan/profil/pengadilan/pt-surabaya.html>
-   2. Pada leftbar dengan judul pengadilan, klik atau pilih PN yang dituju.
-   3. Jika tampilan PN sudah muncul — ditandai dengan kemunculan nama PN di
-      pojok kiri atas — klik atau pilih "pidana umum" pada leftbar.
-   4. Jika nama PN dan tulisan PIDANA UMUM sudah muncul, ambil URL yang muncul.
-      Dari titik URL inilah `getURLlist.ipynb` dijalankan.
-   5. Kemudian jalankan `getMETAINFO.ipynb`. Modifikasi pada kode diperbolehkan,
-      selama inti kode tetap mengambil meta info dari halaman detail putusan.
-      Setiap mahasiswa minimal mengambil meta info dari 200 putusan, dan pastikan
-      data putusan yang diambil berbeda dengan teman yang lain.
-4. Buat file PDF yang memperlihatkan proses menjalankan kode beserta hasilnya,
-   dan berikan catatan seperlunya pada kode. Pada browser Opera bisa memakai menu
-   page → save as pdf, sedangkan browser lain memakai menu print lalu pilih
-   bentuk pdf. Beri nama file `IE-Scraping-nim.pdf`.
-5. Kumpulkan tugas dalam dua bentuk: penjelasan kode `IE-Scraping-nim.pdf`
-   dikumpulkan via assignment GCR, dan hasil scraping dikumpulkan dalam bentuk
-   csv `IE-NamaPN-nim.csv` yang diletakkan pada satu folder kelas.
-6. Kumpulkan tugas sesuai batas waktu yang ditentukan di GCR.
-
-**Indikator penilaian.**
-
-- Kelengkapan catatan penjelasan dari setiap proses pada kode.
-- Hasil meta info yang diperoleh, minimal 200 putusan.
-- Jika dua mahasiswa atau lebih menghasilkan scraping yang sama, nilai tidak
-  akan diberikan.
-
-**Pembagian nilai.** Nilai maksimal 100 bila aplikasi berjalan dan tugas
-dikumpulkan pada hari pertama sampai ketiga sejak assignment diposting. Nilai
-maksimal 75 bila dikumpulkan pada hari keempat dan seterusnya sampai batas
-akhir pengumpulan. Nilai 0 bila tidak mengumpulkan tugas atau pengumpulan
-melewati batas waktu.
-
-**Catatan.** Setiap mahasiswa harus berhasil melakukan proses scraping pada
-notebook atau laptopnya masing-masing. Tugas ini berkelajutan dan saling
-terkait dengan tugas berikutnya.
-
-**Penugasan.** Kelas B — PN Ngawi.
-
-Proses pengerjaan: [Task 1](IE/01-Scraping-230411100197.ipynb)
+**Process:** [Task 1](IE/01-Scraping-230411100197.ipynb)
 
 ## Task 2 — Entity Extraction
 
-**Maksud dan tujuan.** Mahasiswa melakukan proses ujicoba code rule-based
-IE, memahami aplikasi rule-based IE dan kode Python, memahami tahapan
-proses pada masing-masing kode rule-based IE, serta memahami resource
-library rule-based IE Python yang bisa digunakan.
+**Objective.** Apply rule-based Information Extraction to decision documents from Task 1.
 
-**Tahapan tugas.**
+**What to do.**
+1. Study the rule-based IE code in the [class drive](https://drive.google.com/drive/folders/1g8vkKr7k1YlPsT25-vTaSGM9W4eYieEz?usp=drive_link).
+2. Run and verify the provided code works end-to-end.
+3. Convert decision PDFs from Task 1 to TXT format.
+4. Run rule-based extraction to extract the target entities from each decision.
+5. Do this for at least **5** decisions.
 
-1. Pelajari code rule-based IE yang disediakan pada
-   [drive kelas](https://drive.google.com/drive/folders/1g8vkKr7k1YlPsT25-vTaSGM9W4eYieEz?usp=drive_link).
-2. Lakukan ujicoba untuk menjalankan code dan pastikan code bisa dijalankan
-   dengan baik sampai mendapatkan output atau hasil ekstraksi.
-3. Buat code untuk melakukan konversi bentuk data dari file PDF putusan,
-   hasil dari masing-masing tugas scraping sebelumnya, menjadi bentuk TXT.
-4. Lakukan proses ekstraksi informasi menggunakan rule-based sehingga input
-   data putusan dapat menghasilkan output berupa informasi entitas yang
-   dicari.
-5. Buat file PDF untuk memperlihatkan proses menjalankan code rule-based IE
-   beserta hasil dan berikan catatan seperlunya pada kode. Pada browser Opera
-   bisa memakai menu page → save as pdf, sedangkan browser lain memakai menu
-   print lalu pilih bentuk pdf. Beri nama file `IE-RuleBased-nim.pdf`.
-6. Kumpulkan tugas dalam bentuk penjelasan code `IE-RuleBased-nim.pdf` dan
-   juga 5 (lima) hasil/output rule-based IE dalam bentuk
-   `IE-RuleBased-Hasil-nim.pdf`.
-7. Kumpulkan tugas sesuai batas waktu yang sudah ditentukan di GCR.
-
-**Indikator penilaian.**
-
-- Kelengkapan catatan penjelasan dari setiap proses pada kode.
-- Hasil input dan output yang diperoleh, minimal 5 dokumen putusan.
-- Jika dua mahasiswa atau lebih menghasilkan scraping yang sama, nilai
-  tidak akan diberikan.
-
-**Pembagian nilai.** Nilai maksimal 100 bila aplikasi berjalan dan tugas
-dikumpulkan pada hari pertama sampai ketiga sejak assignment diposting. Nilai
-maksimal 75 bila dikumpulkan pada hari keempat dan seterusnya sampai batas
-akhir pengumpulan. Nilai 0 bila tidak mengumpulkan tugas atau pengumpulan
-melewati batas waktu.
-
-**Catatan.** Setiap mahasiswa harus berhasil melakukan proses rule-based IE
-pada notebook atau laptopnya masing-masing. Tugas ini berkelajutan dan saling
-terkait dengan tugas berikutnya.
-
-**Penugasan.** Kelas B — PN Ngawi.
-
-Proses pengerjaan: [Task 2](IE/02-RuleBased-IE-230411100197.ipynb)
+**Process:** [Task 2](IE/02-RuleBased-IE-230411100197.ipynb)
 
 ## Task 3 — Machine Learning
 
-**Maksud dan tujuan.** Mahasiswa melakukan proses ujicoba code Machine
-Learning IE, memahami aplikasi Machine Learning IE dan kode Python, memahami
-tahapan dan proses pada masing-masing Machine Learning IE, serta memahami
-resource library Machine Learning IE Python yang bisa digunakan.
+**Objective.** Apply Machine Learning-based Information Extraction to decision documents.
 
-**Tahapan tugas.**
+**What to do.**
+1. Study ML code from ML1 and ML2 in the [class drive](https://drive.google.com/drive/folders/16GKudbRKcmUgMpRpaKVKUk1sSGyT9P1n?usp=drive_link) (ML1 uses word/POS/Prev/Next features, ML2 adds word shape features).
+2. Run both ML1 and ML2 to verify they produce output.
+3. Create a dataset in the required format using decisions from your chosen PN (from Task 1).
+4. Modify either ML1 or ML2 to run on your own dataset. You may add features/modifications if needed.
+5. Run ML-based extraction to get the target entities.
 
-1. Pelajari code Machine Learning IE yang disediakan pada folder ML1 maupun
-   ML2 pada [drive kelas](https://drive.google.com/drive/folders/16GKudbRKcmUgMpRpaKVKUk1sSGyT9P1n?usp=drive_link). ML1
-   memakai kombinasi fitur (word, POS, Prev, Next), sedangkan ML2 menambah
-   fitur word shape.
-2. Lakukan ujicoba untuk menjalankan code dan pastikan code bisa dijalankan
-   dengan baik sampai mendapatkan output atau hasil ekstraksi.
-3. Simpan bukti telah berhasil menjalankan code sampai terlihat output dalam
-   file pdf `IE-coba-ML1-nim.pdf` dan `IE-coba-ML2-nim.pdf`.
-4. Buat dataset sesuai format contoh menggunakan dokumen putusan hasil
-   scraping pada tugas sebelumnya sesuai PN yang dipilih.
-5. Modifikasi code (salah satu dari ML1 atau ML2) untuk dapat menjalankan
-   proses IE menggunakan dataset sendiri. Modifikasi lain bisa ditambahkan
-   jika diperlukan, termasuk menambah fitur lain.
-6. Lakukan proses ekstraksi informasi menggunakan Machine Learning sehingga
-   input data putusan dapat menghasilkan output berupa informasi entitas
-   yang dicari.
-7. Buat file PDF untuk memperlihatkan proses menjalankan code Machine
-   Learning IE beserta hasil dan berikan catatan seperlunya pada kode. Beri
-   nama file yang disimpan dengan `IE-modif-ML-nim.pdf`.
-8. Kumpulkan tugas dalam bentuk file `IE-coba-ML1-nim.pdf`,
-   `IE-coba-ML2-nim.pdf`, dan `IE-modif-ML-nim.pdf`, sesuai batas waktu yang
-   sudah ditentukan di GCR.
-
-**Indikator penilaian.**
-
-- Berhasil menunjukkan bukti sudah dapat menjalankan code ML1 dan ML2 dengan
-  baik.
-- Membuat dataset dokumen putusan sesuai PN yang dipilih sebelumnya.
-- Membuat modifikasi minimal dataset sendiri atau menambahkan fitur maupun
-  modifikasi lainnya.
-- Jika dua mahasiswa atau lebih menghasilkan scraping yang sama, nilai tidak
-  akan diberikan.
-
-**Pembagian nilai.** Nilai maksimal 100 bila aplikasi berjalan dan tugas
-dikumpulkan pada hari pertama sampai ketiga sejak assignment diposting. Nilai
-maksimal 75 bila dikumpulkan pada hari keempat dan seterusnya sampai batas
-akhir pengumpulan. Nilai 0 bila tidak mengumpulkan tugas atau pengumpulan
-melewati batas waktu.
-
-**Catatan.** Setiap mahasiswa harus berhasil melakukan proses ML IE pada
-notebook atau laptopnya masing-masing. Tugas ini berkelajutan dan saling
-terkait dengan tugas berikutnya.
-
-**Penugasan.** Kelas B — PN Ngawi.
-
-Proses pengerjaan: [Task 3](IE/03-MachineLearning-IE-230411100197.ipynb)
+**Process:** [Task 3](IE/03-MachineLearning-IE-230411100197.ipynb)
 
 ## Task 4 — Dataset Annotation
 
-**Maksud dan tujuan.** Mahasiswa melakukan proses membuat dataset, memahami
-konsep dalam membuat dataset, memahami tahapan dan langkah dalam membuat
-dataset, serta memahami resource Python yang bisa digunakan.
+**Objective.** Build an annotated dataset for sequence labeling (IOB) from court decisions.
 
-**Tahapan tugas.**
+**What to do.**
+1. Take **200** general criminal decisions from the PN chosen in Task 1.
+2. Annotate **12 entities** for each decision following the **IOB** schema in the provided table.
+3. Have the dataset checked by **at least 2** members of the assigned group.
+4. Prepare the annotated dataset files with group check info.
 
-1. Lakukan tahapan untuk membuat dataset dari 200 putusan pidana umum PN yang
-   sudah dipilih sebelumnya.
-2. Lakukan anotasi pada 12 entitas pada masing-masing putusan sesuai dengan
-   skema IOB pada kolom tag tabel.
-3. Lakukan proses pemeriksaan dataset dengan membagikan dataset kepada minimal
-   2 anggota dari kelompok yang sudah ditentukan.
-4. Kumpulkan dataset dalam bentuk file csv. Beri nama file dataset
-   `PN-BKL-nim.csv` (BKL adalah contoh kode jika dataset dari PN Bangkalan, PN
-   yang lain menyesuaikan). Tambahkan satu file txt yang berisi catatan nama PN,
-   waktu scrapping, jumlah putusan, dan nama 2 orang anggota kelompok yang
-   melakukan pemeriksaan dataset.
-5. Kumpulkan tugas sesuai batas waktu yang sudah ditentukan di GCR.
-
-**Indikator penilaian.**
-
-- Jumlah putusan sesuai arahan sebanyak 200 putusan.
-- Dataset sudah dianotasi sesuai skema IOB.
-- Dataset sudah benar-benar dilakukan pemeriksaan oleh dua anggota kelompok
-  sesuai catatan di file txt.
-- Jika masih terjadi 2 atau lebih mahasiswa dengan hasil scraping yang sama,
-  nilai tidak akan diberikan.
-
-**Pembagian nilai.** Nilai maksimal 100 untuk dataset sesuai indikator
-penilaian. Nilai maksimal 75 untuk dataset yang tidak sesuai dengan indikator
-penilaian. Nilai 0 bagi yang tidak mengumpulkan tugas atau tidak sesuai batas
-waktu yang ditentukan.
-
-**Catatan.** Pastikan setiap mahasiswa membuat dataset ini masing-masing. Tugas
-ini akan berkelanjutan dan saling terkait dengan tugas berikutnya serta akan
-digunakan dalam UAS.
-
-**Penugasan.** Kelas B — PN Ngawi.
-
-Proses pengerjaan: [Task 4](IE/04-Dataset-230411100197.ipynb)
+**Process:** [Task 4](IE/04-Dataset-230411100197.ipynb)
