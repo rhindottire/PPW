@@ -161,3 +161,33 @@ Proses pengerjaan: [Book 4](book/book-4.ipynb)
   ringkasan kalimat, token, serta cakupan kosakata.
 
 Proses pengerjaan: [Book 5](book/book-5.ipynb)
+
+## Book 6 — Graph Mining
+
+- **Pemodelan graf 5 simpul** (`A`, `B`, `C`, `D`, `E`) dibangun menggunakan `networkx`
+  untuk menganalisis struktur topologi jaringan web secara simetris (*undirected*, 6 sisi)
+  maupun asimetris berarah (*directed*, 8 busur terkoneksi kuat).
+- **Matriks Ketetanggaan (*Adjacency Matrix*)**: Membuktikan sifat simetri matriks pada
+  graf tidak berarah ($A_{ij} = A_{ji}$) berbanding asimetri pada graf berarah ($A_{ij} \neq A_{ji}$),
+  di mana jumlahan baris memetakan *out-degree* dan jumlahan kolom memetakan *in-degree*.
+- **Analisis Derajat & Distribusi**:
+  - *Undirected*: Simpul `A`, `B`, dan `C` berderajat tertinggi (3), `D` (2), dan `E` (1);
+    rata-rata derajat $\langle k \rangle = \mathbf{2,4000}$; distribusi derajat berpusat
+    pada $k=3$ (**60%** atau 3 simpul), sedangkan $k=1$ dan $k=2$ masing-masing 20%.
+  - *Directed*: Simpul `A` menjadi pusat *out-degree* tertinggi (**3**), `C` menjadi pusat
+    *in-degree* tertinggi (**3**); rata-rata derajat masuk dan keluar $\langle k_{\text{in}} \rangle = \langle k_{\text{out}} \rangle = \mathbf{1,6000}$;
+    distribusi $P(k_{\text{in}}=1) = 60\%$ dan $P(k_{\text{out}}=1) = 40\%$.
+- **Koefisien Kluster**: Simpul `D` mencapai kepadatan antartetangga maksimal (**1,0000**)
+  pada kedua varian graf karena pasangannya ($A$ dan $C$) saling terhubung membentuk
+  siklus segitiga tertutup sempurna; koefisien kluster rata-rata global bernilai **0,5333**
+  (tidak berarah) dan **0,5356** (berarah).
+- **Kepadatan Graf (*Graph Density*)**: Graf tidak berarah mencakup **0,6000** (6 dari 10 sisi
+  maksimal), sedangkan graf berarah mencakup **0,4000** (8 dari 20 busur maksimal).
+- **Diameter & Jarak Lintasan Terpendek**:
+  - *Undirected*: Diameter bernilai **3 langkah** ($D$ ke $E$), dengan rata-rata lintasan terpendek **1,5000 langkah**.
+  - *Directed*: Diameter bernilai **4 langkah** ($B$ ke $D$ via $E \to A$), dengan rata-rata lintasan terpendek **1,8500 langkah** pada jaringan *strongly connected*.
+- **Karakterisasi Graf**: Sintesis metrik mengonfirmasi sifat efek dunia kecil (*small-world*, diameter pendek dengan klusterisasi tinggi), struktur *core-periphery* pada model tidak berarah, serta hierarki *hub-authority* pada model berarah yang menjadi landasan algoritma PageRank dan HITS.
+- Tabel komparasi metrik memperlihatkan resolusi struktural asimetri yang menjadi fondasi
+  algoritma web structure mining.
+
+Proses pengerjaan: [Book 6](book/book-6.ipynb)

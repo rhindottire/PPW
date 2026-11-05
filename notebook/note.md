@@ -84,3 +84,21 @@ Catatan materi kuliah 4: [Note 4](note/note-4.md)
    dan lainnya).
 
 Catatan materi kuliah 5: [Note 5](note/note-5.md)
+
+## Note 6 — Web Structure Mining
+
+1. Bangun representasi graf web menggunakan model tidak berarah (*undirected*)
+   dan model berarah (*directed*) menggunakan library `networkx`.
+2. Bentuk matriks ketetanggaan (*adjacency matrix*), uji pembuktian simetri
+   matriks ($A = A^T$ pada graf tidak berarah vs $A \neq A^T$ pada graf
+   berarah), serta petakan jumlahan baris (*out-degree*) dan kolom (*in-degree*).
+3. Hitung metrik derajat lokal dan sebaran distribusi derajat $P(k)$ untuk
+   menganalisis konsentrasi simpul hub dan otoritas.
+4. Hitung metrik makro jaringan: koefisien klaster rata-rata (*clustering
+   coefficient*), kepadatan graf (*graph density*), lintasan terpendek
+   rata-rata, serta diameter jaringan.
+5. Karakterisasi struktur graf untuk mengonfirmasi sifat dunia kecil
+   (*small-world*) dan hierarki *hub-authority* yang menjadi dasar perankingan
+   web.
+
+Catatan materi kuliah 6: [Note 6](note/note-6.md)

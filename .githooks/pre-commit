@@ -28,8 +28,13 @@ run .venv/bin/ruff check --no-cache scripts notebook
 run .venv/bin/ruff format --check scripts
 run .venv/bin/pyright scripts
 
+# Layer 3 gate: run automated tests if tests/ directory exists
+if [ -d tests ] && [ -x .venv/bin/pytest ]; then
+  run .venv/bin/pytest -q
+fi
+
 if [ "$fail" -ne 0 ]; then
-  echo "pre-commit: static checks failed; commit blocked." >&2
+  echo "pre-commit: static checks or automated tests failed; commit blocked." >&2
   echo "Fix the findings above, then stage the changes and commit again." >&2
   exit 1
 fi
