@@ -130,6 +130,14 @@ Proses pengerjaan: [Book 4](book/book-4.ipynb)
 
 ## Book 5 — Model Deployment
 
+- **Komparasi representasi** pada data berstrata 160 latih dan 40 uji membuktikan
+  mitigasi *curse of dimensionality*: Sparse TF-IDF (3.588 dimensi, MultinomialNB)
+  mencapai akurasi 1,000, PCA TF-IDF (118 dimensi, GaussianNB) mencapai 0,950,
+  sedangkan Skip-Gram Word2Vec (100 dimensi padat, GaussianNB) mencapai akurasi
+  **0,975** (39 dari 40 dokumen benar).
+- **Grid search hyperparameter tuning** 5-fold CV mengonfirmasi parameter variansi
+  optimal GaussianNB pada `var_smoothing = 1e-11` dengan skor CV **0,994** dan
+  akurasi uji **0,975**.
 - Empat artefak pemenang dikemas ke folder distribusi `deploy/models/`:
   `word2vec.model` (1.656.252 byte), `protected.json` (12.981 byte),
   `gnb.joblib` (2.415 byte), dan `labels.json` (20 byte).
@@ -141,9 +149,9 @@ Proses pengerjaan: [Book 4](book/book-4.ipynb)
 - Dua contoh cepat: kalimat finance diklasifikasikan finance dengan skor
   **1,000** (11 token, 9 dikenal kosakata), dan kalimat sport diklasifikasikan
   sport dengan skor **1,000** (13 token, 10 dikenal).
-- **Parity check** pada 40 dokumen uji yang sama dengan Modeling: akurasi lewat
-  pipeline aplikasi **39/40 = 0,975**, setara hasil validasi, sehingga kemasan
-  tidak menggeser prediksi.
+- **Parity check** pada 40 dokumen uji yang sama dengan evaluasi model: akurasi
+  lewat pipeline aplikasi persis **39/40 = 0,975**, membuktikan kemasan servis
+  bebas bias dan tidak menggeser prediksi.
 - Aplikasi dipasang sebagai **Hugging Face Space** `Rhindottire/News-Classifier`
   memakai Gradio pada perangkat **ZeroGPU** (Python 3.12) dan tercatat
   **RUNNING**: dapat diakses di `rhindottire-news-classifier.hf.space`.

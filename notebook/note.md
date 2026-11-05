@@ -7,9 +7,12 @@ tugas di bawah ini.
 
 1. Membuat repositori web mining di GitHub dengan nama `ppw`,
    `github.com/<username>/ppw`.
-2. Membuat halaman statis (webstatis) berisi:
+2. Membuat halaman statis (`intro.md`) berisi:
    - profil pribadi: nama, NPM, email
    - pengantar web mining
+3. Melakukan *crawling* dataset berita (100 *sport*, 100 *finance*) dari
+   detik.com dengan mematuhi etika crawling (jeda $\ge 1$ detik, `trafilatura`,
+   bebas duplikasi baris dan URL).
 
 Catatan materi kuliah 1: [Note 1](note/note-1.md)
 
