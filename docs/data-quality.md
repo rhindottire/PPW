@@ -1,11 +1,6 @@
----
-name: data-quality
-description: Text-noise taxonomy and strict EDA/data-quality checklist for the PPW news corpus. Use whenever cleaning or exploring Indonesian text data (CRISP-DM stages, book tasks, or preprocessing), to classify artifacts, protect proper nouns, decide foreign-language policy, and produce evidence-driven decision tables.
----
-
 # Data Quality & Text-Noise Taxonomy
 
-Project-wide rules for turning the raw crawl (`data/crawling_detik.csv`) into a
+Project-wide rules for turning the raw crawl (`data/Web-Mining/crawling_detik.csv`) into a
 clean, defensible text corpus. Applies to every notebook that cleans or
 explores text (book tasks, CRISP-DM stages, future analyses), not just one task.
 
@@ -20,7 +15,7 @@ explores text (book tasks, CRISP-DM stages, future analyses), not just one task.
 4. **Preserve-first foreign language.** Keep foreign sentences, quotes, and
    loanwords unless a token meets all criteria to translate (below).
 
-## Text-noise taxonomy
+## Text-Noise Taxonomy
 Classify artifacts after a naive cleanup like
 `re.sub(r"[^a-z\s]", " ", text.lower())`, then tokenize with length filter.
 
@@ -33,7 +28,7 @@ Classify artifacts after a naive cleanup like
 | Slang-collision | token that is a slang-dictionary target AND a capitalized name in the source | Protect via original-casing evidence (see proper-noun rule) |
 | Token-length residue | `a`, `i`, `u` from headers/abbrev | Enforce `min length = 2`; document count |
 
-## Proper-noun protection (data-driven)
+## Proper-Noun Protection (Data-Driven)
 - A token is a name candidate if it appears capitalized mid-sentence in the
   **original** text and has no consistently lowercase counter-evidence.
 - Multi-word names: consecutive capitalized tokens, with lowercase
@@ -42,7 +37,7 @@ Classify artifacts after a naive cleanup like
 - Protected names never undergo slang replacement or translation, even when a
   slang equivalent exists (`bca` vs `baca`, name tokens vs noun tokens).
 
-## Foreign-language policy
+## Foreign-Language Policy
 1. Detect per **sentence** with `langid`; treat `{id, ms}` as Indonesian.
 2. Keep sentences/quotes in their original language; document why (context
    preservation).
@@ -52,7 +47,7 @@ Classify artifacts after a naive cleanup like
    that has a single natural Indonesian equivalent, proven by context windows.
    Otherwise preserve and document. Zero translations is a valid outcome.
 
-## Strict EDA checklist
+## Strict EDA Checklist
 Run these before finalizing datasets (structural checks already covered in
 `CRISP-DM/EDA.ipynb`):
 - [ ] Missing values, duplicate rows/URLs, sequential `id`, label balance.
@@ -67,6 +62,6 @@ Run these before finalizing datasets (structural checks already covered in
 
 ## Output
 Final model-ready dataset only as TF-IDF sparse representation, saved under
-`data/` (`.npz`, feature list, doc labels). When a notebook must show
+`data/Web-Mining/` (`.npz`, feature list, doc labels). When a notebook must show
 discovery, keep numbers and decision tables inside the notebook — never in
 `note.md` or `book.md`.

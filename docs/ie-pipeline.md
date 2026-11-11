@@ -1,8 +1,3 @@
----
-name: information-extraction
-description: Information Extraction (IE) pipeline for Indonesian legal court documents. Use when working on resource/IE tasks — scraping, rule-based extraction, dataset/labelling, machine learning (POS, CRF), deep learning (bi-LSTM), or transformer (BERT) fine-tuning — including verification that provided code actually runs.
----
-
 # Information Extraction Pipeline
 
 The IE course deliverable list lives in `resource/IE/`. The pipeline flows:
@@ -80,9 +75,3 @@ source code the lecturer provided; the goal is proving it runs.
 - Preserve-first foreign/hilanguage handling; translate only when every
   occurrence shares one non-name meaning with a single Indonesian
   equivalent.
-
-## Related Skills
-
-- `data-quality` — text-noise taxonomy and strict EDA checklist.
-- `data-preprocessing` — tokenization, stopword removal, and stemming for IR.
-- `crawling` — polite crawl workflow (delays, ethics) for the scraping stage.

@@ -48,9 +48,7 @@ All coursework must read naturally as human-written work (pass global 6-Layer De
 
 ## Available Agents & Reusable Skills
 - Core behaviors and governance follow global brain: `~/.gemini/config/AGENTS.md`.
-- Project skills live in `.opencode/skills/`:
-  - `data-quality`: Text-noise taxonomy and strict EDA checklist for Indonesian news corpus.
-  - `data-preprocessing`: IR snippets (tokenization, stopwords, stemming, TF-IDF).
-  - `crawling`: Trafilatura scraping patterns and ethics.
-  - `information-extraction`: IE sub-project pipeline and verification.
-- Before IE coursework, read `docs/ie-task-log.md` (task status, artifacts, known traps) and update it upon completion.
+- Project domain guides and standards live in `docs/`:
+  - `docs/data-quality.md`: Text-noise taxonomy and strict EDA checklist for Indonesian news corpus.
+  - `docs/ie-pipeline.md`: IE sub-project pipeline and verification workflow.
+  - `docs/ie-task-log.md`: IE task status, artifacts, and known traps (read before coursework and update upon completion).
