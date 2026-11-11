@@ -1,3 +1,1 @@
-# Frozen backups of the CRISP-DM notebooks must stay byte-identical to their
-# sources under notebook/, which ruff format does not check.
-extend-exclude = ["scripts/crisp-dm-backup"]
+cache-dir = "~/.cache/ruff"

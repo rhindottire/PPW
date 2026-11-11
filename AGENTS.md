@@ -5,7 +5,7 @@
 - Key Commands:
   - Run Notebook: `jupyter lab`
   - Re-crawl: `python scripts/run_crawl.py`
-  - Orange Pipeline: `.venv-orange/bin/python scripts/orange-task3/run_pipeline.py`
+  - Orange Pipeline: `~/.local/share/venvs/ppw-orange/bin/python scripts/orange-task3/run_pipeline.py` (Archived Task 3)
   - Lint & Format: `.venv/bin/ruff check scripts notebook` && `.venv/bin/ruff format --check scripts`
   - Type Check: `.venv/bin/pyright scripts` && `.venv/bin/pyrefly check`
   - Pre-commit Gate: `.githooks/pre-commit` (enforces Ruff, Pyright, and dynamic Pytest)
