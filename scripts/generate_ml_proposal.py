@@ -724,6 +724,95 @@ def build_proposal_document(toc_page_map: dict[str, str] | None = None) -> DocOb
     )
 
     add_body(
+        "Berdasarkan seluruh hasil eksplorasi data understanding di atas, disusunlah matriks sintesis komprehensif yang memetakan "
+        "temuan fakta empiris ke rencana aksi komputasi konkret pada tahap Data Preparation, Modeling, hingga Deployment "
+        "pada dokumen laporan akhir (Tabel 2.2).",
+        indent=True,
+    )
+
+    # Tabel 2.2 Matriks Sintesis Temuan Data Understanding dan Rencana Solusi
+    add_table_title(
+        "Tabel 2.2 Matriks Sintesis Temuan Data Understanding dan Rencana Solusi di Laporan Akhir"
+    )
+    tbl_synth = doc.add_table(rows=7, cols=5)
+    tbl_synth.alignment = WD_TABLE_ALIGNMENT.CENTER
+    synth_data = [
+        (
+            "No.",
+            "Dimensi Temuan",
+            "Fakta Empiris & Statistik",
+            "Risiko terhadap Pemodelan",
+            "Rencana Aksi Solusi di Laporan Akhir",
+        ),
+        (
+            "1.",
+            "Label Target Transisi (Enrolled)",
+            "794 data (17,9%) belum berstatus kelulusan definitif",
+            "Ambiguitas label (label noise) merusak performa biner",
+            "Isolasi 794 sampel Enrolled ke kolam simulasi deployment; gunakan 3.630 sampel definitif untuk pelatihan.",
+        ),
+        (
+            "2.",
+            "Korelasi Beban SKS Semester 1 & 2",
+            "Korelasi SKS lulus antar-semester sangat tinggi (r > 0,85 s.d. 0,94)",
+            "Multikolinearitas dan redundansi dimensi prediktor",
+            "Rekayasa 4 fitur rasio kelulusan SKS dan delta nilai antar-semester pada tahap Data Preparation.",
+        ),
+        (
+            "3.",
+            "Tunggakan SPP & Debitur",
+            "SPP tertunggak melonjakkan angka putus studi hingga 86,6%",
+            "Fitur dominan yang berisiko menenggelamkan fitur lain",
+            "Pertahankan skala asli biner pada Decision Tree untuk ekstraksi indikator aturan keputusan konkret.",
+        ),
+        (
+            "4.",
+            "Proteksi Pembiayaan Beasiswa",
+            "Penerima beasiswa mencatat tingkat kelulusan 76,2% (DO hanya 11,8%)",
+            "Pembeda signifikan yang rawan terdistorsi transformasi",
+            "Sertakan fitur beasiswa sebagai prediktor kunci tanpa transformasi destruktif.",
+        ),
+        (
+            "5.",
+            "Pencilan Usia Jalur M23",
+            "Usia pendaftaran s.d. 70 tahun dengan 442 outlier IQR (> 34 tahun)",
+            "Distorsi fungsi jarak Euclidean pada algoritma KNN",
+            "Kebijakan No Trimming Policy; terapkan StandardScaler pada KNN dan skala asli pada Decision Tree.",
+        ),
+        (
+            "6.",
+            "Disparitas Kelas Target",
+            "Rasio 1,55 : 1 (60,9% Graduate vs 39,1% Dropout; akurasi semu 60,85%)",
+            "The Accuracy Trap dan bias prediksi ke kelas mayoritas",
+            "Terapkan Stratified 3-Way Split (70:15:15), Cost-Sensitive Learning, dan prioritaskan metrik Recall/F1.",
+        ),
+    ]
+    col_widths = [Cm(0.8), Cm(2.6), Cm(3.3), Cm(3.3), Cm(4.0)]
+    for r_idx, row in enumerate(synth_data):
+        for c_idx, val in enumerate(row):
+            cell = tbl_synth.cell(r_idx, c_idx)
+            cell.width = col_widths[c_idx]
+            cell.text = val
+            set_cell_margins(cell, top=45, bottom=45, left=70, right=70)
+            p = cell.paragraphs[0]
+            p.paragraph_format.line_spacing = 1.05
+            p.paragraph_format.space_after = Pt(1.5)
+            if r_idx == 0:
+                p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                set_cell_shading(cell, "EAEAEA")
+                for r in p.runs:
+                    r.bold = True
+                    r.font.name = "Times New Roman"
+                    r.font.size = Pt(8.5)
+            else:
+                p.alignment = (
+                    WD_ALIGN_PARAGRAPH.CENTER if c_idx == 0 else WD_ALIGN_PARAGRAPH.LEFT
+                )
+                for r in p.runs:
+                    r.font.name = "Times New Roman"
+                    r.font.size = Pt(8.0)
+
+    add_body(
         "Rencana Pengolahan Data (Data Preparation) yang dirancang mencakup: "
         "1) Penyaringan Sampel Definitif: Mengisolasi 3.630 data mahasiswa biner (Dropout = 1, Graduate = 0) serta mengalokasikan 794 data Enrolled ke kolam simulasi. "
         "2) Feature Engineering: Penambahan 4 fitur rasio akademik turunan (rasio SKS lulus sem 1, rasio SKS lulus sem 2, rasio SKS tahun pertama, dan selisih nilai antar-semester). "

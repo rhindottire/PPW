@@ -1127,6 +1127,29 @@ def create_proposal_presentation(output_path: str) -> None:
     print(f"Presentation PPTX successfully created at: {output_path}")
 
 
+def generate_and_convert_presentation(
+    output_pptx: str, output_pdf: str, preview_dir: str
+) -> None:
+    os.makedirs(os.path.dirname(output_pptx), exist_ok=True)
+    os.makedirs(preview_dir, exist_ok=True)
+
+    create_proposal_presentation(output_pptx)
+
+    # Convert to PDF
+    cmd_pdf = (
+        f"libreoffice -env:UserInstallation=file:///tmp/libreoffice_conv "
+        f"--headless --convert-to pdf {output_pptx} --outdir {os.path.dirname(output_pptx)}"
+    )
+    os.system(cmd_pdf)
+
+    # Render PNG previews
+    cmd_ppm = f"pdftoppm -png -r 120 {output_pdf} {os.path.join(preview_dir, 'slide')}"
+    os.system(cmd_ppm)
+    print(f"Presentation PDF and preview PNGs successfully generated in: {preview_dir}")
+
+
 if __name__ == "__main__":
     target_pptx = "resource/ML/proposal/Presentasi-Proposal-ML-230411100197.pptx"
-    create_proposal_presentation(target_pptx)
+    target_pdf = "resource/ML/proposal/Presentasi-Proposal-ML-230411100197.pdf"
+    target_prev = "resource/ML/proposal/previews"
+    generate_and_convert_presentation(target_pptx, target_pdf, target_prev)

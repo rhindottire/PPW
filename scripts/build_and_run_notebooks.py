@@ -357,7 +357,10 @@ def build_report_notebook() -> None:
             "import numpy as np\n"
             "import pandas as pd\n"
             "import seaborn as sns\n\n"
-            "# 1. Load raw dataset\n"
+            "# 1. Setup output directory for figures\n"
+            "fig_dir = '../../resource/ML/report/figures' if os.path.exists('../../resource/ML/report/figures') else 'resource/ML/report/figures'\n"
+            "os.makedirs(fig_dir, exist_ok=True)\n\n"
+            "# 2. Load raw dataset\n"
             "file_path = '../../data/ML/data.csv' if os.path.exists('../../data/ML/data.csv') else 'data/ML/data.csv'\n"
             "df_raw = pd.read_csv(file_path, sep=';')\n"
             "df_raw.columns = df_raw.columns.str.strip().str.replace('\"', '').str.replace('\\t', '', regex=True)\n\n"
@@ -577,6 +580,7 @@ def build_report_notebook() -> None:
             "plt.grid(True, linestyle='--', alpha=0.6)\n"
             "plt.legend()\n"
             "plt.tight_layout()\n"
+            "plt.savefig(os.path.join(fig_dir, 'tree_tuning.png'), dpi=300, bbox_inches='tight')\n"
             "plt.show()\n\n"
             "df_dt_tune.round(3)"
         )
@@ -635,6 +639,7 @@ def build_report_notebook() -> None:
             "plt.grid(True, linestyle='--', alpha=0.6)\n"
             "plt.legend()\n"
             "plt.tight_layout()\n"
+            "plt.savefig(os.path.join(fig_dir, 'knn_tuning.png'), dpi=300, bbox_inches='tight')\n"
             "plt.show()\n\n"
             "df_knn_tune.round(3)"
         )
@@ -719,6 +724,7 @@ def build_report_notebook() -> None:
             "axes[1].set_ylabel('Status Aktual', fontsize=10)\n"
             "axes[1].set_xlabel('Prediksi Model', fontsize=10)\n\n"
             "plt.tight_layout()\n"
+            "plt.savefig(os.path.join(fig_dir, 'confusion_matrices.png'), dpi=300, bbox_inches='tight')\n"
             "plt.show()"
         )
     )
@@ -738,6 +744,7 @@ def build_report_notebook() -> None:
             "plt.grid(True, linestyle='--', alpha=0.6)\n"
             "plt.legend(loc='lower right')\n"
             "plt.tight_layout()\n"
+            "plt.savefig(os.path.join(fig_dir, 'roc_curve.png'), dpi=300, bbox_inches='tight')\n"
             "plt.show()"
         )
     )
@@ -758,6 +765,7 @@ def build_report_notebook() -> None:
             "plt.title('Top 10 Feature Importance: Determinan Risiko Putus Studi (Decision Tree)', fontsize=12, pad=12)\n"
             "plt.xlabel('Tingkat Kepentingan Relatif (Gini Importance)', fontsize=10)\n"
             "plt.tight_layout()\n"
+            "plt.savefig(os.path.join(fig_dir, 'feature_importance.png'), dpi=300, bbox_inches='tight')\n"
             "plt.show()\n\n"
             "pd.DataFrame({'Fitur': feat_imp.head(10).index, 'Relative Importance': feat_imp.head(10).values.round(4)})"
         )
@@ -811,6 +819,7 @@ def build_report_notebook() -> None:
             "plt.ylabel('Jumlah Mahasiswa', fontsize=10)\n"
             "plt.xlabel('Prioritas Intervensi Kampus', fontsize=10)\n"
             "plt.tight_layout()\n"
+            "plt.savefig(os.path.join(fig_dir, 'risk_segmentation.png'), dpi=300, bbox_inches='tight')\n"
             "plt.show()\n\n"
             "sim_summary"
         )
