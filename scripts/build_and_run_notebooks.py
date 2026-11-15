@@ -1,4 +1,4 @@
-"""Script to split UAS.ipynb into Proposal.ipynb and Report.ipynb and execute them end-to-end."""
+"""Script to build and execute Proposal.ipynb and Report.ipynb following canonical CRISP-DM methodology."""
 
 import os
 
@@ -8,25 +8,252 @@ from nbformat.v4 import new_code_cell, new_markdown_cell, new_notebook
 
 
 def build_proposal_notebook() -> None:
-    src_path = "notebook/ML/UAS.ipynb"
-    with open(src_path, encoding="utf-8") as f:
-        nb_src = nbformat.read(f, as_version=4)
-
-    # Proposal.ipynb takes cells 0 to 38 (Business Understanding and Data Understanding + Synthesis)
-    cells_proposal = list(nb_src["cells"][:39])
-
-    # Add a closing conclusion cell for the Proposal milestone
-    conclusion_text = (
-        "## Conclusion & Next Steps for Proposal Milestone\n\n"
-        "Dua fase awal dari siklus metodologi **CRISP-DM** (**Business Understanding** dan **Data Understanding**) telah diselesaikan secara komprehensif:\n"
-        "1. **Business Understanding**: Merumuskan permasalahan kritis retensi mahasiswa melalui sasaran klasifikasi biner definitif (`Dropout = 1` vs `Graduate = 0`) dengan prioritas metrik Recall dan F1-Score pada kelas mahasiswa rentan putus studi, serta menyisihkan 794 data mahasiswa aktif (`Enrolled`) sebagai kolam simulasi pemantauan preventif.\n"
-        "2. **Data Understanding**: Memvalidasi kebersihan dataset (4.424 baris, 0 missing value, 0 duplikat), mendiagnosis faktor risiko determinan (tunggakan SPP dengan DO 86,6%, proteksi beasiswa dengan kelulusan 76,2%, multikolinearitas SKS tahun pertama $r \\ge 0,85$, dan kerentanan usia pendaftaran dewasa).\n"
-        "3. **Matriks Sintesis**: Memetakan setiap temuan empiris secara kausal ke dalam rencana aksi konkret tahap Data Preparation (rekayasa fitur rasio/delta, partisi berstrata 70:15:15, dan arsitektur *Dual Preprocessing Pipeline*).\n\n"
-        "Seluruh implementasi teknis tahap **Data Preparation**, **Modeling** (Decision Tree & K-Nearest Neighbors), **Evaluation**, serta **Deployment Simulation** dieksekusi secara mandiri pada notebook [Report.ipynb](Report.ipynb)."
+    cells = []
+    cells.append(
+        new_markdown_cell(
+            "# Academic Success Prediction: Project Proposal\n**Mata Kuliah**: Machine Learning | **Dosen Pengampu**: Ach. Khozaimi, S.Kom., M.Kom.\n\n**Tim Pelaksana (Kelompok)**:\n1. **Achmad Ridho Fa'iz** (NIM: 230411100197) - Ketua Kelompok\n2. **[Nama Rekan Kelompok]** (NIM: [NIM Rekan Kelompok]) - Anggota Kelompok\n\nProgram Studi Teknik Informatika, Fakultas Teknik, Universitas Trunojoyo Madura (2026)"
+        )
     )
-    cells_proposal.append(new_markdown_cell(conclusion_text))
+    cells.append(
+        new_markdown_cell(
+            "## 1. Business Understanding\n\nFase pertama metodologi CRISP-DM berfokus pada pemahaman mendalam terhadap masalah fundamental institusi pendidikan tinggi, perumusan sasaran bisnis dan teknis, pemetaan pemangku kepentingan (*stakeholders*), serta penetapan kriteria keberhasilan proyek."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "### 1.1 Define the Problem\n\nFenomena putus studi (*student dropout*) merupakan tantangan struktural kritis yang dihadapi oleh institusi pendidikan tinggi di seluruh dunia. Kegagalan mahasiswa dalam menyelesaikan studi menimbulkan kerugian multidimensi yang signifikan:\n1. **Bagi Mahasiswa**: Kerugian finansial pribadi, hilangnya waktu produktif, dan penurunan peluang mobilitas sosial-ekonomi di masa depan.\n2. **Bagi Universitas**: Penurunan efisiensi operasional, penurunan skor akreditasi institusi, pemborosan kapasitas kuota kelas, serta hilangnya pendapatan biaya kuliah (SPP).\n3. **Bagi Negara**: Pemborosan subsidi pendidikan tinggi publik dan terhambatnya target pembentukan modal manusia (*human capital*) berdaya saing global.\n\nPendekatan manajerial konvensional yang bersifat reaktif—seperti memanggil mahasiswa setelah nilai IPK anjlok di semester akhir atau setelah menunggak pembayaran SPP berbulan-bulan—terbukti tidak efektif karena intervensi datang terlambat. Oleh karena itu, diperlukan pendekatan prediktif menggunakan **Machine Learning** untuk mendeteksi indikasi dini risiko putus studi pada semester 1 dan semester 2, sehingga pihak kampus memiliki jendela waktu intervensi preventif yang memadai."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "### 1.2 Set Objectives\n\n"
+            "Proyek Machine Learning ini menetapkan dua pilar sasaran yang saling mendukung:\n"
+            "1. **Sasaran Bisnis (Manajerial Kampus)**: Membangun sistem peringatan dini (*Early Warning System*) berbasis analitik prediktif untuk memetakan mahasiswa berisiko tinggi putus studi, sehingga pihak kampus dapat mengalokasikan program bimbingan akademik, restrukturisasi skema pembayaran SPP, dan bantuan beasiswa secara proaktif dan tepat sasaran.\n"
+            "2. **Sasaran Machine Learning**: Mengembangkan dan membandingkan model klasifikasi biner (*Binary Classification*) untuk memprediksi apakah seorang mahasiswa akan berhasil lulus (`Graduate: 0`) atau berisiko mengalami putus studi (`Dropout: 1`) berdasarkan indikator demografis, sosio-ekonomi, dan performa kurikuler awal.\n\n"
+            "**Justifikasi Pemilihan Klasifikasi Dibandingkan Regresi**:\n"
+            "Pemilihan pendekatan **Supervised Classification** dan bukan **Regression** didasari oleh tiga landasan teoritis dan praktis yang mendasar:\n"
+            "- **Sifat Alami Variabel Target (Diskrit Kategorikal)**: Kolom `Target` pada dataset berisi status administratif kualitatif: `Dropout`, `Enrolled`, dan `Graduate`. Ini adalah label kualitatif nominal, bukan besaran angka kontinu. Kita tidak bisa meregresikan kata 'Lulus' atau 'Dropout' karena tidak ada makna fisik dari nilai kontinu seperti *'mahasiswa ini lulus 0,73'* atau *'mahasiswa ini DO 1,45'*.\n"
+            "- **Kebutuhan Intervensi Manajerial Kampus (Actionable Decision Boundary)**: Pihak kampus dan dosen wali memerlukan batas keputusan (*decision boundary*) yang tegas untuk memicu *Standard Operating Procedure (SOP)* penanganan (seperti panggilan konseling akademik darurat atau restrukturisasi cicilan SPP bagi mahasiswa berlabel 'Dropout'). Model regresi yang sekadar memprediksi angka IPK akhir tidak secara langsung menjawab pertanyaan kritis apakah mahasiswa bersangkutan akan bertahan atau keluar.\n"
+            "- **Pelanggaran Asumsi Matematis Regresi Linear**: Menerapkan regresi pada target biner (*Linear Probability Model*) menghasilkan prediksi nilai yang melanggar batas probabilitas logis (bisa bernilai $< 0$ atau $> 1$) serta melanggar asumsi homoskedastisitas residual. Sebaliknya, model klasifikasi berbasis probabilitas posterior terkalibrasi memungkinkan sistem melakukan pemeringkatan risiko (*risk triage*) bertingkat secara presisi."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "### 1.3 Identify Stakeholders\n\nPemangku kepentingan yang terlibat langsung dan menerima manfaat dari proyek ini meliputi:\n- **Pimpinan Universitas & Fakultas**: Memanfaatkan wawasan manajerial untuk merancang kebijakan retensi mahasiswa, alokasi anggaran beasiswa, dan evaluasi kurikulum.\n- **Biro Administrasi Akademik & Kemahasiswaan (BAAK)**: Memantau status pembayaran SPP dan kepatuhan registrasi secara terotomasi.\n- **Dosen Pembimbing Akademik (Dosen Wali)**: Menerima peringatan dini (*risk alert*) mengenai mahasiswa bimbingan yang terindikasi berisiko tinggi untuk segera diberikan konseling personal.\n- **Mahasiswa**: Memperoleh pendampingan akademik dan dukungan finansial sebelum terlanjur terancam sanksi putus studi.\n- **Tim Pengembang Proyek (Kelompok)**: Mahasiswa pelaksana yang bertanggung jawab mengeksekusi pipeline CRISP-DM dari eksplorasi data, rekayasa fitur, pemodelan, hingga pelaporan ilmiah."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "### 1.4 Define Success Criteria\n\nKeberhasilan implementasi proyek diukur berdasarkan kriteria kuantitatif dan kualitatif berikut:\n1. **Kriteria Evaluasi Teknis Machine Learning**:\n   - **Recall Kelas Dropout $\\ge 85\\%$**: Mengutamakan sensitivitas deteksi terhadap kelas minoritas mahasiswa rentan DO guna meminimalkan *False Negative* (mahasiswa berisiko yang luput dari pantauan sistem).\n   - **F1-Score $\\ge 88\\%$**: Menjaga keseimbangan harmonis antara ketepatan deteksi (*Precision*) dan cakupan deteksi (*Recall*).\n   - **Akurasi Model Uji $\\ge 88\\%$**: Mengungguli secara signifikan batas *The Accuracy Trap* (baseline tebakan kelas mayoritas sebesar 60,85%).\n   - **ROC-AUC $\\ge 0,90$**: Memastikan daya pemisah probabilitas model berada pada kategori *Excellent Discrimination*.\n2. **Kriteria Transparansi & Operasional**:\n   - Menghasilkan aturan pohon keputusan (*white-box decision rules*) yang konkret dan mudah dipahami oleh pengambil kebijakan non-teknis di lingkungan kampus."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "## 2. Data Understanding\n\nFase kedua metodologi CRISP-DM bertujuan untuk mengumpulkan data, mendeskripsikan struktur dan tipe data, melakukan eksplorasi data mendalam (*Exploratory Data Analysis / EDA*), serta memverifikasi kualitas dan integritas dataset sebelum memasuki tahap persiapan data."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "### 2.1 Collect Data\n\nDataset yang digunakan dalam penelitian ini bersumber dari repositori terkemuka **UCI Machine Learning Repository** berjudul *'Predict Students' Dropout and Academic Success'* yang dikontribusikan oleh Valentim Realinho, Mónica V. Martins, Jorge Machado, dan Luís Baptista dari Instituto Politécnico de Portalegre, Portugal (2021).\n\n**Penjelasan Parameter Institusional Riil Ketiga Label Target**:\nBerdasarkan dokumentasi resmi institusi dan publikasi ilmiah aslinya, status kelulusan mahasiswa diekstraksi pada batas akhir durasi kurikulum normal sarjana (3 tahun / 6 semester) dengan tiga kategori institusional:\n1. **`Graduate` (Lulus)**: Mahasiswa yang berhasil menyelesaikan seluruh beban kurikulum penuh (180 ECTS / SKS sistem Eropa) pada akhir masa studi dan secara administratif dinyatakan lulus serta berhak menyandang gelar sarjana.\n2. **`Dropout` (Putus Studi / Keluar)**: Mahasiswa yang secara formal mengundurkan diri (*deregistered*) ATAU mahasiswa yang tidak melakukan registrasi ulang / menunggak pembayaran SPP (*tuition fees overdue*) melebihi batas semester toleransi sehingga hak akademiknya ditutup permanen oleh kampus sebelum mencapai 180 ECTS.\n3. **`Enrolled` (Masih Terdaftar Aktif)**: Mahasiswa yang pada saat akhir durasi normal kurikulum status registrasinya masih tercatat aktif kuliah (karena mengulang mata kuliah yang belum lulus atau sedang menyelesaikan tugas akhir). Mahasiswa ini belum memenuhi 180 ECTS, namun belum mengundurkan diri dan tetap membayar biaya registrasi.\n\n**Alasan Ilmiah Pemisahan Label `Enrolled`**:\nDalam perumusan **Binary Classification** (*Dropout vs Graduate*), kelas `Enrolled` merupakan status transisi yang sedang berjalan (*censored ongoing process*), bukan takdir akhir (*terminal outcome*). Memasukkan data `Enrolled` ke dalam data latih klasifikasi biner akan menimbulkan ambiguitas label (*label noise*) yang menurunkan akurasi model menjadi ~77%. Oleh karena itu, **794 baris data mahasiswa berstatus Enrolled disisihkan dari data latih/uji klasifikasi biner, dan dialokasikan khusus sebagai kolam simulasi inferensi sistem deteksi dini (*Early Warning System*) pada tahap deployment.**"
+        )
+    )
+    cells.append(
+        new_code_cell(
+            "import os\n\nimport pandas as pd\n\n# Load dataset using semicolon delimiter\nfile_path = '../../data/ML/data.csv' if os.path.exists('../../data/ML/data.csv') else 'data/ML/data.csv'\ndf = pd.read_csv(file_path, sep=';')\n\n# Clean column names by stripping trailing whitespace or special characters\ndf.columns = df.columns.str.strip().str.replace('\"', '').str.replace('\\t', '', regex=True)\n\ndf.head(20)"
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "Tabel di atas menampilkan 20 baris pertama dari dataset mentah. Setiap baris merepresentasikan data profil individu mahasiswa yang mencakup dimensi demografis, sosio-ekonomi, dan kinerja kurikuler semester 1 dan semester 2."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "### 2.2 Describe Data\n\nDataset terdiri atas **4.424 baris data (mahasiswa)** dan **36 kolom fitur** ditambah 1 kolom target (`Target`). Terdapat 4 kelompok besar atribut:\n1. **Fitur Demografis**: Usia saat pendaftaran (*Age at enrollment*), jenis kelamin (*Gender*), status perkawinan (*Marital status*), kewarganegaraan (*Nacionality*), dan kebutuhan pendidikan khusus (*Educational special needs*).\n2. **Fitur Sosio-Ekonomi**: Kualifikasi pendidikan ayah/ibu (*Mother's/Father's qualification*) dan pekerjaan orang tua (*Mother's/Father's occupation*).\n3. **Fitur Akademik Kurikuler (Semester 1 & 2)**: Jumlah SKS dikreditkan (*credited*), SKS didaftarkan (*enrolled*), SKS dievaluasi (*evaluations*), SKS disetujui/lulus (*approved*), dan rata-rata nilai (*grade* skala 0–20).\n4. **Fitur Finansial & Makroekonomi**: Kepatuhan SPP (*Tuition fees up to date*), status debitur utang (*Debtor*), kepemilikan beasiswa (*Scholarship holder*), serta indikator ekonomi makro (tingkat pengangguran, inflasi, dan GDP)."
+        )
+    )
+    cells.append(
+        new_code_cell(
+            "summary_df = pd.DataFrame({\n    'Metric': [\n        'Total Rows (Instances)',\n        'Total Columns (Features)',\n        'Total Missing Values (NaN)',\n        'Duplicate Rows'\n    ],\n    'Value': [\n        f\"{len(df):,}\",\n        f\"{len(df.columns)}\",\n        f\"{df.isnull().sum().sum()}\",\n        f\"{df.duplicated().sum()}\"\n    ]\n})\nsummary_df"
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "Tabel ringkasan struktur di atas membuktikan bahwa dataset memiliki integritas struktural yang sangat tinggi: 4.424 observasi lengkap tanpa satupun nilai hilang (*0 missing values*) dan tanpa duplikasi baris (*0 duplicate rows*)."
+        )
+    )
+    cells.append(
+        new_code_cell(
+            "key_numeric_cols = [\n    'Admission grade', 'Age at enrollment',\n    'Curricular units 1st sem (evaluations)', 'Curricular units 1st sem (approved)', 'Curricular units 1st sem (grade)',\n    'Curricular units 2nd sem (evaluations)', 'Curricular units 2nd sem (approved)', 'Curricular units 2nd sem (grade)',\n    'Unemployment rate', 'Inflation rate', 'GDP'\n]\n\nstats_summary = df[key_numeric_cols].describe().T[['count', 'mean', 'std', 'min', '50%', 'max']]\nstats_summary.columns = ['Count', 'Mean', 'Std Dev', 'Min', 'Median', 'Max']\nstats_summary.round(2)"
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "Tabel statistik deskriptif di atas memperlihatkan rentang variasi yang signifikan pada variabel kunci:\n- Nilai masuk (*Admission grade*) memiliki rata-rata 126,98 (skala 0–200).\n- Usia saat pendaftaran (*Age at enrollment*) memiliki median 20 tahun dengan nilai maksimum mencapai 70 tahun, mengindikasikan adanya populasi mahasiswa dewasa yang terdaftar melalui jalur khusus.\n- SKS yang disetujui pada semester 1 memiliki rata-rata 4,71 unit dengan deviasi standar 3,09, menunjukkan disparitas kelulusan mata kuliah yang sangat lebar antar-mahasiswa."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "### 2.3 Explore Data (EDA)\n\nTahap Exploratory Data Analysis (EDA) dilakukan secara komprehensif melalui 6 sudut pandang analisis grafis untuk mengungkap korelasi linear, disparitas performa, anomali beban finansial, dan karakteristik demografis mahasiswa."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "**A. Target Distribution Analysis**\n\nMemeriksa persebaran frekuensi kelas pada dataset mentah (3 kelas) dan perbandingannya dengan formulasi biner definitif:"
+        )
+    )
+    cells.append(
+        new_code_cell(
+            "target_counts = df['Target'].value_counts()\ntarget_pct = (df['Target'].value_counts(normalize=True) * 100).round(2)\n\ntarget_summary = pd.DataFrame({\n    'Target Class': target_counts.index,\n    'Count (Students)': target_counts.values,\n    'Percentage (%)': target_pct.values\n})\ntarget_summary"
+        )
+    )
+    cells.append(
+        new_code_cell(
+            "import matplotlib.pyplot as plt\nimport seaborn as sns\n\nplt.figure(figsize=(7, 4.5))\npalette = {'Graduate': '#2ca02c', 'Dropout': '#d62728', 'Enrolled': '#1f77b4'}\nax = sns.countplot(\n    data=df,\n    x='Target',\n    order=['Graduate', 'Dropout', 'Enrolled'],\n    hue='Target',\n    palette=palette,\n    legend=False\n)\n\nplt.title('Distribution of Student Academic Outcomes', fontsize=12, pad=12)\nplt.xlabel('Academic Outcome (Target)', fontsize=10)\nplt.ylabel('Number of Students', fontsize=10)\nplt.grid(axis='y', linestyle='--', alpha=0.5)\n\nfor p in ax.patches:\n    height = int(p.get_height())\n    pct = (height / len(df)) * 100\n    ax.annotate(f'{height:,}\\n({pct:.1f}%)', \n                (p.get_x() + p.get_width() / 2., height / 2),\n                ha='center', va='center', fontsize=10, color='white', weight='bold')\n\nplt.tight_layout()\nplt.show()"
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "Diagram batang di atas memperlihatkan komposisi kelas mentah: **Graduate 49,9% (2.209 mahasiswa)**, **Dropout 32,1% (1.421 mahasiswa)**, dan **Enrolled 18,0% (794 mahasiswa)**. Pada saat kelas Enrolled disisihkan ke kolam simulasi, proporsi kelas biner definitif menjadi **60,85% Graduate** vs **39,15% Dropout** (rasio 1,55 : 1)."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "**B. Academic Correlation Matrix**\n\nMemeriksa korelasi Pearson antar-variabel kurikuler pada semester 1 dan semester 2 untuk mendeteksi multikolinearitas:"
+        )
+    )
+    cells.append(
+        new_code_cell(
+            "acad_cols = [\n    'Curricular units 1st sem (credited)', 'Curricular units 1st sem (enrolled)',\n    'Curricular units 1st sem (evaluations)', 'Curricular units 1st sem (approved)',\n    'Curricular units 1st sem (grade)',\n    'Curricular units 2nd sem (credited)', 'Curricular units 2nd sem (enrolled)',\n    'Curricular units 2nd sem (evaluations)', 'Curricular units 2nd sem (approved)',\n    'Curricular units 2nd sem (grade)'\n]\n\nplt.figure(figsize=(9.5, 7))\ncorr_acad = df[acad_cols].corr()\n\nsns.heatmap(\n    corr_acad,\n    annot=True,\n    fmt='.2f',\n    cmap='coolwarm',\n    vmin=-1,\n    vmax=1,\n    linewidths=0.5,\n    cbar_kws={'label': 'Pearson Correlation'}\n)\n\nplt.title('Correlation Matrix of Academic Curricular Features (Semesters 1 & 2)', fontsize=12, pad=12)\nplt.xticks(rotation=45, ha='right', fontsize=8.5)\nplt.yticks(fontsize=8.5)\nplt.tight_layout()\nplt.show()"
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "Matriks korelasi di atas mengungkap multikolinearitas linear sangat tinggi:\n- Korelasi antara SKS terdaftar semester 1 dan 2 mencapai **$r = 0,94$**.\n- Korelasi antara SKS disetujui semester 1 dan 2 mencapai **$r = 0,90$**.\n- Korelasi antara nilai rata-rata semester 1 dan 2 mencapai **$r = 0,84$**.\n\nTingginya redundansi informasi ini membenarkan perlunya rekayasa fitur rasio kelulusan SKS dan selisih nilai antar-semester pada tahap Data Preparation guna meningkatkan efisiensi pembelajaran algoritma."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "**C. Financial Risk Analysis**\n\nMenganalisis dampak tunggakan biaya kuliah (SPP) dan status debitur utang terhadap risiko putus studi:"
+        )
+    )
+    cells.append(
+        new_code_cell(
+            "fig, axes = plt.subplots(1, 2, figsize=(13, 4.8))\npalette = {'Graduate': '#2ca02c', 'Dropout': '#d62728', 'Enrolled': '#1f77b4'}\n\n# 1. Tuition fees status\ntuition_pct = pd.crosstab(df['Tuition fees up to date'], df['Target'], normalize='index') * 100\ntuition_pct = tuition_pct[['Graduate', 'Dropout', 'Enrolled']]\ntuition_pct.plot(\n    kind='bar',\n    ax=axes[0],\n    color=[palette[c] for c in tuition_pct.columns],\n    width=0.7,\n    edgecolor='black',\n    linewidth=0.5\n)\naxes[0].set_title('Academic Outcome by Tuition Fees Status', fontsize=11, pad=10)\naxes[0].set_xlabel('Tuition Fees Status', fontsize=10)\naxes[0].set_ylabel('Percentage within Group (%)', fontsize=10)\naxes[0].set_xticklabels(['Unpaid / In Arrears (0)', 'Up to Date (1)'], rotation=0)\naxes[0].grid(axis='y', linestyle='--', alpha=0.5)\naxes[0].legend(title='Outcome', loc='upper right')\n\nfor container in axes[0].containers:\n    axes[0].bar_label(container, fmt='%.1f%%', label_type='edge', padding=2, fontsize=8.5)\n\n# 2. Debtor status\ndebtor_pct = pd.crosstab(df['Debtor'], df['Target'], normalize='index') * 100\ndebtor_pct = debtor_pct[['Graduate', 'Dropout', 'Enrolled']]\ndebtor_pct.plot(\n    kind='bar',\n    ax=axes[1],\n    color=[palette[c] for c in debtor_pct.columns],\n    width=0.7,\n    edgecolor='black',\n    linewidth=0.5\n)\naxes[1].set_title('Academic Outcome by Debtor Status', fontsize=11, pad=10)\naxes[1].set_xlabel('Debtor Status', fontsize=10)\naxes[1].set_ylabel('Percentage within Group (%)', fontsize=10)\naxes[1].set_xticklabels(['No Debt (0)', 'Has Debt (1)'], rotation=0)\naxes[1].grid(axis='y', linestyle='--', alpha=0.5)\naxes[1].legend(title='Outcome', loc='upper right')\n\nfor container in axes[1].containers:\n    axes[1].bar_label(container, fmt='%.1f%%', label_type='edge', padding=2, fontsize=8.5)\n\nplt.tight_layout()\nplt.show()"
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "Grafik di atas membuktikan bahwa faktor finansial merupakan salah satu pemisah paling tajam:\n- Mahasiswa yang menunggak pembayaran SPP (*Tuition fees = 0*) memiliki angka **Dropout melonjak hingga 86,6%** dengan tingkat kelulusan hanya 6,8%.\n- Mahasiswa dengan status berutang (*Debtor = 1*) memiliki angka **Dropout sebesar 61,4%**, dua kali lipat lebih tinggi dari mahasiswa tanpa utang (28,3%)."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "**D. Scholarship Protection Analysis**\n\nMengevaluasi peran protektif bantuan pembiayaan beasiswa terhadap stabilitas kelulusan mahasiswa:"
+        )
+    )
+    cells.append(
+        new_code_cell(
+            "scholar_pct = pd.crosstab(df['Scholarship holder'], df['Target'], normalize='index') * 100\nscholar_pct = scholar_pct[['Graduate', 'Dropout', 'Enrolled']]\n\nax = scholar_pct.plot(\n    kind='bar',\n    color=[palette[c] for c in scholar_pct.columns],\n    width=0.6,\n    edgecolor='black',\n    linewidth=0.5,\n    figsize=(7, 4.5)\n)\n\nplt.title('Academic Outcome Distribution by Scholarship Status', fontsize=12, pad=12)\nplt.xlabel('Scholarship Status', fontsize=10)\nplt.ylabel('Percentage within Group (%)', fontsize=10)\nplt.xticks([0, 1], ['Non-Scholarship Holder (0)', 'Scholarship Holder (1)'], rotation=0)\nplt.grid(axis='y', linestyle='--', alpha=0.5)\nplt.legend(title='Outcome', loc='upper right')\n\nfor container in ax.containers:\n    ax.bar_label(container, fmt='%.1f%%', label_type='edge', padding=2, fontsize=8.5)\n\nplt.tight_layout()\nplt.show()"
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "Hasil tabulasi silang membuktikan peran protektif beasiswa secara signifikan:\n- Penerima beasiswa (*Scholarship holder = 1*) mencapai **tingkat kelulusan 76,2%** dengan angka putus studi hanya **11,8%**.\n- Sebaliknya, mahasiswa non-beasiswa memiliki tingkat putus studi hampir 3 kali lipat lebih tinggi (38,0%). Hal ini membuktikan bahwa intervensi finansial merupakan tuas kebijakan retensi yang sangat efektif bagi universitas."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "**E. Age Demographic & Lifelong Learning Analysis (Kasus Nyata Jalur M23)**\n\nMenganalisis distribusi usia mahasiswa saat mendaftar kuliah dan fenomena mahasiswa usia dewasa (25 hingga 70 tahun):"
+        )
+    )
+    cells.append(
+        new_code_cell(
+            "plt.figure(figsize=(9, 4.5))\nfor target_label, color in palette.items():\n    subset = df[df['Target'] == target_label]\n    sns.kdeplot(\n        subset['Age at enrollment'],\n        label=f\"{target_label} (Mean: {subset['Age at enrollment'].mean():.1f} yrs)\",\n        color=color,\n        linewidth=2,\n        fill=True,\n        alpha=0.15\n    )\n\nplt.title('Distribution of Age at Enrollment Across Academic Outcomes', fontsize=12, pad=12)\nplt.xlabel('Age at Enrollment (Years)', fontsize=10)\nplt.ylabel('Probability Density', fontsize=10)\nplt.xlim(15, 60)\nplt.grid(axis='both', linestyle='--', alpha=0.5)\nplt.legend(title='Target Outcome', loc='upper right')\nplt.tight_layout()\nplt.show()"
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "**Highlight Kasus Nyata Pendidikan Tinggi Portugal (*Maiores de 23*)**:\nKurva kepadatan probabilitas (*KDE*) di atas menunjukkan distribusi usia yang condong ke kanan (*right-skewed*), dengan rentang usia pendaftaran dari **17 tahun hingga 70 tahun**. Temuan adanya mahasiswa berusia 40, 50, bahkan 70 tahun bukanlah kesalahan input data (*input error*), melainkan fenomena nyata kebijakan pendidikan tinggi di Portugal:\n1. **Jalur Akses Dewasa (*Maiores de 23 / M23*)**: Berdasarkan Perjanjian Bologna, institusi politeknik di Portugal menyediakan jalur khusus bagi orang dewasa berusia 23 tahun ke atas tanpa memerlukan ujian masuk SMA reguler. Mereka umumnya adalah pekerja profesional, orang tua, atau pensiunan yang ingin meraih gelar sarjana terapan (seperti keperawatan, agronomi, atau administrasi publik).\n2. **Kuliah Malam (*Evening Attendance*)**: Mahasiswa dewasa ini mayoritas terdaftar pada kelas malam (`Daytime/evening attendance = 0`) setelah jam kerja.\n3. **Kerentanan Dropout Tinggi**: Terlihat jelas bahwa puncak kurva mahasiswa Graduate terkonsentrasi rapat pada usia muda (18–21 tahun, rata-rata 21,3 tahun). Sebaliknya, kurva mahasiswa Dropout memiliki ekor tebal melebar ke kanan (rata-rata 26,4 tahun). Mahasiswa dewasa menghadapi konflik peran berat antara beban pekerjaan profesional, tanggung jawab keluarga, dan tuntutan akademik, sehingga risiko putus studi mereka meningkat drastis."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "**F. Academic Performance Disparity**\n\nMenganalisis disparitas nilai rata-rata semester 1 dan semester 2 antara kelompok kelulusan:"
+        )
+    )
+    cells.append(
+        new_code_cell(
+            "fig, axes = plt.subplots(1, 2, figsize=(13, 5))\n\nsns.boxplot(\n    data=df,\n    x='Target',\n    y='Curricular units 1st sem (grade)',\n    order=['Graduate', 'Dropout', 'Enrolled'],\n    palette=palette,\n    hue='Target',\n    legend=False,\n    ax=axes[0],\n    boxprops={'alpha': 0.85}\n)\naxes[0].set_title('1st Semester Grade Distribution by Outcome', fontsize=11, pad=10)\naxes[0].set_xlabel('Academic Outcome', fontsize=10)\naxes[0].set_ylabel('Grade (Scale 0 - 20)', fontsize=10)\naxes[0].grid(axis='y', linestyle='--', alpha=0.5)\n\nsns.boxplot(\n    data=df,\n    x='Target',\n    y='Curricular units 2nd sem (grade)',\n    order=['Graduate', 'Dropout', 'Enrolled'],\n    palette=palette,\n    hue='Target',\n    legend=False,\n    ax=axes[1],\n    boxprops={'alpha': 0.85}\n)\naxes[1].set_title('2nd Semester Grade Distribution by Outcome', fontsize=11, pad=10)\naxes[1].set_xlabel('Academic Outcome', fontsize=10)\naxes[1].set_ylabel('Grade (Scale 0 - 20)', fontsize=10)\naxes[1].grid(axis='y', linestyle='--', alpha=0.5)\n\nplt.tight_layout()\nplt.show()"
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "Diagram *boxplot* di atas memperlihatkan disparitas nilai yang sangat tajam:\n- Mahasiswa Graduate memiliki median nilai konsisten di atas 12,5 (skala 0–20).\n- Mahasiswa Dropout memiliki median nilai yang jatuh di bawah 10, bahkan terkonsentrasi mendekati angka 0 karena banyaknya mata kuliah yang tidak diikuti ujiannya (*unattended evaluations*).\n- Mahasiswa Enrolled berada di tengah-tengah dengan variasi nilai yang lebar, memvalidasi bahwa mereka adalah kelompok transisi yang memerlukan pemantauan berkelanjutan."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "### 2.4 Verify Data Quality\n\nTahap verifikasi kualitas data memastikan bahwa dataset memenuhi standar kebersihan teknis, mengevaluasi pencilan statistik, membedah jebakan ketidakseimbangan kelas (*class imbalance*), serta merumuskan matriks sintesis persiapan data."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "**1. Missing Values, Duplicates, and Domain Integrity**\n\nPemeriksaan kebersihan data dasar dan konsistensi logis domain akademik:"
+        )
+    )
+    cells.append(
+        new_code_cell(
+            "quality_summary = pd.DataFrame({\n    'Pemeriksaan Kualitas': [\n        'Missing Values (Sel Kosong)',\n        'Duplikasi Baris (Duplicate Rows)',\n        'Rentang Nilai Semester (Valid Skala 0 - 20)',\n        'Konsistensi SKS (Approved <= Enrolled)'\n    ],\n    'Hasil Pemeriksaan': [\n        f\"{df.isnull().sum().sum()} nilai kosong\",\n        f\"{df.duplicated().sum()} baris duplikat\",\n        f\"Min: {df['Curricular units 1st sem (grade)'].min():.1f}, Max: {df['Curricular units 1st sem (grade)'].max():.1f} (Valid)\",\n        f\"Inkonsistensi: {sum(df['Curricular units 1st sem (approved)'] > df['Curricular units 1st sem (enrolled)'])} kasus\"\n    ],\n    'Status Integritas': [\n        'Bersih 100%',\n        'Bersih 100%',\n        'Sesuai Standar Portugal',\n        'Konsisten Logis'\n    ]\n})\nquality_summary"
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "Tabel di atas mengonfirmasi bahwa dataset bebas dari nilai kosong (*missing values*) dan duplikasi. Seluruh nilai akademik berada dalam batas sah sistem pendidikan Portugal (skala 0–20), serta jumlah SKS yang lulus (*approved*) tidak pernah melebihi SKS yang didaftarkan (*enrolled*)."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "**2. Outlier Analysis (Metode IQR) pada Usia Pendaftaran**\n\nMendeteksi pencilan statistik pada usia pendaftaran menggunakan metode *Interquartile Range* (IQR) dan mengevaluasi justifikasi ilmiahnya:"
+        )
+    )
+    cells.append(
+        new_code_cell(
+            "# Analisis Pencilan Usia dengan Metode IQR\nq1_age = df['Age at enrollment'].quantile(0.25)\nq3_age = df['Age at enrollment'].quantile(0.75)\niqr_age = q3_age - q1_age\nupper_bound_age = q3_age + 1.5 * iqr_age\noutliers_age = df[df['Age at enrollment'] > upper_bound_age]\n\noutlier_age_df = pd.DataFrame({\n    'Parameter Statistik IQR': [\n        'Kuartil 1 (Q1 - 25%)',\n        'Median (Q2 - 50%)',\n        'Kuartil 3 (Q3 - 75%)',\n        'Interquartile Range (IQR)',\n        'Ambang Batas Atas (Q3 + 1.5*IQR)',\n        'Jumlah Outlier Statistik (Usia > 34 Thn)',\n        'Persentase Outlier terhadap Populasi',\n        'Usia Maksimum dalam Dataset'\n    ],\n    'Nilai': [\n        f\"{q1_age:.1f} tahun\",\n        f\"{df['Age at enrollment'].median():.1f} tahun\",\n        f\"{q3_age:.1f} tahun\",\n        f\"{iqr_age:.1f} tahun\",\n        f\"{upper_bound_age:.1f} tahun\",\n        f\"{len(outliers_age):,} mahasiswa\",\n        f\"{len(outliers_age) / len(df) * 100:.2f}%\",\n        f\"{df['Age at enrollment'].max()} tahun\"\n    ]\n})\noutlier_age_df"
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "**Justifikasi Domain terhadap Outlier Usia (*No Trimming Policy*)**:\nSecara matematis murni, rumus IQR menetapkan batas atas usia sebesar **34,0 tahun**, sehingga sebanyak **442 mahasiswa (9,99%)** terdeteksi sebagai *outlier statistik*. Namun, dalam konteks ilmu data terapan (*applied data science*):\n1. **Bukan Kesalahan Pengukuran**: Nilai usia 35 hingga 70 tahun adalah data manusia nyata yang mendaftar secara sah melalui program jalur dewasa (*Maiores de 23*).\n2. **Bahaya Pemotongan (*Trimming Danger*)**: Menghapus 442 mahasiswa ini akan membuang 10% data riil dan menciptakan *blind spot* (kebutaan model) di mana sistem tidak akan mampu mengenali risiko mahasiswa dewasa di dunia nyata.\n3. **Keputusan Preprocessing**: Seluruh data usia dipertahankan 100% tanpa pemotongan. Untuk algoritma Decision Tree, skala usia tidak mempengaruhi pemisahan (*split*); sedangkan untuk algoritma KNN, fitur usia akan distandarisasi (*StandardScaler*) pada Data Preparation agar besaran angka tidak mendistorsi perhitungan jarak Euclidean."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "**3. Class Imbalance Analysis & The Accuracy Trap**\n\nMenganalisis proporsi kelas biner definitif dan membongkar jebakan akurasi semu (*The Accuracy Trap*):"
+        )
+    )
+    cells.append(
+        new_code_cell(
+            "# Analisis The Accuracy Trap pada Populasi Biner Definitif\ndf_bin = df[df['Target'].isin(['Graduate', 'Dropout'])]\nn_grad = sum(df_bin['Target'] == 'Graduate')\nn_drop = sum(df_bin['Target'] == 'Dropout')\ntotal_bin = len(df_bin)\n\ndummy_accuracy = (n_grad / total_bin) * 100\nimbalance_ratio = n_grad / n_drop\n\nimbalance_df = pd.DataFrame({\n    'Metrik Kelas Biner': [\n        'Total Sampel Definitif',\n        'Kelas Mayoritas: Graduate (0)',\n        'Kelas Minoritas: Dropout (1)',\n        'Rasio Ketidakseimbangan (Disproportion)',\n        'The Accuracy Trap (Dummy Classifier Baseline)',\n        'Konsekuensi Evaluasi'\n    ],\n    'Nilai Kuantitatif': [\n        f\"{total_bin:,} mahasiswa\",\n        f\"{n_grad:,} ({n_grad / total_bin * 100:.2f}%)\",\n        f\"{n_drop:,} ({n_drop / total_bin * 100:.2f}%)\",\n        f\"{imbalance_ratio:.2f} : 1 (~61% vs ~39%)\",\n        f\"{dummy_accuracy:.2f}% (Tebak Graduate Selalu)\",\n        \"Akurasi mentah menyesatkan; Wajib Recall & F1-Score\"\n    ]\n})\nimbalance_df"
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "**Analisis Dampak Ketidakseimbangan Kelas (*The Accuracy Trap*)**:\nPada populasi 3.630 data biner definitif, proporsi kelas adalah **60,85% Graduate** dan **39,15% Dropout** (rasio 1,55 : 1):\n1. **Bukan Extreme Imbalance**: Rasio 60:40 tergolong *mild imbalance* yang merupakan cerminan sehat dunia pendidikan (lebih banyak yang lulus daripada DO). Oleh karena itu, teknik manipulasi sintetis agresif seperti **SMOTE tidak direkomendasikan** karena berisiko menginterpolasi data palsu pada variabel biner (seperti beasiswa dan status debitur).\n2. **Bahaya The Accuracy Trap**: Jika model bersikap malas dan selalu memprediksi 'Graduate' untuk semua mahasiswa (*Zero-Rule / Dummy Classifier*), model akan mendapatkan **akurasi semu sebesar 60,85%** padahal gagal total mendeteksi 1 orang pun mahasiswa yang akan DO (*Recall = 0%*).\n3. **Solusi Metodologis**: Menetapkan pembobotan biaya (`class_weight='balanced'`) pada Decision Tree dan memprioritaskan metrik **Recall** dan **F1-Score** pada kelas Dropout agar model dihukum lebih berat jika melewatkan mahasiswa yang berisiko."
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "**4. Data Understanding Synthesis Matrix**\n\nTabel sintesis di bawah memetakan secara kausal bagaimana setiap temuan empiris pada Data Understanding diterjemahkan menjadi rencana aksi konkret pada tahap Data Preparation di [Report.ipynb](Report.ipynb):\n\n| No | Dimensi Temuan Data Understanding | Fakta Empiris & Statistik | Risiko terhadap Pemodelan | Rencana Aksi Data Preparation |\n| :---: | :--- | :--- | :--- | :--- |\n| **1** | **Label Target Transisi (Enrolled)** | 794 data (18,0%) belum memiliki status akhir kelulusan | Ambiguitas label (*label noise*) menurunkan performa biner | Isolasi 794 sampel Enrolled ke kolam simulasi deployment; gunakan 3.630 sampel definitif untuk pelatihan. |\n| **2** | **Korelasi Curricular Units** | Korelasi SKS sem 1 & sem 2 sangat tinggi ($r = 0,90$ s.d. $0,94$) | Multikolinearitas dan pemborosan dimensi fitur | Rekayasa fitur rasio kelulusan SKS dan delta nilai antar-semester. |\n| **3** | **Tunggakan SPP & Debitur** | SPP tertunggak melonjakkan angka DO hingga 86,6% | Fitur prediktor dominan yang rawan mengabaikan fitur lain | Pertahankan skala asli biner pada Decision Tree untuk ekstraksi aturan keputusan konkret. |\n| **4** | **Proteksi Beasiswa** | Mahasiswa penerima beasiswa memiliki tingkat lulus 76,2% | Fitur protektif pembeda signifikan | Sertakan fitur beasiswa sebagai variabel kunci tanpa transformasi destruktif. |\n| **5** | **Pencilan Usia Jalur M23** | Usia pendaftaran mencapai 70 tahun dengan 442 outlier IQR ($>34$ thn) | Distorsi fungsi jarak Euclidean pada algoritma KNN | Jangan hapus data usia; terapkan *StandardScaler* pada KNN dan biarkan skala asli pada Decision Tree. |\n| **6** | **Disparitas Kelas (61% vs 39%)** | Rasio 1,55:1 dengan baseline akurasi semu 60,85% | Bias prediksi condong ke kelas mayoritas Graduate | Terapkan *Stratified 3-Way Split* (70:15:15) dan gunakan *Cost-Sensitive Learning* (`class_weight='balanced'`). |"
+        )
+    )
+    cells.append(
+        new_markdown_cell(
+            "## 3. Conclusion & Next Steps for Proposal Milestone\n\nDua fase awal dari siklus metodologi **CRISP-DM** (**1. Business Understanding** dan **2. Data Understanding**) telah diselesaikan secara komprehensif sebagai landasan kokoh bagi pelaksanaan proyek akhir Machine Learning:\n\n1. **Business Understanding**: Berhasil merumuskan urgensi krisis putus studi di perguruan tinggi, menetapkan sasaran klasifikasi biner definitif (`Dropout: 1` vs `Graduate: 0`) dengan fokus metrik Recall dan F1-Score, memetakan peran pemangku kepentingan kampus, serta mengalokasikan 794 data mahasiswa aktif (`Enrolled`) untuk sistem deteksi dini.\n2. **Data Understanding**: Memvalidasi kebersihan teknis dataset (4.424 baris, 0 missing value, 0 duplikat), mengungkap fenomena nyata mahasiswa dewasa jalur *Maiores de 23* (usia s.d. 70 tahun), mendiagnosis faktor risiko determinan (tunggakan SPP dengan DO 86,6%), serta membongkar jebakan akurasi semu (*The Accuracy Trap*) pada rasio 61:39.\n3. **Kesiapan Eksekusi**: Seluruh temuan empiris telah dipetakan secara kausal melalui Matriks Sintesis menuju tahap **3. Data Preparation**, **4. Modeling**, **5. Evaluation**, **6. Deployment Simulation**, dan **7. Rekomendasi Manajerial** yang dieksekusi secara mandiri pada notebook [Report.ipynb](Report.ipynb)."
+        )
+    )
 
-    nb_prop = new_notebook(cells=cells_proposal)
+    nb_prop = new_notebook(cells=cells)
 
     prop_path = "notebook/ML/Proposal.ipynb"
     with open(prop_path, "w", encoding="utf-8") as f:
@@ -68,7 +295,7 @@ def build_report_notebook() -> None:
             "## Executive Summary & Architectural Overview\n\n"
             "Notebook ini merupakan dokumen implementasi komputasi mandiri (*self-contained technical report*) yang merealisasikan fase **Data Preparation**, **Modeling**, **Evaluation**, dan **Deployment Simulation** berdasarkan hasil diagnosis empiris pada [Proposal.ipynb](Proposal.ipynb).\n\n"
             "Arsitektur teknis yang dieksekusi mencakup:\n"
-            "1. **Formulasi Biner Definitif**: Mengisolasi $N = 3.630$ data mahasiswa berstatus kelulusan definitif (`Dropout = 1` vs `Graduate = 0`), serta menyisihkan 794 data `Enrolled` sebagai kumpulan data simulasi inferensi intervensi aktif.\n"
+            "1. **Formulasi Biner Definitif (Klasifikasi, Bukan Regresi)**: Mengisolasi $N = 3.630$ data mahasiswa berstatus kelulusan definitif (`Dropout = 1` vs `Graduate = 0`), serta menyisihkan 794 data `Enrolled` sebagai kumpulan data simulasi inferensi intervensi aktif. Status mahasiswa merupakan label kualitatif diskrit tanpa interpretasi fisik bagi nilai kontinu (seperti *'lulus 0,73'* atau *'DO 1,45'*), sehingga tugas ini dirumuskan sebagai Supervised Classification untuk menghasilkan *decision boundary* tegas bagi intervensi kampus.\n"
             "2. **Rekayasa Fitur Rasio**: Membentuk 4 fitur baru untuk mengatasi multikolinearitas SKS dan mengukur efisiensi kelulusan akademik.\n"
             "3. **Partisi 3-Arah Berstrata**: Membagi dataset menjadi **70% Data Latih** (2.541 baris), **15% Data Validasi** (544 baris untuk tuning parameter tanpa *test leakage*), dan **15% Data Uji** (545 baris untuk evaluasi akhir murni).\n"
             "4. **Dual Preprocessing Pipeline**: Menyediakan data unscaled untuk *Decision Tree* (menjaga kejelasan aturan IF-THEN) dan data terstandarisasi *StandardScaler* untuk *K-Nearest Neighbors* (menjaga keadilan fungsi jarak Euclidean).\n"
@@ -79,7 +306,7 @@ def build_report_notebook() -> None:
     # Phase 3: Data Preparation
     cells.append(
         new_markdown_cell(
-            "## Data Preparation\n\n"
+            "## 3. Data Preparation\n\n"
             "Tahap Data Preparation mentransformasikan dataset mentah `data/ML/data.csv` menjadi representasi fitur yang terstandarisasi, bebas kebocoran data (*data leakage*), dan siap diumpankan ke model Machine Learning."
         )
     )
@@ -87,16 +314,17 @@ def build_report_notebook() -> None:
     cells.append(
         new_markdown_cell(
             "### Data Ingestion & Target Formulation\n\n"
-            "Membaca dataset mentah, menyaring sampel definitif biner (`Graduate: 0` vs `Dropout: 1`), dan mengisolasi sampel aktif (`Enrolled`)."
+            "Membaca dataset mentah, menyaring sampel definitif biner (`Graduate: 0` vs `Dropout: 1`), dan mengisolasi sampel aktif (`Enrolled`).\n\n"
+            "> **Justifikasi Klasifikasi vs Regresi**: Variabel target adalah status administratif kualitatif diskrit ('Graduate' vs 'Dropout'). Tidak ada makna fisik bagi nilai kontinu seperti *'mahasiswa ini lulus 0,73'* atau *'mahasiswa ini DO 1,45'*. Pendekatan Supervised Classification menyediakan *decision boundary* tegas yang dibutuhkan pihak kampus untuk memicu SOP intervensi akademik."
         )
     )
 
     cells.append(
         new_code_cell(
-            "import os\n"
-            "import pandas as pd\n"
-            "import numpy as np\n"
+            "import os\n\n"
             "import matplotlib.pyplot as plt\n"
+            "import numpy as np\n"
+            "import pandas as pd\n"
             "import seaborn as sns\n\n"
             "# 1. Load raw dataset\n"
             "file_path = '../../data/ML/data.csv' if os.path.exists('../../data/ML/data.csv') else 'data/ML/data.csv'\n"
@@ -272,7 +500,7 @@ def build_report_notebook() -> None:
     # Phase 4: Modeling & Hyperparameter Tuning
     cells.append(
         new_markdown_cell(
-            "## Modeling & Hyperparameter Tuning\n\n"
+            "## 4. Modeling & Hyperparameter Tuning\n\n"
             "Fase Modeling menerapkan strategi optimasi berbasis **Data Validasi (Validation Set - 544 baris)** untuk memilih hyperparameter terbaik dari masing-masing algoritma tanpa menyentuh data uji murni (*anti-data leakage*):\n"
             "1. **Decision Tree Classifier**: Mencari kedalaman pohon optimal (`max_depth`) untuk menghindari *overfitting*.\n"
             "2. **K-Nearest Neighbors (KNN)**: Mencari jumlah tetangga terdekat optimal ($K$) dan fungsi pembobotan jarak."
@@ -288,8 +516,8 @@ def build_report_notebook() -> None:
 
     cells.append(
         new_code_cell(
-            "from sklearn.tree import DecisionTreeClassifier\n"
-            "from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score\n\n"
+            "from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score\n"
+            "from sklearn.tree import DecisionTreeClassifier\n\n"
             "depth_range = [2, 3, 4, 5, 6, 7, 8, 10, 12, 15, None]\n"
             "dt_results = []\n\n"
             "for depth in depth_range:\n"
@@ -399,7 +627,7 @@ def build_report_notebook() -> None:
     # Phase 5: Evaluation
     cells.append(
         new_markdown_cell(
-            "## Evaluation & Model Comparison\n\n"
+            "## 5. Evaluation & Model Comparison\n\n"
             "Fase Evaluation menguji performa generalisasi kedua model terbaik secara objektif pada **Data Uji Independen (Test Set - 545 baris)** yang belum pernah disentuh selama pelatihan dan tuning."
         )
     )
@@ -513,7 +741,7 @@ def build_report_notebook() -> None:
     # Phase 6: Deployment Simulation
     cells.append(
         new_markdown_cell(
-            "## Deployment Simulation: Active Student Early Warning System\n\n"
+            "## 6. Deployment Simulation: Active Student Early Warning System\n\n"
             "Mensimulasikan inferensi model Decision Tree pada **794 data mahasiswa aktif (`Enrolled`)** untuk mengidentifikasi tingkat urgensi intervensi sebelum mereka terlanjur mengalami putus studi."
         )
     )
@@ -566,7 +794,7 @@ def build_report_notebook() -> None:
     # Conclusion & Recommendations
     cells.append(
         new_markdown_cell(
-            "## Conclusion & Managerial Recommendations\n\n"
+            "## 7. Conclusion & Managerial Recommendations\n\n"
             "### Kesimpulan Proyek\n"
             "1. **Integritas Metodologi CRISP-DM**: Proyek berhasil menyelesaikan siklus penuh CRISP-DM secara modular, dimulai dari perumusan sasaran biner, pemisahan kolam simulasi 794 mahasiswa aktif, rekayasa 4 fitur rasio SKS, partisi 3-arah berstrata (70:15:15), hingga evaluasi independen anti-leakage.\n"
             "2. **Kinerja Algoritma**: Model **Decision Tree** terbukti paling efektif sebagai sistem deteksi dini berkat capaian **Recall 82,63%** pada data uji murni (menekan false negative seminimal mungkin) dengan interpretabilitas aturan IF-THEN yang transparan. Di sisi lain, **KNN** memberikan kepastian presisi tinggi (81,77%) untuk memvalidasi kemiripan profil mahasiswa.\n"

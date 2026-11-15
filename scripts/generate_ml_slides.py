@@ -448,16 +448,16 @@ def create_proposal_presentation(output_path: str) -> None:
 
     tj_list = [
         (
-            "1. Analisis Bukti Data Riil",
-            "Mengidentifikasi variabel determinan risiko dropout secara kuantitatif melalui eksplorasi data 3.630 mahasiswa berstatus definitif.",
+            "1. Formulasi Klasifikasi Biner",
+            "Menetapkan target diskrit ('Graduate' vs 'Dropout') karena tidak ada makna fisik bagi nilai kontinu seperti 'lulus 0,73' atau 'DO 1,45'. Kampus butuh batas keputusan tegas.",
         ),
         (
             "2. Pengujian Terukur Bebas Leakage",
-            "Melatih model pada 70% data latih, mencari parameter terbaik pada 15% validasi, dan menguji murni pada 15% data uji.",
+            "Melatih model pada 70% data latih, validasi 15%, dan uji 15% pada 3.630 data definitif guna membandingkan Decision Tree vs KNN.",
         ),
         (
             "3. Simulasi Mahasiswa Aktif",
-            "Menerapkan model terbaik pada 794 data mahasiswa aktif (Enrolled) untuk simulasi deteksi dini di lingkungan kampus.",
+            "Menerapkan model terbaik pada 794 data mahasiswa aktif (Enrolled) untuk simulasi deteksi dini dan intervensi preventif dosen wali.",
         ),
     ]
     for t_txt, b_txt in tj_list:
@@ -478,9 +478,11 @@ def create_proposal_presentation(output_path: str) -> None:
 
     set_notes(
         s3,
-        "Rumusan masalah kami terfokus pada tiga hal: menemukan faktor pemicu utama, membandingkan performa Decision Tree vs KNN "
-        "pada klasifikasi biner, dan menerapkan validasi 3-arah tanpa kebocoran data. Tujuannya adalah menghasilkan model yang teruji "
-        "dan simulasi deteksi dini untuk 794 mahasiswa aktif.",
+        "Rumusan masalah kami terfokus pada perumusan Supervised Classification dan bukan Regression. "
+        "Status mahasiswa adalah label kualitatif diskrit ('Graduate' vs 'Dropout')—tidak ada interpretasi fisik bagi nilai kontinu "
+        "seperti 'mahasiswa lulus 0,73' atau 'mahasiswa DO 1,45'. Pihak kampus dan dosen wali memerlukan batas keputusan tegas (decision boundary) untuk memicu SOP intervensi. "
+        "Tujuannya adalah membandingkan Decision Tree vs KNN secara adil dengan validasi 3-arah bebas kebocoran data, "
+        "serta menghasilkan simulasi deteksi dini bagi 794 mahasiswa aktif.",
     )
 
     # ==================== SLIDE 4: PROFIL DATASET BINER (3.630 DATA) ====================
@@ -544,11 +546,11 @@ def create_proposal_presentation(output_path: str) -> None:
 
     pdi_b = tf_di.add_paragraph()
     pdi_b.text = (
+        "• Formulasi Klasifikasi Biner (Bukan Regresi):\n"
+        "  Label kualitatif nominal ('Graduate' vs 'Dropout') tidak memiliki makna fisik kontinu seperti 'lulus 0,73' atau 'DO 1,45'. Fokus pada 3.630 data definitif mengoptimalkan batas keputusan (decision boundary).\n\n"
         "• Eliminasi Noise (Paper Martins et al., 2021):\n"
-        "  Mahasiswa aktif (Enrolled - 794 data) belum memiliki takdir studi final. Memasukkannya ke data latih terbukti menimbulkan ambiguitas (noise).\n\n"
-        "• Formulasi Klasifikasi Biner:\n"
-        "  Fokus pada 3.630 data berstatus pasti menaikkan potensi akurasi model dari ~77% menjadi ~88-92%.\n\n"
-        "• Kolam Simulasi:\n"
+        "  Mahasiswa aktif (Enrolled - 794 data) belum memiliki takdir studi final. Memasukkannya ke data latih menimbulkan ambiguitas label.\n\n"
+        "• Kolam Simulasi Deployment:\n"
         "  794 data Enrolled dialokasikan sebagai data uji simulasi pemantauan mahasiswa aktif."
     )
     pdi_b.font.name = "Arial"
@@ -578,7 +580,8 @@ def create_proposal_presentation(output_path: str) -> None:
         s4,
         "Dataset acuan kami dari UCI Repository. Berdasarkan dokumentasi dan paper resmi Martins et al., 794 data mahasiswa yang masih "
         "aktif (Enrolled) kami pisahkan dari data latih karena status studinya belum selesai. Kami fokus pada 3.630 mahasiswa berstatus "
-        "pasti (Lulus vs DO), sehingga masalah menjadi biner, batas kelas bersih, dan potensi akurasi melonjak ke kisaran 88 hingga 92 persen.",
+        "pasti (Lulus vs DO), sehingga masalah menjadi klasifikasi biner dan bukan regresi. Status mahasiswa merupakan label nominal kualitatif diskrit "
+        "sehingga tidak ada makna fisik bagi nilai kontinu seperti 'lulus 0,73' atau 'DO 1,45'. Batas kelas menjadi bersih, dan potensi akurasi melonjak ke kisaran 88 hingga 92 persen.",
     )
 
     # ==================== SLIDE 5: TEMUAN EDA - RISIKO FINANSIAL ====================

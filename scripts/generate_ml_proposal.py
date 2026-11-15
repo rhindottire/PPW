@@ -558,6 +558,13 @@ def build_proposal_document(toc_page_map: dict[str, str] | None = None) -> DocOb
         "'Graduate' (mahasiswa yang berhasil lulus). Sebanyak 794 baris data mahasiswa berstatus Enrolled dipisahkan dari proses pelatihan/pengujian "
         "dan dialokasikan secara khusus sebagai data simulasi pemantauan mahasiswa aktif."
     )
+    add_body(
+        "Justifikasi Pemilihan Klasifikasi Dibandingkan Regresi: "
+        "Pemilihan tugas klasifikasi biner dan bukan regresi didasari oleh tiga pertimbangan teoritis dan praktis yang fundamental: "
+        "1) Sifat Alami Variabel Target: Kolom Target pada dataset berisi status administratif kualitatif: 'Dropout', 'Enrolled', dan 'Graduate'. Ini adalah label kualitatif nominal, bukan besaran angka kontinu. Kita tidak bisa meregresikan kata 'Lulus' atau 'Dropout' karena tidak ada makna fisik dari nilai kontinu seperti 'mahasiswa ini lulus 0,73' atau 'mahasiswa ini DO 1,45'. "
+        "2) Kebutuhan Intervensi Manajerial Kampus: Pihak kampus dan dosen wali memerlukan batas keputusan (decision boundary) yang tegas untuk memicu Standard Operating Procedure (SOP) intervensi (seperti panggilan konseling akademik darurat atau restrukturisasi cicilan SPP bagi mahasiswa berlabel 'Dropout'). Model regresi yang sekadar memprediksi nilai IPK tidak secara langsung menjawab pertanyaan kritis apakah mahasiswa bersangkutan akan bertahan atau keluar. "
+        "3) Pelanggaran Asumsi Matematis Regresi: Penerapan regresi linear pada variabel target biner (Linear Probability Model) berisiko menghasilkan estimasi di luar rentang probabilitas valid ([0, 1]) serta melanggar asumsi homoskedastisitas varians residual. Sebaliknya, model klasifikasi berbasis probabilitas posterior terkalibrasi memungkinkan sistem melakukan pemeringkatan risiko (risk triage) bertingkat secara presisi."
+    )
 
     add_heading_2("2.2 Algoritma yang Digunakan")
     add_body(
