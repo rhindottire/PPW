@@ -853,6 +853,16 @@ def build_proposal_document(toc_page_map: dict[str, str] | None = None) -> DocOb
         "4. ROC-AUC (Area Under the Receiver Operating Characteristic): ",
         "Mengukur kapabilitas diskriminasi model dalam memisahkan kelas kelulusan di berbagai ambang batas probabilitas (threshold-independent metric).",
     )
+    add_body(
+        "Keterkaitan Temuan Data Understanding dengan Laporan Akhir (Report Milestone): "
+        "Seluruh evaluasi model dan tahapan implementasi ini merupakan kelanjutan langsung dari diagnosis data understanding. "
+        "Enam rencana aksi komputasi yang dieksekusi mencakup: 1) Isolasi 794 sampel Enrolled ke kolam simulasi intervensi aktif, "
+        "2) Rekayasa 4 fitur rasio SKS untuk mereduksi multikolinearitas (r ~ 0,94), "
+        "3) Pemanfaatan fitur tunggakan SPP dan beasiswa sebagai prediktor kunci, "
+        "4) Retensi sampel pendaftaran usia dewasa (hingga 70 tahun jalur M23) dengan normalisasi StandardScaler pada KNN, "
+        "5) Penggunaan pembobotan biaya (class_weight='balanced') pada Decision Tree untuk mengatasi rasio kelas 61:39, dan "
+        "6) Pengujian murni pada 545 data uji dengan prioritas metrik Recall dan F1-Score guna mengeliminasi jebakan akurasi semu (The Accuracy Trap: 60,85%)."
+    )
 
     # ==================== DAFTAR PUSTAKA ====================
     doc.add_page_break()

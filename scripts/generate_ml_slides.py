@@ -1065,7 +1065,8 @@ def create_proposal_presentation(output_path: str) -> None:
     set_notes(
         s9,
         "Dalam evaluasi klasifikasi biner, kami memanfaatkan Confusion Matrix 2x2, ROC-AUC, dan prioritas Recall pada kelas Dropout. "
-        "Bagi kampus, menghindari False Negative jauh lebih bernilai agar mahasiswa yang membutuhkan bantuan tidak terlewatkan.",
+        "Evaluasi ini menjadi penutup proposal sekaligus pintu gerbang eksekusi laporan akhir: mengatasi The Accuracy Trap (60,85%), "
+        "menghubungkan temuan outlier usia M23, multikolinearitas SKS, dan isolasi data Enrolled secara bertahap menuju simulasi intervensi mahasiswa aktif.",
     )
 
     # ==================== SLIDE 10: CLOSING SLIDE (DARK HERO) ====================
