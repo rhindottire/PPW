@@ -38,4 +38,5 @@ chapters:
       - file: IE/04-Dataset-230411100197
   - file: ML
     sections:
-      - file: ML/01-Linear-Regression
+      - file: ML/Proposal.ipynb
+      - file: ML/Report.ipynb
