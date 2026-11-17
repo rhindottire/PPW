@@ -30,6 +30,12 @@ Thumbs.db
 # Logs
 *.log
 
+# PyTorch and machine learning model weights
+*.pth
+*.pt
+*.pkl
+*.h5
+
 # Node modules (untuk MCP/tools)
 node_modules/
 

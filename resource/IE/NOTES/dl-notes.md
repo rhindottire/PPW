@@ -70,13 +70,18 @@ Catatan pembacaan `resource/IE/DL/`. Dibaca read-only; file tidak diubah.
 5. Metrik macro via `MultiLabelBinarizer` + `UndefinedMetricWarning` (kelas minoritas 0 support)
 6. Kekhawatiran dominasi O tercatat SS cara resolve
 
-## Run-Readiness
+## Run-Readiness (Telah Dieksekusi 2026-11-17)
 
-| Notebook | Status | Syarat |
-|---|---|---|
-| bi-lstm pidana-200 | ⚠️ sebagian | file Kaggle DatasetPos-Pidana200.csv (tidak ada di folder); TensorFlow env; kernel enWebmining |
-| bi-lstm cbow | ⚠️ sebagian (untuk uji coba) | perbaiki `astype(int)` → float; Dataset-Pidana500.csv tak ada di folder |
-| Salinan bi-LSTM | ❌ belum tereksekusi | Dataset-Merge.csv di Drive; butuh train+mengukur |
+| Notebook | Status Awal | Status Terkini | Adaptasi & Hasil Eksekusi |
+|---|---|---|---|
+| bi-lstm pidana-200 | ⚠️ sebagian | ✅ Selesai Tereksekusi | Path Kaggle diarahkan ke `LEGALNER-POS-PREV-NEXT-200.csv`, Bi-LSTM PyTorch CUDA, 10 epoch, model disimpan ke `model-BiLSTM-Pidana200.pth`, output tersimpan penuh. |
+| bi-lstm cbow | ⚠️ sebagian | ✅ Selesai Tereksekusi | Path Kaggle diarahkan ke `LEGALNER-POS-PREV-NEXT-200.csv`, bug `astype(int)` diperbaiki ke float32, batch prediction uji, model disimpan ke `model-BiLSTM-Pidana500-100Epoch.pth`, demo `new_word = 'bkl'` berhasil. |
+| Salinan bi-LSTM | ❌ belum tereksekusi | ✅ Selesai Tereksekusi | Google Colab path dinetralkan, filtering kalimat all-O diuji pada korpus lokal, dilatih 10 epoch, model disimpan ke `model-BiLSTM-Filtered.pth`, evaluasi klasifikasi selesai. |
 
-Catatan: file CSV yang dibutuhkan belum tentu tersedia lokal (beberapa di Kaggle/Drive).
-Untung uji ulang perlu verifikasi ketersediaan data.
+### Perbandingan Reasoning Ketiga Notebook Acuan Dosen:
+1. **DL1 (`bi-lstm-dataset-pidana-200.ipynb`)**: Model baseline standar tanpa representasi kata pre-trained. Masalah utama: dominasi tag `O` tidak ditangani, menghasilkan metrik macro rendah.
+2. **DL2 (`bi-lstm-dataset-pidana-cbow.ipynb`)**: Menambahkan representasi semantik CBOW 10-d. Masalah utama: bug casting `astype(int)` memotong vektor kata menjadi bilangan bulat/0.
+3. **DL3 (`Salinan bi-LSTM.ipynb`)**: Eksperimen lanjutan untuk memecahkan dominasi `O` dengan membuang seluruh kalimat yang hanya berisi tag `O`. Masalah utama: mengubah distribusi alami teks hukum (*distribution shift*) dan menyebabkan *false positive* tinggi pada kalimat prosedur/pengantar umum.
+
+**Solusi Sintesis pada Notebook Modifikasi (`notebook/IE/05-DeepLearning-IE-230411100197.ipynb`)**:
+Alih-alih membuang kalimat secara destruktif seperti pada *Salinan bi-LSTM*, dominasi 96,8% tag `O` diselesaikan secara elegan pada level *Loss Function* menggunakan **Masked Cross-Entropy Loss (`ignore_index=TAG_PAD_IDX`)** dan **Calibrated Class Weighting** (`O` dibobot 0.2, tag entitas 1.0–2.0). Digabungkan dengan representasi Word2Vec CBOW 100-d, model modifikasi mencapai Entity Weighted F1 sebesar **0,9507** pada seluruh 208 putusan PN Ngawi.

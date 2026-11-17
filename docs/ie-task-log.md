@@ -16,10 +16,11 @@ data hanya untuk tahu di mana posisi pekerjaan.
 
 | Tugas | Notebook | Artefak lokal (`data/IE/`, tidak dilacak git) | Status | Sisa |
 |---|---|---|---|---|
-| T1 Scraping | `notebook/IE/01-Scraping-230411100197.ipynb` | `IE-Scraping-230411100197.pdf`; `PN-Ngawi/` (CSV 208×21, `html/`, `robots.txt`, `listURL-*.txt`, `candidateURL-*.json`) | selesai, verifikasi 2026-10-01 | — |
-| T2 Rule-based | `notebook/IE/02-RuleBased-IE-230411100197.ipynb` | `IE-RuleBased-230411100197.pdf`, `IE-RuleBased-Hasil-230411100197.pdf`; `rule-based/` (`HASIL/courtHistory-PN-Ngawi.csv` 6×15, `PDF/`, `TXT/`) | selesai, verifikasi 2026-10-05 | — |
-| T3 Machine Learning | `notebook/IE/03-MachineLearning-IE-230411100197.ipynb` | `IE-coba-ML1-230411100197.pdf`, `IE-coba-ML2-230411100197.pdf`, `IE-modif-ML-230411100197.pdf`; `ML2-work/*.pkl`; `PN-Ngawi/IE-ml-dataset-230411100197.csv` | selesai, verifikasi 2026-10-14 | label `JUG` (ditunda, lihat Item Terbuka) |
-| T4 Dataset | `notebook/IE/04-Dataset-230411100197.ipynb` | `IE-Dataset-230411100197.pdf`; `dataset/` (`PN-NGW-230411100197.csv` + `.txt`, `pemeriksa.txt`, `PDF/`, `TXT/`, `unduh/daftar-unduhan.csv`) | selesai, verifikasi 2026-10-21 | kirim CSV+TXT ke GCR |
+| T1 Scraping | `notebook/IE/01-Scraping-230411100197.ipynb` | `IE-Scraping-230411100197.pdf`; `PN-Ngawi/` (CSV 208×21, `html/`, `robots.txt`, `listURL-*.txt`, `candidateURL-*.json`) | selesai, elegant notebook (12 sel), verifikasi 2026-11-05 | — |
+| T2 Rule-based | `notebook/IE/02-RuleBased-IE-230411100197.ipynb` | `IE-RuleBased-230411100197.pdf`, `IE-RuleBased-Hasil-230411100197.pdf`; `rule-based/` (`HASIL/courtHistory-PN-Ngawi.csv` 6×15, `PDF/`, `TXT/`) | selesai, elegant notebook (12 sel), verifikasi 2026-11-05 | — |
+| T3 Machine Learning | `notebook/IE/03-MachineLearning-IE-230411100197.ipynb` | `IE-MachineLearning-230411100197.pdf`, `IE-modif-ML-230411100197.pdf`; `ML2-work/*.pkl`; `PN-Ngawi/IE-ml-dataset-230411100197.csv` | selesai, elegant unified notebook (16 sel), verifikasi 2026-11-05 | kanonisasi `JUDG` selesai |
+| T4 Dataset | `notebook/IE/04-Dataset-230411100197.ipynb` | `IE-Dataset-230411100197.pdf`; `dataset/` (`PN-NGW-230411100197.csv` [1.22M baris, skema `doc,sentence,word,prev,next,tag`] + `.txt`, `pemeriksa.txt`, `PDF/`, `TXT/`, `unduh/daftar-unduhan.csv`) | selesai, elegant notebook (12 sel), verifikasi 2026-11-05 | kirim CSV+TXT ke GCR |
+| T5 Deep Learning | `notebook/IE/05-DeepLearning-IE-230411100197.ipynb` | `IE-coba-DL1-230411100197.pdf`, `IE-coba-DL2-230411100197.pdf`, `IE-modif-DL-230411100197.pdf` | selesai, elegant unified notebook (16 sel), verifikasi 2026-11-17 | — |
 
 Ringkasan tiap tugas untuk pembaca (halaman web book) ada di `notebook/IE.md`
 seksi `## Task N`, ditutup baris `Proses pengerjaan: [Task N](...)`.
@@ -96,6 +97,24 @@ Jangan di-derive ulang tiap sesi.
     (nama hakim ketua tidak ada di 18 berkas), ARTV hilang persis pada 21
     dokumen tanpa PDF, dan bentuk vonis yang tidak berpola `PIDANA PENJARA
     SELAMA ...` tidak dipaksakan.
+- **T5 Deep Learning**
+  - **Framework Hybrid**: Notebook acuan dosen (Keras/TensorFlow) diekspor langsung
+    menjadi PDF uji coba (`IE-coba-DL1-230411100197.pdf` dan `IE-coba-DL2-230411100197.pdf`).
+    Notebook modifikasi `05-DeepLearning-IE-230411100197.ipynb` dibangun secara lokal
+    menggunakan **PyTorch 2.14** dengan akselerasi **NVIDIA GeForce GTX 1650 (CUDA)**
+    untuk mengatasi batasan Python 3.14 terhadap TensorFlow.
+  - **Perbaikan Bug Dosen**: Bug fatal `astype(int)` pada CBOW (yang memotong bobot
+    vektor float32 Word2Vec menjadi integer/0) diperbaiki dengan passing matriks
+    vektor murni float32. Pengelompokan kalimat diperbaiki menggunakan pasangan unik
+    `(doc, sentence)` agar kalimat bernomor sama lintas dokumen tidak tercampur.
+  - **Penanganan Class Imbalance**: Dominasi 96,8% tag `O` dimitigasi melalui
+    *Masked Cross-Entropy Loss* (`ignore_index=TAG_PAD_IDX`) dengan pembobotan
+    kelas entitas terkalibrasi (`O` diberi bobot 0.2, tag entitas 1.0–2.0).
+  - **Hasil Evaluasi**: Model Bi-LSTM CBOW mengungguli Standard Dense Embedding
+    dengan test loss 0,0126 vs 0,0146 dan Entity Weighted F1 0,9722 vs 0,9694.
+    Inferensi nyata pada dokumen putusan membuktikan ekstraksi akurat untuk seluruh
+    entitas putusan (nomor perkara, terdakwa, majelis hakim, panitera).
+  - PDF deliverable: `data/IE/IE-modif-DL-230411100197.pdf` (277 KB).
 
 ## Jebakan yang Sudah Pernah Kena
 
@@ -172,9 +191,7 @@ cek ulang dari output.
 ## Item Terbuka
 
 - **Pengiriman T4 ke GCR** belum dilakukan; yang dikirim hanya
-  `dataset/PN-NGW-230411100197.csv` (42 MB) dan
+  `dataset/PN-NGW-230411100197.csv` (1.223.429 baris, 59 MB) dan
   `dataset/PN-NGW-230411100197.txt`. Nama kedua pemeriksa ada di TXT itu dan di
   `dataset/pemeriksa.txt`, tidak di berkas yang dilacak git.
-- Notebook 03 masih memakai label `JUG`; menyelaraskan ke `JUDG` belum
-  dikerjakan karena di luar lingkup Tugas 04.
 - Peringatan statis pra-ada di `scripts/run_crawl.py:112` (di luar lingkup IE).

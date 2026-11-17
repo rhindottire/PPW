@@ -2,18 +2,13 @@
 
 ## Task 1 — Court Scraping
 
-**Objective.** Get metadata for general criminal court decisions from one selected District Court (Pengadilan Negeri) in East Java.
+**Objective.** Collect metadata for at least 200 general criminal court decisions from a selected District Court (Pengadilan Negeri) in East Java.
 
 **What to do.**
-1. Coordinate with class/group leader to pick a District Court in East Java. Avoid picking the same court as others.
-2. Study the scraping code provided in the [class drive](https://drive.google.com/drive/folders/1StUCQDNn7Gp7BG9yHiCVwMOojlZ4EDap?usp=sharing).
-3. Get the URL for the "Pidana Umum" list for the chosen court via the MA site:
-   - Open <https://putusan3.mahkamahagung.go.id/pengadilan/profil/pengadilan/pt-surabaya.html>
-   - Pick the target PN from the left sidebar.
-   - Click/select "Pidana Umum" in the left sidebar once the PN appears (name shown top-left).
-   - Take the URL that appears at that point to run `getURLlist.ipynb`.
-4. Run `getURLlist.ipynb` then `getMETAINFO.ipynb`. Modifications are allowed as long as the core logic to collect metadata from decision detail pages remains.
-5. Collect metadata for at least **200** decisions. The dataset must be **different** from others.
+1. Select one District Court in East Java from the assigned list (PN Ngawi).
+2. Collect decision listing URLs from the "Pidana Umum" directory using `getURLlist.ipynb`.
+3. Extract decision detail metadata into structured format using `getMETAINFO.ipynb` for at least 200 unique decisions.
+4. Export the metadata dataset (`IE-PN-Ngawi-230411100197.csv`) and document the execution in PDF format (`IE-Scraping-230411100197.pdf`).
 
 **Process:** [Task 1](IE/01-Scraping-230411100197.ipynb)
 
@@ -49,8 +44,23 @@
 
 **What to do.**
 1. Take **200** general criminal decisions from the PN chosen in Task 1.
-2. Annotate **12 entities** for each decision following the **IOB** schema in the provided table.
+2. Annotate **12 entities** for each decision following the **IOB** schema (`VERN`, `DEFN`, `CRIA`, `ARTV`, `PENA`, `PUNI`, `TIMV`, `JUDP`, `JUDG`, `REGI`, `PROS`, `ADVO`).
 3. Have the dataset checked by **at least 2** members of the assigned group.
-4. Prepare the annotated dataset files with group check info.
+4. Prepare the annotated dataset file (`PN-NGW-230411100197.csv`) with standard columns `doc,sentence,word,prev,next,tag` and group audit note (`PN-NGW-230411100197.txt`).
 
 **Process:** [Task 4](IE/04-Dataset-230411100197.ipynb)
+
+## Task 5 — Deep Learning
+
+**Objective.** Apply Deep Learning-based Information Extraction to court decision documents.
+
+**What to do.**
+1. Study Deep Learning IE code provided in the class drive (DL1 uses standard embeddings; DL2 uses CBOW Word2Vec representations).
+2. Run baseline trials for both DL1 and DL2 to verify end-to-end execution and export verification PDFs (`IE-coba-DL1-230411100197.pdf` and `IE-coba-DL2-230411100197.pdf`).
+3. Prepare the sequence dataset format using annotated decisions from Task 4 (`PN-NGW-230411100197.csv`).
+4. Implement a comparative Bi-LSTM pipeline evaluating both trainable dense embeddings and pretrained Continuous Bag-of-Words (CBOW) representations on the PN Ngawi corpus.
+5. Mitigate extreme tag class imbalance (96.8% `O` tokens) using masked cross-entropy loss with calibrated class weighting.
+6. Extract target legal entities from court decision texts and export the documented pipeline to PDF (`IE-modif-DL-230411100197.pdf`).
+
+**Process:** [Task 5](IE/05-DeepLearning-IE-230411100197.ipynb)
+
