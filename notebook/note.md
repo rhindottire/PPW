@@ -102,3 +102,15 @@ Catatan materi kuliah 5: [Note 5](note/note-5.md)
    web.
 
 Catatan materi kuliah 6: [Note 6](note/note-6.md)
+
+## Note 7 — PageRank Algorithm
+
+1. Bangun representasi graf berarah (*directed graph*) dari jaringan website resmi Universitas Trunojoyo Madura (`*.trunojoyo.ac.id`) menggunakan perayapan etis.
+2. Visualisasikan topologi graf berarah dengan penataan simpul dan orientasi panah yang jelas.
+3. Bentuk matriks ketetanggaan (*adjacency matrix*) dan matriks probabilitas transisi stokastik kolom ($M$) beserta penanganan simpul buntu (*dead ends*).
+4. Hitung skor PageRank secara iteratif melalui metode *power iteration* manual dengan faktor redaman (*damping factor* $\alpha = 0{,}85$).
+5. Hitung skor PageRank menggunakan fungsi bawaan `networkx.pagerank` untuk memvalidasi ketelitian numerik dan konvergensi.
+6. Analisis perbandingan peringkat otoritas antar-simpul berdasarkan distribusi tautan masuk (*in-degree*) dan tautan keluar (*out-degree*).
+7. Bangun aplikasi web interaktif berbasis Streamlit dan visualisasi graf Pyvis yang siap di-deploy pada server warga laboratorium maupun server kampus.
+
+Catatan materi kuliah 7: [Note 7](note/note-7.md)

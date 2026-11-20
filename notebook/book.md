@@ -191,3 +191,45 @@ Proses pengerjaan: [Book 5](book/book-5.ipynb)
   algoritma web structure mining.
 
 Proses pengerjaan: [Book 6](book/book-6.ipynb)
+
+## Book 7 — PageRank Algorithm
+
+- **Topologi graf web Universitas Trunojoyo Madura (UTM)** dibangun dari perayapan etis
+  antarsubdomain resmi (`*.trunojoyo.ac.id`) menggunakan arsitektur *Recursive Breadth-First Search (BFS) Multi-Hop*,
+  menghasilkan **91 simpul subdomain** dan **247 busur keterhubungan berarah** dengan kepadatan graf (*density*)
+  **0,0302**.
+- **Matriks Ketetanggaan (*Adjacency Matrix*)**: Matriks asimetris berukuran $91 \times 91$
+  memetakan 247 tautan keluar-masuk lintas-unit kampus; portal utama `trunojoyo.ac.id` mencatat
+  *out-degree* tertinggi (25 tautan keluar) dan *in-degree* 16.
+- **Matriks Transisi Stokastik Kolom ($M$)**: Penanganan simpul buntu (*dead ends*) mendistribusikan
+  peluang seragam $1/N = 0{,}010989$ ke seluruh simpul, menjamin jumlahan setiap kolom tepat **1,0000**
+  tanpa kebocoran probabilitas (*zero leakage*).
+- **Metode Power Iteration**: Komputasi iteratif numerik dengan faktor redaman $d = 0{,}85$
+  mencapai konvergensi stasioner stabil pada **iterasi ke-14** dengan toleransi $\epsilon = 10^{-7}$.
+- **Skor PageRank Akhir (Top 5 Otoritas UTM)**:
+  - **`trunojoyo.ac.id`**: **0,073986** (Peringkat 1 — portal induk dan jangkar rujukan universitas)
+  - **`journal.trunojoyo.ac.id`**: **0,042489** (Peringkat 2 — sentral publikasi ilmiah terakreditasi)
+  - **`ppid.trunojoyo.ac.id`**: **0,035888** (Peringkat 3 — portal layanan informasi publik universitas)
+  - **`siakad.trunojoyo.ac.id`**: **0,033407** (Peringkat 4 — sistem informasi akademik rujukan seluruh prodi/fakultas)
+  - **`library.trunojoyo.ac.id`**: **0,029542** (Peringkat 5 — repositori dan perpustakaan digital kampus)
+  - Total akumulasi probabilitas seluruh simpul tepat **1,000000**.
+- **Validasi NetworkX**: Skor komputasi mandiri *power iteration* terbukti identik dengan fungsi bawaan
+  `networkx.pagerank` dengan selisih mutlak maksimum hanya **$3{,}17 \times 10^{-7}$**.
+- **Diferensiasi Prestise vs In-Degree**: Terbukti bahwa ranking otoritas tidak semata-mata ditentukan oleh
+  kuantitas tautan masuk kuantitatif; `journal.trunojoyo.ac.id` memiliki bobot prestise lebih tinggi dibanding
+  simpul berderajat masuk sepadan karena menerima tautan dari fakultas-fakultas berbobot tinggi.
+- **Sensitivitas Faktor Redaman**: Uji variasi $d \in \{0{,}50, 0{,}70, 0{,}85, 0{,}95\}$ membuktikan bahwa
+  semakin tinggi nilai $d$, konsentrasi bobot ke portal utama semakin kuat (`trunojoyo.ac.id` meningkat dari
+  0,04981 menjadi 0,08542), sedangkan nilai $d$ rendah meratakan probabilitas ke arah distribusi acak seragam.
+- **Aplikasi & Deployment Publik**: Aplikasi riset ilmiah **UTM PageRank Research Workbench** (`deploy/server.py`
+  dan antarmuka D3.js SPA) dideploy secara permanen 24/7 di cloud Hugging Face Spaces pada tautan
+  **[Hugging Face Space: Rhindottire/UTM-PageRank](https://huggingface.co/spaces/Rhindottire/UTM-PageRank)** (tautan langsung:
+  **`https://rhindottire-utm-pagerank.static.hf.space/index.html`**), serta cadangan tunnel Cloudflare
+  `https://marks-beef-ministers-seekers.trycloudflare.com`. Antarmuka 100% identik persis dengan antarmuka lokal `http://127.0.0.1:8000/`,
+  menyajikan visualisasi topologi graf 2D terarah D3 dengan fitur isolasi sorotan perujuk masuk (*inbound-only referrer highlighting*),
+  sinkronisasi hover real-time pada daftar perujuk, stepper interaktif *power iteration*, inspeksi matriks transisi
+  kolom-stokastik $M$, simulator modifikasi tautan masuk (*what-if simulation*), serta konsol perayap langsung (*live probe*)
+  lintas-domain untuk pengujian situs luar (seperti `https://www.sman1ketapang.sch.id/`).
+
+Proses pengerjaan: [Book 7](book/book-7.ipynb)
+
